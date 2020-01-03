@@ -1,0 +1,30 @@
+{
+    "name": "bolt/forms",
+    "description": "📦 This Bolt extension can be used to handle forms in your Bolt 4 project.",
+    "type": "bolt-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bob den Otter",
+            "email": "bobdenotter@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.2",
+        "twig/twig": "^2.12 | ^3.0"
+    },
+    "require-dev": {
+        "bolt/core": "^4.0.0",
+        "symplify/easy-coding-standard": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bolt\\Boltforms\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "entrypoint": "Bolt\\Boltforms\\Extension"
+    }
+}
