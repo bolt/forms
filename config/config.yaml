@@ -1,4 +1,4 @@
-# Boltforms
+# BoltForms
 
 ## Debugging
 #
@@ -30,10 +30,10 @@ csrf: true
 # inside your theme, you would use similar to:
 #
 templates:
-    form: extensions/boltforms/form.twig
-    email: extensions/boltforms/email.twig
-    subject: extensions/boltforms/subject.twig
-    files: extensions/boltforms/file_browser.twig
+    form: @boltforms/form.twig
+    email: @boltforms/email.twig
+    subject: @boltforms/subject.twig
+    files: @boltforms/file_browser.twig
 
 ## reCAPTCHa set up
 #
@@ -169,11 +169,11 @@ contact:
 #        bcc_name: Manager Person
 #        bcc_email: manager@example.com
 #        attach_files: false
-#    templates:                      # Over ride the global Twig templates for this form
-#        form: extensions/boltforms/form.twig
-#        email: extensions/boltforms/email.twig
-#        subject: extensions/boltforms/subject.twig
-#        files: extensions/boltforms/file_browser.twig
+#    templates:                      # Override the global Twig templates for this form
+#        form: @boltforms/form.twig
+#        email: @boltforms/email.twig
+#        subject: @boltforms/subject.twig
+#        files: @boltforms/file_browser.twig
 #    feedback:
 #        success: Form submission sucessful
 #        error: There are errors in the form, please fix before trying to resubmit

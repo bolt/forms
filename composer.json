@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Bolt\\Boltforms\\": "src/"
+            "Bolt\\BoltForms\\": "src/"
         }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
-        "entrypoint": "Bolt\\Boltforms\\Extension"
+        "entrypoint": "Bolt\\BoltForms\\Extension"
     }
 }
