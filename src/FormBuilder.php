@@ -4,6 +4,9 @@
 namespace Bolt\BoltForms;
 
 
+use Bolt\BoltForms\Factory\FieldConstraints;
+use Bolt\BoltForms\Factory\FieldOptions;
+use Bolt\BoltForms\Factory\FieldType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -41,46 +44,19 @@ class FormBuilder
 
     private function addField(SymfonyFormBuilder $formBuilder, string $name, array $field)
     {
-        $type = $this->getType($field);
-        $options = $this->getOptions($field);
+        $type = FieldType::get($field);
+        $options = FieldOptions::get($field);
+        $constraints = FieldConstraints::get($name, $field);
 
         $formBuilder->add($name, $type, $options);
 
-    }
-
-    private function getType($field): string
-    {
-        switch ($field['type']) {
-            case 'textarea':
-                $type = TextareaType::class;
-                break;
-            case 'email':
-                $type = EmailType::class;
-                break;
-            case 'file':
-                $type = FileType::class;
-                break;
-            case 'submit':
-                $type = SubmitType::class;
-                break;
-            case 'choice':
-                $type = ChoiceType::class;
-
-                break;
-            case 'text':
-            default:
-                $type = TextType::class;
-                break;
+        if ($constraints) {
+            dump($constraints);
         }
 
-        return $type;
     }
 
-    private function getOptions(array $field): array
-    {
-        $options = $field['options'];
 
-        return $options;
-    }
+
 
 }

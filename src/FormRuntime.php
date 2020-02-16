@@ -7,6 +7,8 @@ use Bolt\Extension\ExtensionRegistry;
 use Bolt\Twig\Notifications;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Tightenco\Collect\Support\Collection;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -25,17 +27,26 @@ class FormRuntime implements RuntimeExtensionInterface
     /** @var Environment */
     private $twig;
 
-    public function __construct(ExtensionRegistry $extensionRegistry, Notifications $notifications, Environment $twig, FormBuilder $builder)
+    /** @var Request */
+    private $request;
+
+    public function __construct(
+        ExtensionRegistry $extensionRegistry,
+        Notifications $notifications,
+        Environment $twig,
+        FormBuilder $builder,
+        RequestStack $requestStack)
     {
         $this->registry = $extensionRegistry;
         $this->notifications = $notifications;
         $this->twig = $twig;
         $this->builder = $builder;
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     private function getConfig(): Collection
     {
-        $extension = $this->registry->getExtension('BoltForms');
+        $extension = $this->registry->getExtension('Bolt\\BoltForms');
 
         return $extension->getConfig();
     }
@@ -54,6 +65,8 @@ class FormRuntime implements RuntimeExtensionInterface
         $formConfig = $config->get($formName);
 
         $form = $this->builder->build($formName, $formConfig);
+
+        $form->handleRequest($this->request);
 
         return $this->twig->render('@boltforms/form.html.twig', [
             'formconfig' => $formConfig,
