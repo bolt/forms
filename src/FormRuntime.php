@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Bolt\BoltForms;
 
 use Bolt\Extension\ExtensionRegistry;
 use Bolt\Twig\Notifications;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tightenco\Collect\Support\Collection;
@@ -35,8 +34,8 @@ class FormRuntime implements RuntimeExtensionInterface
         Notifications $notifications,
         Environment $twig,
         FormBuilder $builder,
-        RequestStack $requestStack)
-    {
+        RequestStack $requestStack
+    ) {
         $this->registry = $extensionRegistry;
         $this->notifications = $notifications;
         $this->twig = $twig;
@@ -71,8 +70,7 @@ class FormRuntime implements RuntimeExtensionInterface
         return $this->twig->render('@boltforms/form.html.twig', [
             'formconfig' => $formConfig,
             'debug' => $config->get('debug'),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
-
     }
 }

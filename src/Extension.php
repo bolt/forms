@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Bolt\BoltForms;
 
 use Bolt\Extension\BaseExtension;
-use Symfony\Component\Routing\Route;
 
 class Extension extends BaseExtension
 {
@@ -18,5 +17,4 @@ class Extension extends BaseExtension
     {
         $this->addTwigNamespace('boltforms');
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bolt\BoltForms\EventSubscriber;
 
 use App\Controller\TokenAuthenticatedController;
@@ -14,7 +16,7 @@ class BoltFormsSubscriber implements EventSubscriberInterface
     {
     }
 
-    public function onKernelController(ControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): void
     {
         $controller = $event->getController();
 
@@ -28,7 +30,7 @@ class BoltFormsSubscriber implements EventSubscriberInterface
 
         if ($controller instanceof TokenAuthenticatedController) {
             $token = $event->getRequest()->query->get('token');
-            if (!in_array($token, $this->tokens)) {
+            if (! in_array($token, $this->tokens, true)) {
                 throw new AccessDeniedHttpException('This action needs a valid token!');
             }
         }

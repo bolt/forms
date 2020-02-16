@@ -1,22 +1,15 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Bolt\BoltForms;
-
 
 use Bolt\BoltForms\Factory\FieldConstraints;
 use Bolt\BoltForms\Factory\FieldOptions;
 use Bolt\BoltForms\Factory\FieldType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class FormBuilder
 {
@@ -33,16 +26,14 @@ class FormBuilder
         /** @var SymfonyFormBuilder $formBuilder */
         $formBuilder = $this->formFactory->createNamedBuilder($formName);
 
-        foreach($formConfig['fields'] as $name => $field) {
+        foreach ($formConfig['fields'] as $name => $field) {
             $this->addField($formBuilder, $name, $field);
         }
 
-        $form = $formBuilder->getForm();
-
-        return $form;
+        return $formBuilder->getForm();
     }
 
-    private function addField(SymfonyFormBuilder $formBuilder, string $name, array $field)
+    private function addField(SymfonyFormBuilder $formBuilder, string $name, array $field): void
     {
         $type = FieldType::get($field);
         $options = FieldOptions::get($field);
@@ -53,10 +44,5 @@ class FormBuilder
         if ($constraints) {
             dump($constraints);
         }
-
     }
-
-
-
-
 }

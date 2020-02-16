@@ -1,36 +1,23 @@
 <?php
 
-namespace Bolt\BoltForms\Factory;
+declare(strict_types=1);
 
-use http\Exception\RuntimeException;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraint;
+namespace Bolt\BoltForms\Factory;
 
 class FieldConstraints
 {
-    const SF_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
+    public const SF_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
 
-    /**
-     * @param array $field
-     */
     public static function get(string $formName, array $field): ?array
     {
-        if (!array_key_exists('constraints', $field)) {
+        if (! array_key_exists('constraints', $field)) {
             return null;
         }
 
         $result = [];
-
         $class = null;
-        $params = null;
 
         foreach ($field['constraints'] as $item) {
-
             $inputType = gettype($item);
 
             if ($inputType === 'string') {
@@ -51,9 +38,6 @@ class FieldConstraints
         return new $className($params);
     }
 
-    /**
-     * @param mixed $params
-     */
     private static function getClassFromArray(array $input): object
     {
         return self::getClassFromString(key($input), current($input));
