@@ -23,8 +23,8 @@ class Extension extends BaseExtension
      * Note: These are cached by Symfony. If you make modifications to this, run
      * `bin/console cache:clear` to ensure your routes are parsed.
      */
-    public function getRoutes(): array
-    {
+//    public function getRoutes(): array
+//    {
 //        return [
 //            'reference' => new Route(
 //                '/extensions/reference/{name}',
@@ -32,7 +32,7 @@ class Extension extends BaseExtension
 //                ['name' => '[a-zA-Z0-9]+']
 //            ),
 //        ];
-    }
+//    }
 
     /**
      * Ran automatically, if the current request is in a browser.
@@ -43,8 +43,6 @@ class Extension extends BaseExtension
      */
     public function initialize(): void
     {
-        $this->addTwigExtension(new Twig());
-
         $this->addTwigNamespace('boltforms');
     }
 
