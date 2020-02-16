@@ -19,18 +19,18 @@ class FormRuntime implements RuntimeExtensionInterface
     /** @var Notifications */
     private $notifications;
 
-    /** @var FormFactory */
-    private $formFactory;
+    /** @var FormBuilder */
+    private $builder;
 
     /** @var Environment */
     private $twig;
 
-    public function __construct(ExtensionRegistry $extensionRegistry, Notifications $notifications, FormFactoryInterface $formFactory, Environment $twig)
+    public function __construct(ExtensionRegistry $extensionRegistry, Notifications $notifications, Environment $twig, FormBuilder $builder)
     {
         $this->registry = $extensionRegistry;
         $this->notifications = $notifications;
-        $this->formFactory = $formFactory;
         $this->twig = $twig;
+        $this->builder = $builder;
     }
 
     private function getConfig(): Collection
@@ -53,13 +53,7 @@ class FormRuntime implements RuntimeExtensionInterface
 
         $formConfig = $config->get($formName);
 
-        $formBuilder = $this->formFactory->createBuilder();
-
-        foreach($formConfig['fields'] as $name => $field) {
-            $formBuilder->add($name,TextType::class);
-        }
-
-        $form = $formBuilder->getForm();
+        $form = $this->builder->build($formName, $formConfig);
 
         return $this->twig->render('@boltforms/form.html.twig', [
             'formconfig' => $formConfig,
