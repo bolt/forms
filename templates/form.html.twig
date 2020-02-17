@@ -1,9 +1,25 @@
-<hr>
+{# this tag only applies to the forms defined in this template #}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+    {% include '@boltforms/assets/boltforms.css' %}
+</style>
 
 {% if debug.enabled %}
     {{ dump(formconfig) }}
 {% endif %}
 
-{{ form(form) }}
+{% if valid %}
+    <div class="boltforms-feedback success">{{ formconfig.feedback.success }}</div>
+{% endif %}
+
+{% if submitted and not valid %}
+    <div class="boltforms-feedback error">{{ formconfig.feedback.error }}</div>
+{% endif %}
+
+{% if not valid %}
+    {{ form(form) }}
+{% endif %}
 
 <hr>

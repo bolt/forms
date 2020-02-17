@@ -26,7 +26,7 @@ class BoltFormsSubscriber implements EventSubscriberInterface
             $controller = $controller[0];
         }
 
-        dump($controller);
+//        dump($controller);
 
         if ($controller instanceof TokenAuthenticatedController) {
             $token = $event->getRequest()->query->get('token');

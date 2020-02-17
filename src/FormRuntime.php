@@ -71,6 +71,9 @@ class FormRuntime implements RuntimeExtensionInterface
             'formconfig' => $formConfig,
             'debug' => $config->get('debug'),
             'form' => $form->createView(),
+            'submitted' => $form->isSubmitted(),
+            'valid' => $form->isSubmitted() && $form->isValid(),
+            'data' => $form->getData(),
         ]);
     }
 }
