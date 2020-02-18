@@ -64,23 +64,23 @@ class FormRuntime implements RuntimeExtensionInterface
 
         if (! $config->has($formName)) {
             return $this->notifications->warning(
-                'Incorrect usage of form',
+                '[Boltforms] Incorrect usage of form',
                 'The form "' . $formName . '" is not defined. '
             );
         }
 
         $formConfig = $config->get($formName);
-
         $form = $this->builder->build($formName, $formConfig);
-
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted()) {
-
             $event = new PostSubmitEvent($form, $config, $formName);
             $this->dispatcher->dispatch($event, PostSubmitEvent::NAME);
-            dump('submitted');
+            dump(sprintf('Form "%s" has been submitted', $formName));
         }
+
+        dump($formConfig);
+        dump($form);
 
         return $this->twig->render('@boltforms/form.html.twig', [
             'formconfig' => $formConfig,
