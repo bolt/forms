@@ -11,7 +11,6 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Tightenco\Collect\Support\Collection;
 
 class Mailer implements EventSubscriberInterface
@@ -40,11 +39,11 @@ class Mailer implements EventSubscriberInterface
         $this->mail();
     }
 
-    public function mail()
+    public function mail(): void
     {
         dump($this->event->getMeta());
 
-        if (!$this->notification->get('enabled') && !$this->notification->get('email')) {
+        if (! $this->notification->get('enabled') && ! $this->notification->get('email')) {
             return;
         }
 
@@ -57,7 +56,7 @@ class Mailer implements EventSubscriberInterface
                 'data' => $this->event->getForm()->getData(),
                 'formname' => $this->event->getFormName(),
                 'meta' => $this->event->getMeta(),
-                'config' => $this->event->getFormConfig()
+                'config' => $this->event->getFormConfig(),
             ]);
 
         if ($this->hasCc()) {
@@ -72,14 +71,19 @@ class Mailer implements EventSubscriberInterface
             $email->bcc($this->getBcc());
         }
 
-        if ($this->getReplyTo()) {
+        if ($this->hasReplyTo()) {
             $email->replyTo($this->getReplyTo());
         }
 
-        $sentEmail = $this->mailer->send($email);
+        // @todo Returns `null`, whilst is _should_ return some info on whether it was successfull.
+        $this->mailer->send($email);
 
-        $this->logger->info('[Boltforms] Form {formname} sent email to {recipient}',
-            ['formname' => $this->event->getFormName(), 'recipient' => $this->getTo()->toString()]
+        $this->logger->info(
+            '[Boltforms] Form {formname} sent email to {recipient}',
+            [
+                'formname' => $this->event->getFormName(),
+                'recipient' => $this->getTo()->toString(),
+            ]
         );
     }
 
@@ -121,7 +125,6 @@ class Mailer implements EventSubscriberInterface
         return $this->getAddress('bcc_email', 'bcc_name');
     }
 
-
     private function hasReplyTo(): bool
     {
         return $this->notification->has('replyto_email');
@@ -154,4 +157,3 @@ class Mailer implements EventSubscriberInterface
         ];
     }
 }
-

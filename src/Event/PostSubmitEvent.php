@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Bolt\BoltForms\Event;
 
@@ -19,7 +20,7 @@ class PostSubmitEvent extends Event
     /** @var Collection */
     private $config;
 
-    private $formname;
+    private $formName;
 
     public function __construct(Form $form, Collection $config, string $formName, Request $request)
     {
@@ -51,14 +52,11 @@ class PostSubmitEvent extends Event
 
     public function getMeta()
     {
-        $meta = [
+        return [
             'ip' => $this->request->getClientIp(),
             'timestamp' => Carbon::now(),
             'path' => $this->request->getRequestUri(),
-            'url' => $this->request->getUri()
+            'url' => $this->request->getUri(),
         ];
-
-        return $meta;
     }
-
 }

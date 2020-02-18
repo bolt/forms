@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
-use Bolt\Common\Str;
 use Bolt\Log\LoggerTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Tightenco\Collect\Support\Collection;
 
 class Logger implements EventSubscriberInterface
@@ -35,9 +31,9 @@ class Logger implements EventSubscriberInterface
         $this->log();
     }
 
-    public function log()
+    public function log(): void
     {
-        if (!$this->notification->get('log')) {
+        if (! $this->notification->get('log')) {
             return;
         }
 
@@ -57,4 +53,3 @@ class Logger implements EventSubscriberInterface
         ];
     }
 }
-
