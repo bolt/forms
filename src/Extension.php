@@ -17,7 +17,7 @@ class Extension extends BaseExtension
     {
         $this->addTwigNamespace('boltforms');
 
-        $this->addListener('boltforms.post_submit', [new EventListener\Mailer(), 'handleEvent']);
+//        $this->addListener('boltforms.post_submit', [new EventListener\Mailer(), 'handleEvent']);
     }
 
     public function initializeCLI(): void

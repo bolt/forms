@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Bolt\BoltForms\EventListener;
+namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
 use Bolt\Log\LoggerTrait;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-class Mailer
+class Mailer implements EventSubscriberInterface
 {
     use LoggerTrait;
 
@@ -19,7 +20,7 @@ class Mailer
     /** @var MailerInterface */
     private $mailer;
 
-    public function xx__construct(MailerInterface $mailer)
+    public function __construct(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -48,10 +49,17 @@ class Mailer
             ->text('Sending emails is fun again!')
             ->html('<p>See Twig integration for better HTML integration!</p>');
 
-//        /** @var Symfony\Component\Mailer\SentMessage $sentEmail */
-//        $sentEmail = $this->mailer->send($email);
+        /** @var Symfony\Component\Mailer\SentMessage $sentEmail */
+        $sentEmail = $this->mailer->send($email);
 
-//        dump($sentEmail->getMessageId());
+        dump($sentEmail->getMessageId());
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            'boltforms.post_submit' => 'handleEvent',
+        ];
     }
 }
 
