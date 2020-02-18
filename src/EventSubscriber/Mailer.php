@@ -7,6 +7,7 @@ namespace Bolt\BoltForms\EventSubscriber;
 use Bolt\BoltForms\Event\PostSubmitEvent;
 use Bolt\Common\Str;
 use Bolt\Log\LoggerTrait;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -41,16 +42,23 @@ class Mailer implements EventSubscriberInterface
 
     public function mail()
     {
+        dump($this->event->getMeta());
+
         if (!$this->notification->get('enabled') && !$this->notification->get('email')) {
             return;
         }
 
-        $email = (new Email())
+        $email = (new TemplatedEmail())
             ->from($this->getFrom())
             ->to($this->getTo())
             ->subject($this->getSubject())
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->htmlTemplate($this->event->getConfig()->get('templates')['email'])
+            ->context([
+                'data' => $this->event->getForm()->getData(),
+                'formname' => $this->event->getFormName(),
+                'meta' => $this->event->getMeta(),
+                'config' => $this->event->getFormConfig()
+            ]);
 
         if ($this->hasCc()) {
             $email->cc($this->getCc());

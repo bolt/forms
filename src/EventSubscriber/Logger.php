@@ -53,7 +53,7 @@ class Logger implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'boltforms.post_submit' => 'handleEvent',
+            'boltforms.post_submit' => ['handleEvent', 100],
         ];
     }
 }

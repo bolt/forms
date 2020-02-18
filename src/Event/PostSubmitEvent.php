@@ -3,7 +3,9 @@
 
 namespace Bolt\BoltForms\Event;
 
+use Carbon\Carbon;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 use Tightenco\Collect\Support\Collection;
 
@@ -19,11 +21,12 @@ class PostSubmitEvent extends Event
 
     private $formname;
 
-    public function __construct(Form $form, Collection $config, string $formName)
+    public function __construct(Form $form, Collection $config, string $formName, Request $request)
     {
         $this->form = $form;
         $this->config = $config;
         $this->formName = $formName;
+        $this->request = $request;
     }
 
     public function getFormName(): string
@@ -44,6 +47,18 @@ class PostSubmitEvent extends Event
     public function getFormConfig(): Collection
     {
         return new Collection($this->config->get($this->formName));
+    }
+
+    public function getMeta()
+    {
+        $meta = [
+            'ip' => $this->request->getClientIp(),
+            'timestamp' => Carbon::now(),
+            'path' => $this->request->getRequestUri(),
+            'url' => $this->request->getUri()
+        ];
+
+        return $meta;
     }
 
 }
