@@ -28,22 +28,20 @@ class Logger implements EventSubscriberInterface
         $this->event = $event;
         $this->notification = new Collection($this->event->getFormConfig()->get('notification'));
 
-        $this->log();
+        if (! $this->notification->get('log')) {
+            $this->log();
+        }
     }
 
     public function log(): void
     {
-        if (! $this->notification->get('log')) {
-            return;
-        }
-
         $data = $this->event->getForm()->getData();
 
         $data['formname'] = $this->event->getFormName();
 
         $this->logger->info('[Boltforms] Form {formname} - submitted Form data (see \'Context\')', $data);
 
-        dump('Submitted form data was logged in the System log.');
+        $this->event->getExtension()->dump('Submitted form data was logged in the System log.');
     }
 
     public static function getSubscribedEvents()

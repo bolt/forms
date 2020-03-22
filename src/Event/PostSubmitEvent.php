@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Event;
 
+use Bolt\BoltForms\Extension;
+use Bolt\Extension\ExtensionRegistry;
 use Carbon\Carbon;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +24,16 @@ class PostSubmitEvent extends Event
 
     private $formName;
 
-    public function __construct(Form $form, Collection $config, string $formName, Request $request)
+    /** @var ExtensionRegistry */
+    private $registry;
+
+    public function __construct(Form $form, Collection $config, string $formName, Request $request, ExtensionRegistry $registry)
     {
         $this->form = $form;
         $this->config = $config;
         $this->formName = $formName;
         $this->request = $request;
+        $this->registry = $registry;
     }
 
     public function getFormName(): string
@@ -38,6 +44,11 @@ class PostSubmitEvent extends Event
     public function getForm(): Form
     {
         return $this->form;
+    }
+
+    public function getExtension()
+    {
+        return $this->registry->getExtension(Extension::class);
     }
 
     public function getConfig(): Collection

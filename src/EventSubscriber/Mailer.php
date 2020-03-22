@@ -26,6 +26,9 @@ class Mailer implements EventSubscriberInterface
     /** @var Collection */
     private $notification;
 
+    /** @var Collection */
+    private $config;
+
     public function __construct(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
@@ -34,18 +37,17 @@ class Mailer implements EventSubscriberInterface
     public function handleEvent(PostSubmitEvent $event): void
     {
         $this->event = $event;
+        $this->config = $this->event->getConfig();
         $this->notification = new Collection($this->event->getFormConfig()->get('notification'));
 
-        $this->mail();
+        if ($this->notification->get('enabled') || $this->notification->get('email')) {
+            $this->mail();
+        }
     }
 
     public function mail(): void
     {
-        dump($this->event->getMeta());
-
-        if (! $this->notification->get('enabled') && ! $this->notification->get('email')) {
-            return;
-        }
+        $debug = (bool) $this->config->get('debug')['enabled'];
 
         $email = (new TemplatedEmail())
             ->from($this->getFrom())
@@ -75,7 +77,12 @@ class Mailer implements EventSubscriberInterface
             $email->replyTo($this->getReplyTo());
         }
 
-        // @todo Returns `null`, whilst is _should_ return some info on whether it was successfull.
+        // Override the "to"
+        if ($debug) {
+            $email->to($this->config->get('debug')['address']);
+        }
+
+        // @todo Returns `null`, whilst it _should_ return some info on whether it was successful.
         $this->mailer->send($email);
 
         $this->logger->info(

@@ -16,12 +16,19 @@ class Extension extends BaseExtension
     public function initialize(): void
     {
         $this->addTwigNamespace('boltforms');
-
-//        $this->addListener('boltforms.post_submit', [new EventListener\Mailer(), 'handleEvent']);
     }
 
     public function initializeCLI(): void
     {
         $this->initialize();
+    }
+
+    public function dump($var, ...$moreVars): void
+    {
+        if (! $this->getService('kernel')->isDebug() || ! $this->getConfig()->get('debug')['enabled']) {
+            return;
+        }
+
+        dump($var, ...$moreVars);
     }
 }

@@ -61,6 +61,7 @@ class FormRuntime implements RuntimeExtensionInterface
     public function run(string $formName = '')
     {
         $config = $this->getConfig();
+        $extension = $this->registry->getExtension(Extension::class);
 
         if (! $config->has($formName)) {
             return $this->notifications->warning(
@@ -74,13 +75,14 @@ class FormRuntime implements RuntimeExtensionInterface
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted()) {
-            $event = new PostSubmitEvent($form, $config, $formName, $this->request);
+            $event = new PostSubmitEvent($form, $config, $formName, $this->request, $this->registry);
             $this->dispatcher->dispatch($event, PostSubmitEvent::NAME);
-            dump(sprintf('Form "%s" has been submitted', $formName));
+
+            $extension->dump(sprintf('Form "%s" has been submitted', $formName));
         }
 
-        dump($formConfig);
-        dump($form);
+        $extension->dump($formConfig);
+        $extension->dump($form);
 
         return $this->twig->render('@boltforms/form.html.twig', [
             'formconfig' => $formConfig,
