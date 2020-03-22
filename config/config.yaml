@@ -30,10 +30,10 @@ csrf: true
 # inside your theme, you would use similar to:
 #
 templates:
-    form: @boltforms/form.twig
-    email: @boltforms/email.twig
-    subject: @boltforms/subject.twig
-    files: @boltforms/file_browser.twig
+    form: '@boltforms/form.html.twig'
+    email: '@boltforms/email.html.twig'
+    subject: '@boltforms/subject.html.twig'
+    files: '@boltforms/file_browser.twig'
 
 ## reCAPTCHa set up
 #
@@ -90,20 +90,18 @@ templates:
 #
 # Contact Form
 contact:
-    submission:
-        ajax: false                   # Use AJAX for form submission and handling
     notification:
         enabled: true
         debug: false
         debug_address: name@example.com # Email address used when debug mode is enabled
         debug_smtp: true
         subject: Your message was submitted
-        from_name: name                 # Email addresses and names can be either the
-        from_email: email               # name of a field below or valid text.
-        replyto_email: email            #
-        replyto_name: name              # NOTE: Email addresses must be valid
-        to_name: My Site                #
-        to_email: noreply@example.com   #
+        replyto_name: '{NAME}'                 # Email addresses and names can be either the
+        replyto_email: '{EMAIL}'                 # name of a field below or valid text.
+        to_name: 'WebsiteName'     
+        to_email: 'youremail@example.org'            #
+        from_name: 'WebsiteName'                #
+        from_email: 'youremail@example.org'   #
     feedback:
         success: Message submission successful
         error: There are errors in the form, please fix before trying to resubmit
