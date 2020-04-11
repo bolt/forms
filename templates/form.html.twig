@@ -19,6 +19,7 @@
 {% endif %}
 
 {% if not valid %}
+    {% include '@boltforms/honeypotstyle.html.twig' with {'honeypotname': honeypotname} %}
     {{ form(form) }}
 {% endif %}
 

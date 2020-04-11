@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 use Symfony\Component\Form\FormFactoryInterface;
+use Tightenco\Collect\Support\Collection;
 
 class FormBuilder
 {
@@ -21,7 +22,7 @@ class FormBuilder
         $this->formFactory = $formFactory;
     }
 
-    public function build(string $formName, array $formConfig): Form
+    public function build(string $formName, Collection $config): Form
     {
         /** @var SymfonyFormBuilder $formBuilder */
         $formBuilder = $this->formFactory->createNamedBuilder($formName, FormType::class, [], [
@@ -30,9 +31,11 @@ class FormBuilder
             ],
         ]);
 
-        foreach ($formConfig['fields'] as $name => $field) {
+        foreach ($config->get($formName)['fields'] as $name => $field) {
             $this->addField($formBuilder, $name, $field);
         }
+
+        $this->addHoneypot($formName, $formBuilder, $config);
 
         return $formBuilder->getForm();
     }
@@ -43,5 +46,13 @@ class FormBuilder
         $options = FieldOptions::get($name, $field);
 
         $formBuilder->add($name, $type, $options);
+    }
+
+    private function addHoneypot(string $formName, SymfonyFormBuilder $formBuilder, Collection $config): void
+    {
+        if ($config->get('honeypot', false)) {
+            $honeypot = new Honeypot($formName, $formBuilder);
+            $honeypot->addField();
+        }
     }
 }

@@ -35,6 +35,11 @@ class Logger implements EventSubscriberInterface
 
     public function log(): void
     {
+        // Don't log anything, if the form isn't valid
+        if (! $this->event->getForm()->isValid()) {
+            return;
+        }
+
         $data = $this->event->getForm()->getData();
 
         $data['formname'] = $this->event->getFormName();
@@ -47,7 +52,7 @@ class Logger implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'boltforms.post_submit' => ['handleEvent', 100],
+            'boltforms.post_submit' => ['handleEvent', 10],
         ];
     }
 }

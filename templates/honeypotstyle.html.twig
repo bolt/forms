@@ -1,0 +1,17 @@
+{% if honeypotname %}
+<script>
+    var getClosest = function (elem, selector) {
+        for ( ; elem && elem !== document; elem = elem.parentNode ) {
+            if ( elem.matches( selector ) ) return elem;
+        }
+        return null;
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var el = getClosest(document.querySelector("#{{ honeypotname }}"), 'div');
+        el.style.position = 'absolute';
+        el.style.top = '3px';
+        el.style.left = '-600px';
+    });
+</script>
+{% endif %}

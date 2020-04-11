@@ -1,6 +1,6 @@
 {% block submission_summary %}
     <ul>
-    {%- for fieldname, values in data %}
+    {%- for fieldname, values in data|filter((values, fieldname) => attribute(config.fields, fieldname) is defined) %}
         {%- set field = attribute(config.fields, fieldname) %}
         {%- set label = field.options.label|default(fieldname) %}
 

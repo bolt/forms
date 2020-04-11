@@ -27,6 +27,8 @@ class PostSubmitEvent extends Event
     /** @var ExtensionRegistry */
     private $registry;
 
+    private $spam = false;
+
     public function __construct(Form $form, Collection $config, string $formName, Request $request, ExtensionRegistry $registry)
     {
         $this->form = $form;
@@ -69,5 +71,15 @@ class PostSubmitEvent extends Event
             'path' => $this->request->getRequestUri(),
             'url' => $this->request->getUri(),
         ];
+    }
+
+    public function markAsSpam($spam): void
+    {
+        $this->spam = $spam;
+    }
+
+    public function isSpam(): bool
+    {
+        return $this->spam;
     }
 }

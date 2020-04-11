@@ -9,11 +9,13 @@ debug:
     enabled: true
     address: noreply@example.com
 
-## CSRF protection
+## Various SPAM protection measures
 #
 # Enable CSRF protection for forms. You should leave this set to 'true', unless
 # you know what you're doing.
 csrf: true
+honeypot: true
+spam-action: mark-as-spam # Either 'block', 'none' or 'mark-as-spam'
 
 # Global templates used for rendering forms and emails.
 #

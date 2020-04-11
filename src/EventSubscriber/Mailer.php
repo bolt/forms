@@ -49,6 +49,11 @@ class Mailer implements EventSubscriberInterface
     {
         $debug = (bool) $this->config->get('debug')['enabled'];
 
+        // Don't send mails, if the form isn't valid
+        if (! $this->event->getForm()->isValid()) {
+            return;
+        }
+
         $email = (new TemplatedEmail())
             ->from($this->getFrom())
             ->to($this->getTo())
@@ -98,6 +103,10 @@ class Mailer implements EventSubscriberInterface
     {
         $subject = $this->notification->get('subject', 'Untitled email');
         $subject = Str::ensureStartsWith($subject, '[Boltforms] ');
+
+        if ($this->event->isSpam()) {
+            $subject = Str::ensureStartsWith($subject, '[SPAM] ');
+        }
 
         return $this->parsePartial($subject);
     }
@@ -160,7 +169,7 @@ class Mailer implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'boltforms.post_submit' => 'handleEvent',
+            'boltforms.post_submit' => ['handleEvent', 0],
         ];
     }
 }

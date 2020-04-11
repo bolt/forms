@@ -70,8 +70,8 @@ class FormRuntime implements RuntimeExtensionInterface
             );
         }
 
-        $formConfig = $config->get($formName);
-        $form = $this->builder->build($formName, $formConfig);
+        $formConfig = collect($config->get($formName));
+        $form = $this->builder->build($formName, $config);
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted()) {
@@ -84,9 +84,17 @@ class FormRuntime implements RuntimeExtensionInterface
         $extension->dump($formConfig);
         $extension->dump($form);
 
+        if ($config->get('honeypot')) {
+            $honeypot = new Honeypot($formName);
+            $honeypotName = $honeypot->generateFieldName(true);
+        } else {
+            $honeypotName = false;
+        }
+
         return $this->twig->render('@boltforms/form.html.twig', [
             'formconfig' => $formConfig,
             'debug' => $config->get('debug'),
+            'honeypotname' => $honeypotName,
             'form' => $form->createView(),
             'submitted' => $form->isSubmitted(),
             'valid' => $form->isSubmitted() && $form->isValid(),

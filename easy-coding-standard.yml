@@ -86,6 +86,7 @@ services:
 parameters:
     cache_directory: var/cache/ecs
     skip:
+        PhpCsFixer\Fixer\Alias\RandomApiMigrationFixer: ~
         PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer: ~
         PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer: ~
         PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer: ~
