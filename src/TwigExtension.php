@@ -20,6 +20,7 @@ class TwigExtension extends AbstractExtension
 
         return [
             new TwigFunction('boltform', [FormRuntime::class, 'run'], $safe),
+            new TwigFunction('boltforms', [FormRuntime::class, 'run'], $safe),
         ];
     }
 }
