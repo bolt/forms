@@ -71,7 +71,8 @@ class FormRuntime implements RuntimeExtensionInterface
         }
 
         $formConfig = collect($config->get($formName));
-        $form = $this->builder->build($formName, $config);
+        $form = $this->builder->build($formName, $config, $this->dispatcher);
+
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted()) {
