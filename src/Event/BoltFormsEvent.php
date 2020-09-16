@@ -6,6 +6,7 @@ namespace Bolt\BoltForms\Event;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * External event interface for BoltForms
@@ -45,7 +46,7 @@ class BoltFormsEvent extends FormEvent
      * @param FormEvent $event
      * @param string    $formsEventName
      */
-    public function __construct(FormEvent $event, $formsEventName)
+    public function __construct(FormEvent $event, string $formsEventName)
     {
         parent::__construct($event->getForm(), $event->getData());
 
@@ -53,17 +54,17 @@ class BoltFormsEvent extends FormEvent
         $this->formsEventName = $formsEventName;
     }
 
-    public function getEvent()
+    public function getEvent(): FormEvent
     {
         return $this->event;
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    public function setData($data)
+    public function setData($data): void
     {
         if ($this->formsEventName === FormEvents::PRE_SUBMIT) {
             $this->event->setData($data);
@@ -72,7 +73,7 @@ class BoltFormsEvent extends FormEvent
         }
     }
 
-    public function getForm()
+    public function getForm(): FormInterface
     {
         return $this->form;
     }

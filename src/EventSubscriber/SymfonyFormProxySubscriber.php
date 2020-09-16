@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\BoltFormsEvent;
@@ -35,6 +37,7 @@ use Symfony\Component\Form\FormEvents;
  */
 class SymfonyFormProxySubscriber implements EventSubscriberInterface
 {
+    /** @var EventDispatcher */
     private $boltFormsDispatcher;
 
     /**
@@ -69,7 +72,7 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
      * @param string          $eventName
      * @param EventDispatcher $dispatcher
      */
-    public function preSetData(FormEvent $event, $eventName, $dispatcher)
+    public function preSetData(FormEvent $event, string $eventName, EventDispatcher $dispatcher): void
     {
         $this->dispatch(BoltFormsEvents::PRE_SET_DATA, $event, $eventName, $dispatcher);
     }
@@ -81,7 +84,7 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
      * @param string          $eventName
      * @param EventDispatcher $dispatcher
      */
-    public function postSetData(FormEvent $event, $eventName, $dispatcher)
+    public function postSetData(FormEvent $event, string $eventName, EventDispatcher $dispatcher): void
     {
         $this->dispatch(BoltFormsEvents::POST_SET_DATA, $event, $eventName, $dispatcher);
     }
@@ -99,7 +102,7 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
      * @param string          $eventName
      * @param EventDispatcher $dispatcher
      */
-    public function preSubmit(FormEvent $event, $eventName, $dispatcher)
+    public function preSubmit(FormEvent $event, string $eventName, EventDispatcher $dispatcher): void
     {
         $this->dispatch(BoltFormsEvents::PRE_SUBMIT, $event, $eventName, $dispatcher);
     }
@@ -111,7 +114,7 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
      * @param string          $eventName
      * @param EventDispatcher $dispatcher
      */
-    public function submit(FormEvent $event, $eventName, $dispatcher)
+    public function submit(FormEvent $event, string $eventName, EventDispatcher $dispatcher): void
     {
         $this->dispatch(BoltFormsEvents::SUBMIT, $event, $eventName, $dispatcher);
     }
@@ -123,7 +126,7 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
      * @param string          $eventName
      * @param EventDispatcher $dispatcher
      */
-    public function postSubmit(FormEvent $event, $eventName, $dispatcher)
+    public function postSubmit(FormEvent $event, string $eventName, EventDispatcher $dispatcher): void
     {
         $this->dispatch(BoltFormsEvents::POST_SUBMIT, $event, $eventName, $dispatcher);
     }
@@ -136,7 +139,7 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
      * @param string          $formsEventName
      * @param EventDispatcher $dispatcher
      */
-    protected function dispatch($eventName, FormEvent $event, $formsEventName, EventDispatcher $dispatcher)
+    protected function dispatch(string $eventName, FormEvent $event, string $formsEventName, EventDispatcher $dispatcher)
     {
         $event = new BoltFormsEvent($event, $eventName);
         $this->boltFormsDispatcher->dispatch($event, $eventName);
