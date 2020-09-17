@@ -61,7 +61,6 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
             FormEvents::POST_SET_DATA => 'postSetData',
             FormEvents::PRE_SUBMIT    => 'preSubmit',
             FormEvents::SUBMIT        => 'submit',
-            FormEvents::POST_SUBMIT   => 'postSubmit',
         ];
     }
 
@@ -92,7 +91,7 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
     /**
      * Form pre submission event
      *
-     * Event triggered on FormEvents::SUBMIT
+     * Event triggered on FormEvents::PRE_SUBMIT
      *
      * To modify data on the fly, this is the point to do it using:
      *  $data = $event->getData();
@@ -117,18 +116,6 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
     public function submit(FormEvent $event, string $eventName, EventDispatcher $dispatcher): void
     {
         $this->dispatch(BoltFormsEvents::SUBMIT, $event, $eventName, $dispatcher);
-    }
-
-    /**
-     * Event triggered on FormEvents::POST_SUBMIT
-     *
-     * @param FormEvent       $event
-     * @param string          $eventName
-     * @param EventDispatcher $dispatcher
-     */
-    public function postSubmit(FormEvent $event, string $eventName, EventDispatcher $dispatcher): void
-    {
-        $this->dispatch(BoltFormsEvents::POST_SUBMIT, $event, $eventName, $dispatcher);
     }
 
     /**
