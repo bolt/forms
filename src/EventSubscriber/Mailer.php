@@ -102,7 +102,7 @@ class Mailer implements EventSubscriberInterface
     private function getSubject(): string
     {
         $subject = $this->notification->get('subject', 'Untitled email');
-        $subject = Str::ensureStartsWith($subject, '[Boltforms] ');
+        $subject = Str::ensureStartsWith($subject, $this->notification->get('subject_prefix', '[Boltforms] ') . ' ');
 
         if ($this->event->isSpam()) {
             $subject = Str::ensureStartsWith($subject, '[SPAM] ');

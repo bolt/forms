@@ -98,6 +98,7 @@ contact:
         debug_address: name@example.com # Email address used when debug mode is enabled
         debug_smtp: true
         subject: Your message was submitted
+        subject_prefix: '[Boltforms]'
         replyto_name: '{NAME}'                 # Email addresses and names can be either the
         replyto_email: '{EMAIL}'                 # name of a field below or valid text.
         to_name: 'WebsiteName'     
