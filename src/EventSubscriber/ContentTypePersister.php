@@ -54,7 +54,7 @@ class ContentTypePersister implements EventSubscriberInterface
 
         $content = new Content();
         $this->setContentData($content, $config);
-        $this->setContentFields($content, $form, $config);
+        $this->setContentFields($content, $form, $event, $config);
         $this->saveContent($content);
     }
 
@@ -71,11 +71,16 @@ class ContentTypePersister implements EventSubscriberInterface
         }
     }
 
-    private function setContentFields(Content $content, Form $form, Collection $config): void
+    private function setContentFields(Content $content, Form $form, PostSubmitEvent $event, Collection $config): void
     {
         $mapping = collect($config->get('field_map'));
 
-        foreach ($form->getData() as $field => $value) {
+        $data = array_merge(
+            $event->getMeta(),
+            $form->getData(),
+        );
+
+        foreach ($data as $field => $value) {
             $name = $mapping->get($field, $field);
 
             if ($name !== null) {
