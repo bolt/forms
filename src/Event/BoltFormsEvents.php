@@ -32,10 +32,10 @@ final class BoltFormsEvents
     /*
      * Symfony Forms events
      */
-    const PRE_SUBMIT    = 'boltforms.pre_submit';
-    const SUBMIT        = 'boltforms.submit';
-    const PRE_SET_DATA  = 'boltforms.pre_set_data';
-    const POST_SET_DATA = 'boltforms.post_set_data';
+    public const PRE_SUBMIT = 'boltforms.pre_submit';
+    public const SUBMIT = 'boltforms.submit';
+    public const PRE_SET_DATA = 'boltforms.pre_set_data';
+    public const POST_SET_DATA = 'boltforms.post_set_data';
 
     private function __construct()
     {
