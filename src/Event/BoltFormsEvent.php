@@ -36,16 +36,12 @@ class BoltFormsEvent extends FormEvent
     /** @var \Symfony\Component\Form\FormEvent */
     protected $event;
     /** @var array */
-    protected $data;
+    protected $data = [];
     /** @var \Symfony\Component\Form\FormInterface */
     protected $form;
     /** @var string */
     protected $formsEventName;
 
-    /**
-     * @param FormEvent $event
-     * @param string    $formsEventName
-     */
     public function __construct(FormEvent $event, string $formsEventName)
     {
         parent::__construct($event->getForm(), $event->getData());
@@ -69,7 +65,7 @@ class BoltFormsEvent extends FormEvent
         if ($this->formsEventName === FormEvents::PRE_SUBMIT) {
             $this->event->setData($data);
         } else {
-            throw new \RuntimeException(__CLASS__ . '::' . __FUNCTION__ . ' can only be called in BoltFormsEvents::PRE_SUBMIT');
+            throw new \RuntimeException(self::class . '::' . __FUNCTION__ . ' can only be called in BoltFormsEvents::PRE_SUBMIT');
         }
     }
 

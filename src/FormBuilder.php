@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms;
 
+use Bolt\BoltForms\EventSubscriber\SymfonyFormProxySubscriber;
 use Bolt\BoltForms\Factory\FieldOptions;
 use Bolt\BoltForms\Factory\FieldType;
-use Bolt\BoltForms\EventSubscriber\SymfonyFormProxySubscriber;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 use Symfony\Component\Form\FormFactoryInterface;
-use Tightenco\Collect\Support\Collection;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Tightenco\Collect\Support\Collection;
 
 class FormBuilder
 {

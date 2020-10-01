@@ -34,7 +34,7 @@ class FieldType
                 break;
             case 'checkbox':
                 $type = CheckboxType::class;
-                break;                
+                break;
             case 'text':
             default:
                 $type = TextType::class;
