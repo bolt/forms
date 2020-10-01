@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
 use Tightenco\Collect\Support\Collection;
 
-class ContentTypePersister implements EventSubscriberInterface
+class ContentTypePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {
     /** @var Config */
     private $boltConfig;
@@ -32,18 +32,10 @@ class ContentTypePersister implements EventSubscriberInterface
         $this->em = $em;
     }
 
-    public function handleSaveToContenttype(PostSubmitEvent $event): void
+    public function save(PostSubmitEvent $event, Form $form, Collection $config): void
     {
-        $form = $event->getForm();
+        $config = collect($config->get('contenttype', []));
 
-        // Don't save anything if the form isn't valid
-        if (! $form->isValid()) {
-            return;
-        }
-
-        $config = collect(collect($event->getFormConfig()->get('database', []))->get('contenttype', false));
-
-        // If contenttype is not configured, bail out.
         if (! $config) {
             return;
         }
@@ -77,7 +69,7 @@ class ContentTypePersister implements EventSubscriberInterface
 
         $data = array_merge(
             $event->getMeta(),
-            $form->getData(),
+            $form->getData()
         );
 
         foreach ($data as $field => $value) {
@@ -93,12 +85,5 @@ class ContentTypePersister implements EventSubscriberInterface
     {
         $this->em->persist($content);
         $this->em->flush();
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [
-            'boltforms.post_submit' => ['handleSaveToContenttype', 10],
-        ];
     }
 }
