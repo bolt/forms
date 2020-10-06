@@ -58,16 +58,16 @@ class FormRuntime implements RuntimeExtensionInterface
         return $extension->getConfig();
     }
 
-    public function run(string $formName = '')
+    public function run(string $formName = '', bool $warn = true)
     {
         $config = $this->getConfig();
         $extension = $this->registry->getExtension(Extension::class);
 
         if (! $config->has($formName)) {
-            return $this->notifications->warning(
+            return $warn ? $this->notifications->warning(
                 '[Boltforms] Incorrect usage of form',
                 'The form "' . $formName . '" is not defined. '
-            );
+            ) : '';
         }
 
         $formConfig = collect($config->get($formName));
