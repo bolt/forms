@@ -56,6 +56,11 @@ For example:
 
 ```yaml
 quotations:
+    templates:                      # Override the global Twig templates if you want
+    #        form: @theme/form.twig
+    #        email: @theme/email.twig
+    #        subject: @theme/subject.twig
+    #        files: @theme/file_browser.twig
     feedback:
         success: Quotation request is received. We'll be in touch soon.
         error: There are errors in the form, please fix before trying to resubmit

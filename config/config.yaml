@@ -31,6 +31,8 @@ spam-action: mark-as-spam # Either 'block', 'none' or 'mark-as-spam'
 # e.g. You created your templates in the `extensions/boltforms/` directory
 # inside your theme, you would use similar to:
 #
+# You can replace twig namesapce @boltforms with @theme which will point to your active theme folder
+# The namespace is configured in config/packages/twig.yaml
 templates:
     form: '@boltforms/form.html.twig'
     email: '@boltforms/email.html.twig'
