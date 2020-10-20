@@ -65,7 +65,7 @@ class Mailer implements EventSubscriberInterface
     {
         $meta = $this->event->getMeta();
 
-        $email = (new EmailFactory())->create($this->event->getFormConfig(), $this->event->getForm(), $meta);
+        $email = (new EmailFactory())->create($this->event->getFormConfig(), $this->event->getConfig(), $this->event->getForm(), $meta);
 
         if ($this->event->isSpam()) {
             $subject = Str::ensureStartsWith($email->getSubject(), '[SPAM] ');
