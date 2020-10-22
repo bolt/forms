@@ -21,13 +21,19 @@ class EmailFactory
     /** @var Collection */
     private $notification;
 
-    public function create(Collection $config, Form $form, array $meta = []): TemplatedEmail
+    /**
+     * @param Collection $formConfig The config specific for the current form
+     * @param Collection $config     The global config defined config/extensions/bolt-boltforms.yaml
+     * @param Form       $form       The form object
+     * @param array      $meta       Metadata of the PostSubmitEvent
+     */
+    public function create(Collection $formConfig, Collection $config, Form $form, array $meta = []): TemplatedEmail
     {
         $this->config = $config;
-        $this->notification = collect($config->get('notification', []));
+        $this->notification = collect($formConfig->get('notification', []));
         $this->form = $form;
 
-        $debug = (bool) $config->get('debug')['enabled'];
+        $debug = (bool) $this->config->get('debug')['enabled'];
 
         $email = (new TemplatedEmail())
             ->from($this->getFrom())
@@ -38,7 +44,7 @@ class EmailFactory
                 'data' => $form->getData(),
                 'formname' => $form->getName(),
                 'meta' => $meta,
-                'config' => $config,
+                'config' => $formConfig,
             ]);
 
         if (self::hasCc()) {
