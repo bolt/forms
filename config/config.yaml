@@ -39,6 +39,11 @@ templates:
     subject: '@boltforms/subject.html.twig'
     files: '@boltforms/file_browser.twig'
 
+# If the default templates are used, customise the layout.
+layout:
+    form: 'form_div_layout.html.twig' # or see all options here: https://github.com/symfony/symfony/tree/5.x/src/Symfony/Bridge/Twig/Resources/views/Form
+    bootstrap: false # if true, bootstrap will automatically be included.
+
 ## reCAPTCHa set up
 #
 # NOTE: You can get your keys from https://www.google.com/recaptcha/admin
