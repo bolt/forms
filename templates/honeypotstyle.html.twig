@@ -1,4 +1,4 @@
-{% if honeypotname %}
+{% if honeypot_name %}
 <script>
     var getClosest = function (elem, selector) {
         for ( ; elem && elem !== document; elem = elem.parentNode ) {
@@ -8,7 +8,7 @@
     };
 
     document.addEventListener("DOMContentLoaded", function() {
-        var el = getClosest(document.querySelector("#{{ honeypotname }}"), 'div');
+        var el = getClosest(document.querySelector("#{{ honeypot_name }}"), 'div');
         el.style.position = 'absolute';
         el.style.top = '3px';
         el.style.left = '-6600px';

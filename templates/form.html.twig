@@ -1,8 +1,8 @@
 {# this tag only applies to the forms defined in this template #}
-{% set layout = config.layout.form|default('form_div_layout.html.twig') %}
+{% set layout = boltforms_config.layout.form|default('form_div_layout.html.twig') %}
 {% form_theme form layout %}
 
-{% if config.layout.bootstrap|default() %}
+{% if boltforms_config.layout.bootstrap|default() %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 {% endif %}
 
@@ -23,7 +23,7 @@
 {% endif %}
 
 {% if not valid %}
-    {% include '@boltforms/honeypotstyle.html.twig' with {'honeypotname': honeypotname} %}
+    {% include '@boltforms/honeypotstyle.html.twig' with {'honeypot_name': honeypot_name} %}
     {{ form(form) }}
 {% endif %}
 

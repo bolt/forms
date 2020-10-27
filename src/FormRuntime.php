@@ -95,13 +95,16 @@ class FormRuntime implements RuntimeExtensionInterface
         $template = $config->get('templates')['form'];
 
         return $this->twig->render($template, [
-            'formconfig' => $formConfig,
+            'boltforms_config' => $config,
+            'form_config' => $formConfig,
             'debug' => $config->get('debug'),
-            'honeypotname' => $honeypotName,
+            'honeypot_name' => $honeypotName,
             'form' => $form->createView(),
             'submitted' => $form->isSubmitted(),
             'valid' => $form->isSubmitted() && $form->isValid(),
             'data' => $form->getData(),
+            'formconfig' => $formConfig, // Deprecated
+            'honeypotname' => $honeypotName, // Deprecated
         ]);
     }
 }
