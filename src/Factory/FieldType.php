@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 
 class FieldType
 {
@@ -34,6 +37,15 @@ class FieldType
                 break;
             case 'checkbox':
                 $type = CheckboxType::class;
+                break;
+            case 'date':
+                $type = DateType::class;
+                break;
+            case 'dateinterval':
+                $type = DateIntervalType::class;
+                break;
+            case 'datetime':
+                $type = DateTimeType::class;
                 break;
             case 'text':
             default:
