@@ -35,17 +35,17 @@ class FormBuilder
         $formBuilder->addEventSubscriber(new SymfonyFormProxySubscriber($eventDispatcher));
 
         foreach ($config->get($formName)['fields'] as $name => $field) {
-            $this->addField($formBuilder, $name, $field);
+            $this->addField($formBuilder, $name, $field, $config);
         }
 
         $this->addHoneypot($formName, $formBuilder, $config);
         return $formBuilder->getForm();
     }
 
-    private function addField(SymfonyFormBuilder $formBuilder, string $name, array $field): void
+    private function addField(SymfonyFormBuilder $formBuilder, string $name, array $field, Collection $config): void
     {
         $type = FieldType::get($field);
-        $options = FieldOptions::get($name, $field);
+        $options = FieldOptions::get($name, $field, $config);
 
         $formBuilder->add($name, $type, $options);
     }

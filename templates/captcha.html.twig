@@ -1,0 +1,8 @@
+{% block captcha_label %}
+{% endblock %}
+
+{% block captcha_widget %}
+    {% if captcha_type == 'hcaptcha' %}
+        <div class="h-captcha" data-sitekey="{{ hcaptcha_public_key }}"></div>
+    {% endif %}
+{% endblock %}

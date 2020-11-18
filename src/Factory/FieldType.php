@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Bolt\BoltForms\Form\CaptchaType;
 
 class FieldType
 {
@@ -46,6 +47,9 @@ class FieldType
                 break;
             case 'datetime':
                 $type = DateTimeType::class;
+                break;
+            case 'captcha':
+                $type = CaptchaType::class;
                 break;
             case 'text':
             default:
