@@ -6,6 +6,7 @@ namespace Bolt\BoltForms\Factory;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -46,6 +47,9 @@ class FieldType
                 break;
             case 'datetime':
                 $type = DateTimeType::class;
+                break;
+            case 'country':
+                $type = CountryType::class;
                 break;
             case 'text':
             default:
