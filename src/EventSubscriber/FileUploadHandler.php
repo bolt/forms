@@ -83,7 +83,7 @@ class FileUploadHandler implements EventSubscriberInterface
             Handler::OPTION_OVERWRITE => false,
         ]);
 
-        $uploadHandler->setPrefix(mb_substr(md5(time()), 0, 8) . '_' . $filename);
+        $uploadHandler->setPrefix(mb_substr(md5((string) time()), 0, 8) . '_' . $filename);
 
         $uploadHandler->setSanitizerCallback(function ($name) {
             return $this->sanitiseFilename($name);
