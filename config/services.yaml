@@ -1,0 +1,4 @@
+services:
+  Bolt\BoltForms\EventSubscriber\FileUploadHandler:
+    arguments:
+      $projectDir: '%kernel.project_dir%'
