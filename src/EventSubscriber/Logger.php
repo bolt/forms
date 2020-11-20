@@ -46,9 +46,16 @@ class Logger implements EventSubscriberInterface
         // We cannot serialize Uploaded file. See https://github.com/symfony/symfony/issues/19572.
         // So instead, let's get the filename. ¯\_(ツ)_/¯
         // todo: Can we fix this?
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             if ($value instanceof UploadedFile) {
                 $data[$key] = $value->getClientOriginalName();
+            } elseif (is_iterable($value)) {
+                // Multiple files
+                foreach ($value as $k => $v) {
+                    if ($v instanceof UploadedFile) {
+                        $data[$key][$k] = $v->getClientOriginalName();
+                    }
+                }
             }
         }
 

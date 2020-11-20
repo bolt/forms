@@ -67,7 +67,7 @@ class EmailFactory
         }
 
         /** @var File $attachment */
-        foreach($attachments as $attachment) {
+        foreach ($attachments as $attachment) {
             $email->attachFromPath($attachment);
         }
 

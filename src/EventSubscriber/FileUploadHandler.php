@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
@@ -28,33 +30,40 @@ class FileUploadHandler implements EventSubscriberInterface
         $this->projectDir = $projectDir;
     }
 
-    public function handleEvent(PostSubmitEvent  $event): void
+    public function handleEvent(PostSubmitEvent $event): void
     {
         $form = $event->getForm();
         $formConfig = $event->getFormConfig();
 
         $fields = $form->all();
-        foreach($fields as $field) {
-            $file = $field->getData();
-            if($file instanceof UploadedFile) {
-                $fieldConfig = $formConfig->get('fields')[$field->getName()];
-
-                $filename = $this->getFilename($field->getName(), $file, $form, $formConfig);
-                $path = $fieldConfig['directory'] ?? '/uploads/';
-                Str::ensureStartsWith($path, DIRECTORY_SEPARATOR);
-                $files = $this->uploadFiles($filename, $file, $path);
-
-                if (isset($fieldConfig['attach']) && $fieldConfig['attach']) {
-                    $event->addAttachments($files);
-                }
+        foreach ($fields as $field) {
+            $fieldConfig = $formConfig->get('fields')[$field->getName()] ?? null;
+            if ($fieldConfig && $fieldConfig['type'] === 'file') {
+                $this->processFileField($field, collect($fieldConfig), $event);
             }
         }
     }
 
-    private function getFilename(string $fieldname, UploadedFile $file, Form $form, Collection $formConfig): string
+    private function processFileField(Form $field, Collection $fieldConfig, PostSubmitEvent $event): void
+    {
+        $file = $field->getData();
+        $form = $event->getForm();
+        $formConfig = $event->getFormConfig();
+
+        $filename = $this->getFilename($field->getName(), $form, $formConfig);
+        $path = $fieldConfig['directory'] ?? '/uploads/';
+        Str::ensureStartsWith($path, DIRECTORY_SEPARATOR);
+        $files = $this->uploadFiles($filename, $file, $path);
+
+        if (isset($fieldConfig['attach']) && $fieldConfig['attach']) {
+            $event->addAttachments($files);
+        }
+    }
+
+    private function getFilename(string $fieldname, Form $form, Collection $formConfig): string
     {
         $filenameFormat = $formConfig->get('fields')[$fieldname]['file_format'] ?? 'Uploaded file'.uniqid();
-        $filename = $this->helper->get($filenameFormat, $form, ['filename' => $file->getClientOriginalName()]);
+        $filename = $this->helper->get($filenameFormat, $form);
 
         if (! $filename) {
             $filename = uniqid();
@@ -63,7 +72,10 @@ class FileUploadHandler implements EventSubscriberInterface
         return $filename;
     }
 
-    private function uploadFiles(string $filename, UploadedFile $file, string $path = ''): array
+    /**
+     * @param UploadedFile|array $file
+     */
+    private function uploadFiles(string $filename, $file, string $path = ''): array
     {
         $uploadPath = $this->projectDir.$path;
         $uploadHandler = new Handler($uploadPath, [
@@ -71,7 +83,7 @@ class FileUploadHandler implements EventSubscriberInterface
             Handler::OPTION_OVERWRITE => false,
         ]);
 
-        $uploadHandler->setPrefix(substr(md5(time()), 0, 8) . '_' . $filename);
+        $uploadHandler->setPrefix(mb_substr(md5(time()), 0, 8) . '_' . $filename);
 
         $uploadHandler->setSanitizerCallback(function ($name) {
             return $this->sanitiseFilename($name);
@@ -83,7 +95,14 @@ class FileUploadHandler implements EventSubscriberInterface
         $result = [];
         if ($processed->isValid()) {
             $processed->confirm();
-            $result[] = $uploadPath . $processed->__get('name');
+
+            if (is_iterable($processed)) {
+                foreach ($processed as $file) {
+                    $result[] = $uploadPath . $file->__get('name');
+                }
+            } else {
+                $result[] = $uploadPath . $processed->__get('name');
+            }
         }
 
         // Very ugly. But it works when later someone uses Request::createFromGlobals();
