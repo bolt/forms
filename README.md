@@ -139,7 +139,7 @@ configuration:
 ```yaml
     database:
         table:
-            name: cusotom_quotations # save all form submissions to the custom_quotations table in the database
+            name: custom_quotations # save all form submissions to the custom_quotations table in the database
             field_map: # optional
                 timestamp: ~ # do not save the timestamp
                 url: ~ # do not save the url
