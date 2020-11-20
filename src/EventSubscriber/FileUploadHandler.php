@@ -24,7 +24,7 @@ class FileUploadHandler implements EventSubscriberInterface
     /** @var FormHelper */
     private $helper;
 
-    public function __construct(string $projectDir, FormHelper $helper)
+    public function __construct(string $projectDir = '', FormHelper $helper)
     {
         $this->helper = $helper;
         $this->projectDir = $projectDir;
