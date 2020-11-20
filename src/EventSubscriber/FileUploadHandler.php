@@ -106,7 +106,7 @@ class FileUploadHandler implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'boltforms.post_submit' => ['handleEvent', 30],
+            'boltforms.post_submit' => ['handleEvent', 40],
         ];
     }
 }
