@@ -35,6 +35,9 @@ class EmailFactory
 
         $debug = (bool) $this->config->get('debug')['enabled'];
 
+        $attachments = $meta['attachments'] ?? [];
+        unset($meta['attachments']);
+
         $email = (new TemplatedEmail())
             ->from($this->getFrom())
             ->to($this->getTo())
@@ -61,6 +64,11 @@ class EmailFactory
 
         if ($this->hasReplyTo()) {
             $email->replyTo($this->getReplyTo());
+        }
+
+        /** @var File $attachment */
+        foreach($attachments as $attachment) {
+            $email->attachFromPath($attachment);
         }
 
         // Override the "to"

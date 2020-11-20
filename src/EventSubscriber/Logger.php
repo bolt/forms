@@ -7,6 +7,7 @@ namespace Bolt\BoltForms\EventSubscriber;
 use Bolt\BoltForms\Event\PostSubmitEvent;
 use Bolt\Log\LoggerTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Tightenco\Collect\Support\Collection;
 
 class Logger implements EventSubscriberInterface
@@ -41,6 +42,15 @@ class Logger implements EventSubscriberInterface
         }
 
         $data = $this->event->getForm()->getData();
+
+        // We cannot serialize Uploaded file. See https://github.com/symfony/symfony/issues/19572.
+        // So instead, let's get the filename. ¯\_(ツ)_/¯
+        // todo: Can we fix this?
+        foreach($data as $key => $value) {
+            if ($value instanceof UploadedFile) {
+                $data[$key] = $value->getClientOriginalName();
+            }
+        }
 
         $data['formname'] = $this->event->getFormName();
 

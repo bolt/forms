@@ -78,7 +78,7 @@ class Mailer implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'boltforms.post_submit' => ['handleEvent', 20],
+            'boltforms.post_submit' => ['handleEvent', 40],
         ];
     }
 }

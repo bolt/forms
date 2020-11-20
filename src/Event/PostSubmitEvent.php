@@ -29,6 +29,9 @@ class PostSubmitEvent extends Event
 
     private $spam = false;
 
+    /** @var Collection */
+    private $attachments;
+
     public function __construct(Form $form, Collection $config, string $formName, Request $request, ExtensionRegistry $registry)
     {
         $this->form = $form;
@@ -36,6 +39,7 @@ class PostSubmitEvent extends Event
         $this->formName = $formName;
         $this->request = $request;
         $this->registry = $registry;
+        $this->attachments = collect([]);
     }
 
     public function getFormName(): string
@@ -70,6 +74,7 @@ class PostSubmitEvent extends Event
             'timestamp' => Carbon::now(),
             'path' => $this->request->getRequestUri(),
             'url' => $this->request->getUri(),
+            'attachments' => $this->getAttachments(),
         ];
     }
 
@@ -81,5 +86,15 @@ class PostSubmitEvent extends Event
     public function isSpam(): bool
     {
         return $this->spam;
+    }
+
+    public function addAttachments(array $attachments): void
+    {
+        $this->attachments = $this->attachments->merge($attachments);
+    }
+
+    public function getAttachments(): array
+    {
+        return $this->attachments->toArray();
     }
 }
