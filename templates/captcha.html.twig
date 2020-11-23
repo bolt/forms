@@ -5,4 +5,6 @@
     {% if captcha_type == 'hcaptcha' %}
         <div class="h-captcha" data-sitekey="{{ hcaptcha_public_key }}"></div>
     {% endif %}
+
+    {{- form_errors(form) -}}
 {% endblock %}

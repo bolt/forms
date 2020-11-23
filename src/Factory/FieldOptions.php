@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Factory;
 
+use Bolt\BoltForms\Validator\Constraints\Hcaptcha;
 use Tightenco\Collect\Support\Collection;
 
 class FieldOptions
@@ -20,10 +21,15 @@ class FieldOptions
 
         if ($field['type'] === 'submit') {
             unset($options['constraints']);
-        } else if ($field['type'] === 'captcha') {
+        } elseif ($field['type'] === 'captcha') {
             if (isset($config['hcaptcha']['public_key'])) {
                 $options['hcaptcha_public_key'] = $config['hcaptcha']['public_key'];
             }
+
+            unset($options['constraints']);
+            $options['constraints'] = [
+                new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key'])
+            ];
         }
 
         return $options;

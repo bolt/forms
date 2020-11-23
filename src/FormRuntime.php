@@ -75,7 +75,7 @@ class FormRuntime implements RuntimeExtensionInterface
 
         $form->handleRequest($this->request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $event = new PostSubmitEvent($form, $config, $formName, $this->request, $this->registry);
             $this->dispatcher->dispatch($event, PostSubmitEvent::NAME);
 

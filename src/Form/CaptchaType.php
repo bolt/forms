@@ -18,6 +18,7 @@ class CaptchaType extends HiddenType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'compound' => false,
             'captcha_type' => '',
             'hcaptcha_public_key' => '',
         ]);
