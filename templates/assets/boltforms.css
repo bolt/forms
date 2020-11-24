@@ -5,7 +5,7 @@ form.boltforms label.required:after {
 }
 
 form.boltforms .form-group {
-    margin: 0.75em 0;
+    margin: 0.75em 0.1em;
 }
 .boltforms-feedback {
     padding: 8px 35px 8px 14px;
