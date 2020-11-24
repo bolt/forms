@@ -16,7 +16,7 @@ class FieldOptions
 
         $options['constraints'] = FieldConstraints::get($formName, $options);
 
-        if ($field['type'] === 'submit') {
+        if ($field['type'] === 'submit' || $field['type'] === 'button') {
             unset($options['constraints']);
         }
 
