@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Factory;
 
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -50,6 +51,9 @@ class FieldType
                 break;
             case 'country':
                 $type = CountryType::class;
+                break;
+            case 'button':
+                $type = ButtonType::class;
                 break;
             case 'text':
             default:
