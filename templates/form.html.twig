@@ -15,7 +15,6 @@
     <script>
         function onRecaptchaSubmitted(token) {
             var elementsWithName = document.getElementsByName('{{ form.vars.name }}');
-            console.log(elementsWithName);
             for (var i = 0; i < elementsWithName.length; i++) {
                 if (elementsWithName[i].tagName.toLowerCase() == 'form') {
                     elementsWithName[i].submit();
