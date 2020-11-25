@@ -55,7 +55,7 @@
                 <li>
                     {%- if field.type == 'file' %}
                         {{ block('file_field_value') }}
-                    {%- if field.type in ['date', 'datetime', 'dateinterval']%}
+                    {%- elseif field.type in ['date', 'datetime', 'dateinterval']%}
                         {{ block('field_date') }}
                     {%- else %}
                         {{ block('field_value') }}
