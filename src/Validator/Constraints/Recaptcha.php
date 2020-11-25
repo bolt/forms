@@ -4,10 +4,7 @@ namespace Bolt\BoltForms\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
-class Hcaptcha extends Constraint
+class Recaptcha extends Constraint
 {
     /** @var bool */
     public $debug = false;

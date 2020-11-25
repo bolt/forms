@@ -12,7 +12,9 @@ class CaptchaType extends HiddenType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['captcha_type'] = $options['captcha_type'];
+        $view->vars['captcha_invisible'] = $options['captcha_invisible'];
         $view->vars['hcaptcha_public_key'] = $options['hcaptcha_public_key'];
+        $view->vars['recaptcha_public_key'] = $options['recaptcha_public_key'];
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -20,7 +22,9 @@ class CaptchaType extends HiddenType
         $resolver->setDefaults([
             'compound' => false,
             'captcha_type' => '',
+            'captcha_invisible' => false,
             'hcaptcha_public_key' => '',
+            'recaptcha_public_key' => '',
         ]);
     }
 

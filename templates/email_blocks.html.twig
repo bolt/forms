@@ -4,16 +4,17 @@
         {%- set field = attribute(config.fields, fieldname) %}
         {%- set label = field.options.label|default(fieldname) %}
 
-        {%- if values is iterable %}
-            <li>
-                {{ block('field_label') }}
-                {{ block('value_array') }}
-            </li>
-        {%- else %}
-            {%- set value = values %}
-            <li>{{ block('field_label') }}{{ block('field_value') }}</li>
-        {%- endif %}
-
+        {% if not (field.type == 'file' and field.attach|default) %}
+            {%- if values is iterable %}
+                <li>
+                    {{ block('field_label') }}
+                    {{ block('value_array') }}
+                </li>
+            {%- else %}
+                {%- set value = values %}
+                <li>{{ block('field_label') }}{{ block('field_value') }}</li>
+            {%- endif %}
+        {% endif %}
     {%- endfor %}
     </ul>
     <ul>

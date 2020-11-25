@@ -5,9 +5,9 @@ namespace Bolt\BoltForms\Services;
 use Bolt\BoltForms\CaptchaException;
 use Symfony\Component\HttpFoundation\Request;
 
-class HcaptchaService
+class RecaptchaService
 {
-    const POST_FIELD_NAME = 'h-captcha-response';
+    const POST_FIELD_NAME = 'g-recaptcha-response';
 
     /** @var string */
     private $secretKey;
@@ -26,15 +26,14 @@ class HcaptchaService
         $validationData = [
             'secret' => $this->secretKey,
             'response' => $request->get(self::POST_FIELD_NAME),
-            'remoteip' => $request->getClientIp(),
-            'sitekey' => $this->siteKey
+            'remoteip' => $request->getClientIp()
         ];
         $this->dump($debug, $validationData);
 
         $postData = http_build_query($validationData);
         $this->dump($debug, $postData);
 
-        $ch = curl_init('https://hcaptcha.com/siteverify');
+        $ch = curl_init('https://www.google.com/recaptcha/api/siteverify');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);

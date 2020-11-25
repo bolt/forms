@@ -1,5 +1,5 @@
 {# this tag only applies to the forms defined in this template #}
-{% set layout = ['@boltforms/captcha.html.twig', boltforms_config.layout.form|default('form_div_layout.html.twig')] %}
+{% set layout = [boltforms_config.layout.form|default('form_div_layout.html.twig'), '@boltforms/captcha.html.twig'] %}
 {% form_theme form with layout %}
 
 {% if boltforms_config.layout.bootstrap|default() %}
@@ -8,6 +8,21 @@
 
 {% if boltforms_config.hcaptcha.enabled|default() %}
     <script src="https://hcaptcha.com/1/api.js" async defer></script>
+{% endif %}
+
+{% if boltforms_config.recaptcha.enabled|default() %}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onRecaptchaSubmitted(token) {
+            var elementsWithName = document.getElementsByName('{{ form.vars.name }}');
+            console.log(elementsWithName);
+            for (var i = 0; i < elementsWithName.length; i++) {
+                if (elementsWithName[i].tagName.toLowerCase() == 'form') {
+                    elementsWithName[i].submit();
+                }
+            }
+        }
+    </script>
 {% endif %}
 
 <style>

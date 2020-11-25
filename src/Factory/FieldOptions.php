@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\Factory;
 
 use Bolt\BoltForms\Validator\Constraints\Hcaptcha;
+use Bolt\BoltForms\Validator\Constraints\Recaptcha;
 use Tightenco\Collect\Support\Collection;
 
 class FieldOptions
@@ -19,17 +20,39 @@ class FieldOptions
 
         $options['constraints'] = FieldConstraints::get($formName, $options);
 
-        if ($field['type'] === 'submit') {
+        if ($field['type'] === 'submit' || $field['type'] === 'button') {
             unset($options['constraints']);
         } elseif ($field['type'] === 'captcha') {
-            if (isset($config['hcaptcha']['public_key'])) {
+            $isDebug = boolval($config->get('debug')['enabled']);
+
+            if ($config->has('hcaptcha')) {
                 $options['hcaptcha_public_key'] = $config['hcaptcha']['public_key'];
             }
 
+            if ($config->has('recaptcha')) {
+                $options['recaptcha_public_key'] = $config['recaptcha']['public_key'];
+            }
+
             unset($options['constraints']);
-            $options['constraints'] = [
-                new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key'])
-            ];
+
+            if (isset($options['captcha_type']))
+            {
+                switch ($options['captcha_type'])
+                {
+                    case 'hcaptcha':
+                        $options['constraints'] = [
+                            new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key'], $isDebug)
+                        ];
+                        break;
+
+                    case 'recaptcha_v3':
+                    case 'recaptcha_v2':
+                        $options['constraints'] = [
+                            new Recaptcha($config['recaptcha']['public_key'], $config['recaptcha']['private_key'], $isDebug)
+                        ];
+                        break;
+                }
+            }
         }
 
         return $options;

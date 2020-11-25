@@ -1,23 +1,24 @@
 <?php
 
+
 namespace Bolt\BoltForms\Validator\Constraints;
 
-use Bolt\BoltForms\Services\HcaptchaService;
+use Bolt\BoltForms\Services\RecaptchaService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class HcaptchaValidator extends ConstraintValidator
+class RecaptchaValidator extends ConstraintValidator
 {
     /** @var Request */
     private $request;
 
-    /** @var HcaptchaService */
+    /** @var RecaptchaService */
     private $service;
 
-    public function __construct(HcaptchaService $service, RequestStack $requestStack)
+    public function __construct(RecaptchaService $service, RequestStack $requestStack)
     {
         $this->service = $service;
         $this->request = $requestStack->getCurrentRequest();
@@ -25,11 +26,11 @@ class HcaptchaValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof Hcaptcha) {
-            throw new UnexpectedTypeException($constraint, Hcaptcha::class);
+        if (!$constraint instanceof Recaptcha) {
+            throw new UnexpectedTypeException($constraint, Recaptcha::class);
         }
 
-        if (empty($this->request->get(HcaptchaService::POST_FIELD_NAME)))
+        if (empty($this->request->get(RecaptchaService::POST_FIELD_NAME)))
         {
             $this->context->buildViolation($constraint->incompleteMessage)
                 ->addViolation();

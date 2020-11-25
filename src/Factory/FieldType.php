@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Factory;
 
+use Bolt\BoltForms\Form\CaptchaType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
-use Bolt\BoltForms\Form\CaptchaType;
 
 class FieldType
 {
@@ -47,6 +49,12 @@ class FieldType
                 break;
             case 'datetime':
                 $type = DateTimeType::class;
+                break;
+            case 'country':
+                $type = CountryType::class;
+                break;
+            case 'button':
+                $type = ButtonType::class;
                 break;
             case 'captcha':
                 $type = CaptchaType::class;

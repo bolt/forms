@@ -4,7 +4,14 @@
 {% block captcha_widget %}
     {% if captcha_type == 'hcaptcha' %}
         <div class="h-captcha" data-sitekey="{{ hcaptcha_public_key }}"></div>
+    {% elseif captcha_type == 'recaptcha_v3' %}
+        <!-- Hidden reCAPTCHA v3 -->
+    {% elseif captcha_type == 'recaptcha_v2' %}
+        {% if captcha_invisible  %}
+            <!-- Invisible reCAPTCHA v2 -->
+        {% else %}
+            <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}"></div>
+        {% endif %}
     {% endif %}
-
     {{- form_errors(form) -}}
 {% endblock %}
