@@ -1,12 +1,12 @@
 {% block captcha_label %}
-    {% if captcha_type != 'recaptcha_v3' and (captcha_type != 'recaptcha_v2' or not captcha_invisible) %}
+    {% if captcha_type != 'recaptcha_v3' and (captcha_type != 'recaptcha_v2' or not captcha_invisible) and label !== false %}
         {{ block('form_label') }}
     {% endif %}
 {% endblock %}
 
 {% block captcha_widget %}
     {% if captcha_type == 'hcaptcha' %}
-        <div class="h-captcha" data-sitekey="{{ hcaptcha_public_key }}"></div>
+        <div class="h-captcha" data-sitekey="{{ hcaptcha_public_key }}" data-theme="{{ hcaptcha_theme }}"></div>
     {% elseif captcha_type == 'recaptcha_v3' %}
         <!-- Hidden reCAPTCHA v3 -->
     {% elseif captcha_type == 'recaptcha_v2' %}
@@ -16,5 +16,8 @@
             <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}" data-theme="{{ recaptcha_theme }}"></div>
         {% endif %}
     {% endif %}
-    {{- form_errors(form) -}}
+    {# If we don't have a label, errors won't be rendered, so show them here instead #}
+    {% if label === false or captcha_type == 'recaptcha_v3' or (captcha_type == 'recaptcha_v2' and captcha_invisible) %}
+        {{- form_errors(form) -}}
+    {% endif %}
 {% endblock %}

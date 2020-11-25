@@ -27,6 +27,10 @@ class FieldOptions
 
             if ($config->has('hcaptcha')) {
                 $options['hcaptcha_public_key'] = $config['hcaptcha']['public_key'];
+
+                if (isset($config['hcaptcha']['theme'])) {
+                    $options['hcaptcha_theme'] = $config['hcaptcha']['theme'];
+                }
             }
 
             if ($config->has('recaptcha')) {

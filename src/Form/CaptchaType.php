@@ -14,6 +14,7 @@ class CaptchaType extends HiddenType
         $view->vars['captcha_type'] = $options['captcha_type'];
         $view->vars['captcha_invisible'] = $options['captcha_invisible'];
         $view->vars['hcaptcha_public_key'] = $options['hcaptcha_public_key'];
+        $view->vars['hcaptcha_theme'] = $options['hcaptcha_theme'];
         $view->vars['recaptcha_public_key'] = $options['recaptcha_public_key'];
         $view->vars['recaptcha_theme'] = $options['recaptcha_theme'];
     }
@@ -24,6 +25,7 @@ class CaptchaType extends HiddenType
             'compound' => false,
             'captcha_type' => '',
             'captcha_invisible' => false,
+            'hcaptcha_theme' => 'light',
             'recaptcha_theme' => 'light',
             'hcaptcha_public_key' => '',
             'recaptcha_public_key' => '',

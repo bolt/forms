@@ -66,6 +66,7 @@ layout:
 #    enabled: false
 #    public_key: ''
 #    private_key: ''
+#    theme: light|dark
 
 ## File Uploads
 #
