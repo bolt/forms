@@ -52,11 +52,20 @@ layout:
 #
 #recaptcha:
 #    enabled: false
-#    label: "Please enter the reCaptcha text to prove you're a human"
 #    public_key: ''
 #    private_key: ''
-#    error_message: "The CAPTCHA wasn't entered correctly. Please try again."
-#    theme: clean
+#    theme: light|dark
+
+## hCaptcha set up
+#
+# NOTE: You can get your keys from https://dashboard.hcaptcha.com/sites
+# * `public_key` key will be labeled "Site key" within the Site configuration
+# * `private_key` key will be labeled "Secret key" within the Settings tab
+#
+#hcaptcha:
+#    enabled: false
+#    public_key: ''
+#    private_key: ''
 
 ## File Uploads
 #
@@ -333,6 +342,25 @@ contact:
 #            options:
 #                required: false
 #                label: Picture of your pet that you want us to add to our site
+#        hcaptcha:
+#            type: captcha
+#            options:
+#                captcha_type: hcaptcha
+#        recaptcha_v3:
+#            type: captcha
+#            options:
+#                captcha_type: recaptcha_v3
+#        recaptcha_v2:
+#            type: captcha
+#            options:
+#                captcha_type: recaptcha_v2
+#                # To not show a label at all, use "label: false"
+#                label: Please complete this CAPTCHA
+#        recaptcha_v2_invisible:
+#            type: captcha
+#            options:
+#                captcha_type: recaptcha_v2
+#                captcha_invisible: true
 #        submit:
 #            type: submit
 #            options:

@@ -1,4 +1,7 @@
 {% block captcha_label %}
+    {% if captcha_type != 'recaptcha_v3' and (captcha_type != 'recaptcha_v2' or not captcha_invisible) %}
+        {{ block('form_label') }}
+    {% endif %}
 {% endblock %}
 
 {% block captcha_widget %}
@@ -10,7 +13,7 @@
         {% if captcha_invisible  %}
             <!-- Invisible reCAPTCHA v2 -->
         {% else %}
-            <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}"></div>
+            <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}" data-theme="{{ recaptcha_theme }}"></div>
         {% endif %}
     {% endif %}
     {{- form_errors(form) -}}

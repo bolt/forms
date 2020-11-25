@@ -31,14 +31,16 @@ class FieldOptions
 
             if ($config->has('recaptcha')) {
                 $options['recaptcha_public_key'] = $config['recaptcha']['public_key'];
+
+                if (isset($config['recaptcha']['theme'])) {
+                    $options['recaptcha_theme'] = $config['recaptcha']['theme'];
+                }
             }
 
             unset($options['constraints']);
 
-            if (isset($options['captcha_type']))
-            {
-                switch ($options['captcha_type'])
-                {
+            if (isset($options['captcha_type'])) {
+                switch ($options['captcha_type']) {
                     case 'hcaptcha':
                         $options['constraints'] = [
                             new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key'], $isDebug)
