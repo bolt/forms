@@ -31,7 +31,7 @@ class RecaptchaService
         $this->secretKey = $secretKey;
     }
 
-    public function validateTokenFromRequest(Request $request, $debug = false)
+    public function validateTokenFromRequest(Request $request)
     {
         $extension = $this->registry->getExtension(Extension::class);
 
