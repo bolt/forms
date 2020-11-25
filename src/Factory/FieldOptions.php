@@ -23,8 +23,6 @@ class FieldOptions
         if ($field['type'] === 'submit' || $field['type'] === 'button') {
             unset($options['constraints']);
         } elseif ($field['type'] === 'captcha') {
-            $isDebug = boolval($config->get('debug')['enabled']);
-
             if ($config->has('hcaptcha')) {
                 $options['hcaptcha_public_key'] = $config['hcaptcha']['public_key'];
 
@@ -47,14 +45,14 @@ class FieldOptions
                 switch ($options['captcha_type']) {
                     case 'hcaptcha':
                         $options['constraints'] = [
-                            new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key'], $isDebug)
+                            new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key'])
                         ];
                         break;
 
                     case 'recaptcha_v3':
                     case 'recaptcha_v2':
                         $options['constraints'] = [
-                            new Recaptcha($config['recaptcha']['public_key'], $config['recaptcha']['private_key'], $isDebug)
+                            new Recaptcha($config['recaptcha']['public_key'], $config['recaptcha']['private_key'])
                         ];
                         break;
                 }

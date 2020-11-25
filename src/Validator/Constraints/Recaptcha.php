@@ -6,9 +6,6 @@ use Symfony\Component\Validator\Constraint;
 
 class Recaptcha extends Constraint
 {
-    /** @var bool */
-    public $debug = false;
-
     /** @var string */
     public $incompleteMessage = 'Please complete the CAPTCHA challenge.';
 
@@ -21,10 +18,9 @@ class Recaptcha extends Constraint
     /** @var string */
     public $siteKey;
 
-    public function __construct($siteKey, $secretKey, $debug = false)
+    public function __construct($siteKey, $secretKey)
     {
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;
-        $this->debug = $debug;
     }
 }

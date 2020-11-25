@@ -3,17 +3,27 @@
 namespace Bolt\BoltForms\Services;
 
 use Bolt\BoltForms\CaptchaException;
+use Bolt\BoltForms\Extension;
+use Bolt\Extension\ExtensionRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
 class RecaptchaService
 {
     const POST_FIELD_NAME = 'g-recaptcha-response';
 
+    /** @var ExtensionRegistry */
+    private $registry;
+
     /** @var string */
     private $secretKey;
 
     /** @var string */
     private $siteKey;
+
+    public function __construct(ExtensionRegistry $extensionRegistry)
+    {
+        $this->registry = $extensionRegistry;
+    }
 
     public function setKeys($siteKey, $secretKey)
     {
@@ -23,15 +33,17 @@ class RecaptchaService
 
     public function validateTokenFromRequest(Request $request, $debug = false)
     {
+        $extension = $this->registry->getExtension(Extension::class);
+
         $validationData = [
             'secret' => $this->secretKey,
             'response' => $request->get(self::POST_FIELD_NAME),
             'remoteip' => $request->getClientIp()
         ];
-        $this->dump($debug, $validationData);
+        $extension->dump($validationData);
 
         $postData = http_build_query($validationData);
-        $this->dump($debug, $postData);
+        $extension->dump($postData);
 
         $ch = curl_init('https://www.google.com/recaptcha/api/siteverify');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -42,7 +54,7 @@ class RecaptchaService
         ]);
 
         $response = curl_exec($ch);
-        $this->dump($debug, $response);
+        $extension->dump($response);
 
         $jsonResponse = json_decode($response);
 
@@ -55,14 +67,6 @@ class RecaptchaService
             return true;
         } else {
             return join(',', $jsonResponse->{'error-codes'});
-        }
-    }
-
-    private function dump($isDebugMode, $valueToDump)
-    {
-        if ($isDebugMode)
-        {
-            dump($valueToDump);
         }
     }
 }

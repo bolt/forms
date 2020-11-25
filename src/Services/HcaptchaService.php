@@ -3,11 +3,16 @@
 namespace Bolt\BoltForms\Services;
 
 use Bolt\BoltForms\CaptchaException;
+use Bolt\BoltForms\Extension;
+use Bolt\Extension\ExtensionRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
 class HcaptchaService
 {
     const POST_FIELD_NAME = 'h-captcha-response';
+
+    /** @var ExtensionRegistry */
+    private $registry;
 
     /** @var string */
     private $secretKey;
@@ -15,24 +20,31 @@ class HcaptchaService
     /** @var string */
     private $siteKey;
 
+    public function __construct(ExtensionRegistry $extensionRegistry)
+    {
+        $this->registry = $extensionRegistry;
+    }
+
     public function setKeys($siteKey, $secretKey)
     {
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;
     }
 
-    public function validateTokenFromRequest(Request $request, $debug = false)
+    public function validateTokenFromRequest(Request $request)
     {
+        $extension = $this->registry->getExtension(Extension::class);
+
         $validationData = [
             'secret' => $this->secretKey,
             'response' => $request->get(self::POST_FIELD_NAME),
             'remoteip' => $request->getClientIp(),
             'sitekey' => $this->siteKey
         ];
-        $this->dump($debug, $validationData);
+        $extension->dump($validationData);
 
         $postData = http_build_query($validationData);
-        $this->dump($debug, $postData);
+        $extension->dump($postData);
 
         $ch = curl_init('https://hcaptcha.com/siteverify');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -43,7 +55,7 @@ class HcaptchaService
         ]);
 
         $response = curl_exec($ch);
-        $this->dump($debug, $response);
+        $extension->dump($response);
 
         $jsonResponse = json_decode($response);
 
@@ -56,14 +68,6 @@ class HcaptchaService
             return true;
         } else {
             return join(',', $jsonResponse->{'error-codes'});
-        }
-    }
-
-    private function dump($isDebugMode, $valueToDump)
-    {
-        if ($isDebugMode)
-        {
-            dump($valueToDump);
         }
     }
 }

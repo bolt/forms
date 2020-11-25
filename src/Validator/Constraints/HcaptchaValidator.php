@@ -38,7 +38,7 @@ class HcaptchaValidator extends ConstraintValidator
 
         $this->service->setKeys($constraint->siteKey, $constraint->secretKey);
 
-        $result = $this->service->validateTokenFromRequest($this->request, $constraint->debug);
+        $result = $this->service->validateTokenFromRequest($this->request);
 
         if ($result !== true)
         {
