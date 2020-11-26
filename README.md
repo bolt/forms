@@ -125,6 +125,7 @@ In addition to all form fields, you can also keep the following information:
 * `url` - the url where the form is submitted
 * `path` - the absolute path where the form  is submitted
 * `ip` - the ip address of the user submitting the form
+* `attachments` - an array of attached files from file fields
 
 To store that information in a ContentType, simply create a field for each option that
 you want to keep, and remove the override from the form config, e.g.
@@ -145,4 +146,5 @@ configuration:
                 url: ~ # do not save the url
                 path: ~ # do not save the path
                 ip: ~ # do not save the ip
+                attachments: ~ # do not save attached files
 ```
