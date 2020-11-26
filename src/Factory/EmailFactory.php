@@ -139,7 +139,7 @@ class EmailFactory
     {
         $templates = $this->config->get('templates', []);
 
-        if (! in_array('email', $templates, true)) {
+        if (! array_key_exists('email', $templates)) {
             return '@boltforms/email.html.twig';
         }
 
