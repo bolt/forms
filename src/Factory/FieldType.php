@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Factory;
 
+use Bolt\BoltForms\Form\CaptchaType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -54,6 +55,9 @@ class FieldType
                 break;
             case 'button':
                 $type = ButtonType::class;
+                break;
+            case 'captcha':
+                $type = CaptchaType::class;
                 break;
             case 'text':
             default:
