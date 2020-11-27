@@ -29,9 +29,13 @@
     {%- if label is not empty %}{{ label }}: {% endif %}
 {% endblock %}
 
-{% block field_value %}
-    {{- value }}
-{% endblock %}
+{% block field_value %}{% apply spaceless %}
+{% if value is object %}
+    {{ value|date() }}
+{% else %}
+    {{ value }}
+{% endif %}
+{% endapply %}{% endblock %}
 
 {% block field_date %}
     {{- value|date() }}
