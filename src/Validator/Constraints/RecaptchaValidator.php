@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Bolt\BoltForms\Validator\Constraints;
 
@@ -24,16 +25,16 @@ class RecaptchaValidator extends ConstraintValidator
         $this->request = $requestStack->getCurrentRequest();
     }
 
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof Recaptcha) {
+        if (! $constraint instanceof Recaptcha) {
             throw new UnexpectedTypeException($constraint, Recaptcha::class);
         }
 
-        if (empty($this->request->get(RecaptchaService::POST_FIELD_NAME)))
-        {
+        if (empty($this->request->get(RecaptchaService::POST_FIELD_NAME))) {
             $this->context->buildViolation($constraint->incompleteMessage)
                 ->addViolation();
+
             return;
         }
 
@@ -41,8 +42,7 @@ class RecaptchaValidator extends ConstraintValidator
 
         $result = $this->service->validateTokenFromRequest($this->request);
 
-        if ($result !== true)
-        {
+        if ($result !== true) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ error }}', $result)
                 ->addViolation();

@@ -56,7 +56,8 @@ class Mailer implements EventSubscriberInterface
             '[Boltforms] Form {formname} sent email to {recipient}',
             [
                 'formname' => $this->event->getFormName(),
-                'recipient' => (string) $email->getTo()[0]->getName(), // is this casting right?
+                // is this casting right?
+                'recipient' => (string) $email->getTo()[0]->getName(),
             ]
         );
     }

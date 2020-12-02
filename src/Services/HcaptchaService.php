@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bolt\BoltForms\Services;
 
 use Bolt\BoltForms\CaptchaException;
@@ -9,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HcaptchaService
 {
-    const POST_FIELD_NAME = 'h-captcha-response';
+    public const POST_FIELD_NAME = 'h-captcha-response';
 
     /** @var ExtensionRegistry */
     private $registry;
@@ -25,7 +27,7 @@ class HcaptchaService
         $this->registry = $extensionRegistry;
     }
 
-    public function setKeys($siteKey, $secretKey)
+    public function setKeys($siteKey, $secretKey): void
     {
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;
@@ -39,7 +41,7 @@ class HcaptchaService
             'secret' => $this->secretKey,
             'response' => $request->get(self::POST_FIELD_NAME),
             'remoteip' => $request->getClientIp(),
-            'sitekey' => $this->siteKey
+            'sitekey' => $this->siteKey,
         ];
         $extension->dump($validationData);
 
@@ -51,7 +53,7 @@ class HcaptchaService
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/x-www-form-urlencoded'
+            'Content-Type: application/x-www-form-urlencoded',
         ]);
 
         $response = curl_exec($ch);
@@ -59,15 +61,14 @@ class HcaptchaService
 
         $jsonResponse = json_decode($response);
 
-        if ($jsonResponse === false)
-        {
+        if ($jsonResponse === false) {
             throw new CaptchaException(sprintf('Unexpected response: %s', $response));
         }
 
         if ($jsonResponse->success) {
             return true;
-        } else {
-            return join(',', $jsonResponse->{'error-codes'});
         }
+
+        return implode(',', $jsonResponse->{'error-codes'});
     }
 }

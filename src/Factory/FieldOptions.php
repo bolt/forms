@@ -12,7 +12,7 @@ class FieldOptions
 {
     public static function get(string $formName, array $field, Collection $config): array
     {
-        if (! array_key_exists('options', $field)) {
+        if (! \array_key_exists('options', $field)) {
             return [];
         }
 
@@ -45,14 +45,14 @@ class FieldOptions
                 switch ($options['captcha_type']) {
                     case 'hcaptcha':
                         $options['constraints'] = [
-                            new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key'])
+                            new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key']),
                         ];
                         break;
 
                     case 'recaptcha_v3':
                     case 'recaptcha_v2':
                         $options['constraints'] = [
-                            new Recaptcha($config['recaptcha']['public_key'], $config['recaptcha']['private_key'])
+                            new Recaptcha($config['recaptcha']['public_key'], $config['recaptcha']['private_key']),
                         ];
                         break;
                 }

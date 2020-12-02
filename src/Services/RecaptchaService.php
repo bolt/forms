@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bolt\BoltForms\Services;
 
 use Bolt\BoltForms\CaptchaException;
@@ -9,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RecaptchaService
 {
-    const POST_FIELD_NAME = 'g-recaptcha-response';
+    public const POST_FIELD_NAME = 'g-recaptcha-response';
 
     /** @var ExtensionRegistry */
     private $registry;
@@ -17,17 +19,14 @@ class RecaptchaService
     /** @var string */
     private $secretKey;
 
-    /** @var string */
-    private $siteKey;
-
     public function __construct(ExtensionRegistry $extensionRegistry)
     {
         $this->registry = $extensionRegistry;
     }
 
-    public function setKeys($siteKey, $secretKey)
+    public function setKeys($siteKey = null, $secretKey): void
     {
-        $this->siteKey = $siteKey;
+        // Note: $siteKey is not used, but here to stay in sync with HcaptchaService.php
         $this->secretKey = $secretKey;
     }
 
@@ -38,7 +37,7 @@ class RecaptchaService
         $validationData = [
             'secret' => $this->secretKey,
             'response' => $request->get(self::POST_FIELD_NAME),
-            'remoteip' => $request->getClientIp()
+            'remoteip' => $request->getClientIp(),
         ];
         $extension->dump($validationData);
 
@@ -50,7 +49,7 @@ class RecaptchaService
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/x-www-form-urlencoded'
+            'Content-Type: application/x-www-form-urlencoded',
         ]);
 
         $response = curl_exec($ch);
@@ -58,15 +57,14 @@ class RecaptchaService
 
         $jsonResponse = json_decode($response);
 
-        if ($jsonResponse === false)
-        {
+        if ($jsonResponse === false) {
             throw new CaptchaException(sprintf('Unexpected response: %s', $response));
         }
 
         if ($jsonResponse->success) {
             return true;
-        } else {
-            return join(',', $jsonResponse->{'error-codes'});
         }
+
+        return implode(',', $jsonResponse->{'error-codes'});
     }
 }

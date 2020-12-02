@@ -23,9 +23,9 @@ class EmailFactory
 
     /**
      * @param Collection $formConfig The config specific for the current form
-     * @param Collection $config     The global config defined config/extensions/bolt-boltforms.yaml
-     * @param Form       $form       The form object
-     * @param array      $meta       Metadata of the PostSubmitEvent
+     * @param Collection $config The global config defined config/extensions/bolt-boltforms.yaml
+     * @param Form $form The form object
+     * @param array $meta Metadata of the PostSubmitEvent
      */
     public function create(Collection $formConfig, Collection $config, Form $form, array $meta = []): TemplatedEmail
     {
@@ -139,7 +139,7 @@ class EmailFactory
     {
         $templates = $this->config->get('templates', []);
 
-        if (! array_key_exists('email', $templates)) {
+        if (! \array_key_exists('email', $templates)) {
             return '@boltforms/email.html.twig';
         }
 

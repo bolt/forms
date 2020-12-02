@@ -17,11 +17,11 @@ class FormHelper
         return preg_replace_callback(
             '/{([\w]+)}/i',
             function ($match) use ($form, $values) {
-                if (array_key_exists($match[1], $form->all())) {
+                if (\array_key_exists($match[1], $form->all())) {
                     return (string) $form->get($match[1])->getData();
                 }
 
-                if (array_key_exists($match[1], $values)) {
+                if (\array_key_exists($match[1], $values)) {
                     return (string) $values[$match[1]];
                 }
 
