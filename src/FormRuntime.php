@@ -103,8 +103,10 @@ class FormRuntime implements RuntimeExtensionInterface
             'submitted' => $form->isSubmitted(),
             'valid' => $form->isSubmitted() && $form->isValid(),
             'data' => $form->getData(),
-            'formconfig' => $formConfig, // Deprecated
-            'honeypotname' => $honeypotName, // Deprecated
+            // Deprecated
+            'formconfig' => $formConfig,
+            // Deprecated
+            'honeypotname' => $honeypotName,
         ]);
     }
 }

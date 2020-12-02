@@ -12,7 +12,7 @@ class FieldConstraints
 
     public static function get(string $formName, array $field): ?array
     {
-        if (! array_key_exists('constraints', $field)) {
+        if (! \array_key_exists('constraints', $field)) {
             return null;
         }
 
@@ -20,7 +20,7 @@ class FieldConstraints
         $class = null;
 
         foreach ($field['constraints'] as $item) {
-            $inputType = gettype($item);
+            $inputType = \gettype($item);
 
             if ($inputType === 'string') {
                 $class = static::getClassFromString($formName, $item);

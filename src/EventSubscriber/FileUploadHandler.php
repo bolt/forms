@@ -52,7 +52,7 @@ class FileUploadHandler implements EventSubscriberInterface
 
         $filename = $this->getFilename($field->getName(), $form, $formConfig);
         $path = $fieldConfig['directory'] ?? '/uploads/';
-        Str::ensureStartsWith($path, DIRECTORY_SEPARATOR);
+        Str::ensureStartsWith($path, \DIRECTORY_SEPARATOR);
         $files = $this->uploadFiles($filename, $file, $path);
 
         if (isset($fieldConfig['attach']) && $fieldConfig['attach']) {
@@ -62,7 +62,7 @@ class FileUploadHandler implements EventSubscriberInterface
 
     private function getFilename(string $fieldname, Form $form, Collection $formConfig): string
     {
-        $filenameFormat = $formConfig->get('fields')[$fieldname]['file_format'] ?? 'Uploaded file'.uniqid();
+        $filenameFormat = $formConfig->get('fields')[$fieldname]['file_format'] ?? 'Uploaded file' . uniqid();
         $filename = $this->helper->get($filenameFormat, $form);
 
         if (! $filename) {
@@ -77,7 +77,7 @@ class FileUploadHandler implements EventSubscriberInterface
      */
     private function uploadFiles(string $filename, $file, string $path = ''): array
     {
-        $uploadPath = $this->projectDir.$path;
+        $uploadPath = $this->projectDir . $path;
         $uploadHandler = new Handler($uploadPath, [
             Handler::OPTION_AUTOCONFIRM => true,
             Handler::OPTION_OVERWRITE => false,
@@ -113,8 +113,12 @@ class FileUploadHandler implements EventSubscriberInterface
 
     private function sanitiseFilename(string $filename): string
     {
-        $extensionSlug = new Slugify(['regexp' => '/([^a-z0-9]|-)+/']);
-        $filenameSlug = new Slugify(['lowercase' => false]);
+        $extensionSlug = new Slugify([
+            'regexp' => '/([^a-z0-9]|-)+/',
+        ]);
+        $filenameSlug = new Slugify([
+            'lowercase' => false,
+        ]);
 
         $extension = $extensionSlug->slugify(Path::getExtension($filename));
         $filename = $filenameSlug->slugify(Path::getFilenameWithoutExtension($filename));

@@ -41,7 +41,8 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
         }
 
         if (! $this->boltConfig->getContentType($config->get('name', ''))) {
-            return; // todo: handle this error message better
+            // todo: handle this error message better
+            return;
         }
 
         $content = new Content();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bolt\BoltForms\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -9,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CaptchaType extends HiddenType
 {
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['captcha_type'] = $options['captcha_type'];
         $view->vars['captcha_invisible'] = $options['captcha_invisible'];
@@ -19,7 +21,7 @@ class CaptchaType extends HiddenType
         $view->vars['recaptcha_theme'] = $options['recaptcha_theme'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'compound' => false,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bolt\BoltForms\Validator\Constraints;
 
 use Bolt\BoltForms\Services\HcaptchaService;
@@ -23,16 +25,16 @@ class HcaptchaValidator extends ConstraintValidator
         $this->request = $requestStack->getCurrentRequest();
     }
 
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof Hcaptcha) {
+        if (! $constraint instanceof Hcaptcha) {
             throw new UnexpectedTypeException($constraint, Hcaptcha::class);
         }
 
-        if (empty($this->request->get(HcaptchaService::POST_FIELD_NAME)))
-        {
+        if (empty($this->request->get(HcaptchaService::POST_FIELD_NAME))) {
             $this->context->buildViolation($constraint->incompleteMessage)
                 ->addViolation();
+
             return;
         }
 
@@ -40,8 +42,7 @@ class HcaptchaValidator extends ConstraintValidator
 
         $result = $this->service->validateTokenFromRequest($this->request);
 
-        if ($result !== true)
-        {
+        if ($result !== true) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ error }}', $result)
                 ->addViolation();

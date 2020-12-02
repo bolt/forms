@@ -35,7 +35,8 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
         }
 
         if (! $config->get('name', '')) {
-            return; // todo: handle this error message better
+            // todo: handle this error message better
+            return;
         }
 
         $table = $config->get('name', '');
