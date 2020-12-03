@@ -20,7 +20,7 @@ class FieldOptions
 
         $options['constraints'] = FieldConstraints::get($formName, $options);
 
-        if ($field['type'] === 'submit' || $field['type'] === 'button') {
+        if (in_array($field['type'], ['submit', 'button', 'reset'])) {
             unset($options['constraints']);
         } elseif ($field['type'] === 'captcha') {
             if ($config->has('hcaptcha')) {
