@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Factory;
 
+use Bolt\BoltForms\Form\CaptchaType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -44,6 +45,9 @@ class FieldType
     public static function get($field): string
     {
         switch ($field['type']) {
+            case 'captcha':
+                $type = CaptchaType::class;
+                break;
             case 'birthday':
                 $type = BirthdayType::class;
                 break;
