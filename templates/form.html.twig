@@ -33,11 +33,11 @@
 {% endif %}
 
 {% if valid %}
-    <div class="boltforms-feedback success">{{ formconfig.feedback.success }}</div>
+    <div class="boltforms-feedback success">{{ formconfig.feedback.success|raw }}</div>
 {% endif %}
 
 {% if submitted and not valid %}
-    <div class="boltforms-feedback error">{{ formconfig.feedback.error }}</div>
+    <div class="boltforms-feedback error">{{ formconfig.feedback.error|raw }}</div>
 {% endif %}
 
 {% if not valid %}
