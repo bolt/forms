@@ -12,6 +12,7 @@ use Bolt\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Tightenco\Collect\Support\Collection;
 
 class ContentTypePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
@@ -25,11 +26,15 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
     /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(Config $boltConfig, UserRepository $userRepository, EntityManagerInterface $em)
+    /** @var string */
+    private $projectDir;
+
+    public function __construct(Config $boltConfig, UserRepository $userRepository, EntityManagerInterface $em, string $projectDir = '')
     {
         $this->boltConfig = $boltConfig;
         $this->userRepository = $userRepository;
         $this->em = $em;
+        $this->projectDir = $projectDir;
     }
 
     public function save(PostSubmitEvent $event, Form $form, Collection $config): void
@@ -75,8 +80,20 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
 
         foreach ($data as $field => $value) {
             $name = $mapping->get($field, $field);
-
             if ($name !== null) {
+                if (in_array($name, array_keys($data['attachments'] ?? null))) {
+                    // Don't save the file. Rather, save the filename that's in attachments.
+                    $value = $data['attachments'][$name];
+
+                    // Don't save the full path. Only the path without the project dir.
+                    $newValue = [];
+                    foreach ($value as $i => $path) {
+                        $newValue[] = str_replace($this->projectDir, "", $path);
+                    }
+
+                    $value = $newValue;
+                }
+
                 $content->setFieldValue($name, $value);
             }
         }

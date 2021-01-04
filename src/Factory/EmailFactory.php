@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\Factory;
 
 use Bolt\Common\Str;
+use File;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Mime\Address;
@@ -66,9 +67,11 @@ class EmailFactory
             $email->replyTo($this->getReplyTo());
         }
 
-        /** @var File $attachment */
-        foreach ($attachments as $attachment) {
-            $email->attachFromPath($attachment);
+        foreach ($attachments as $name => $attachment) {
+            /** @var File $attachment */
+            foreach ($attachment as $file) {
+                $email->attachFromPath($file, $name . '.' . pathinfo($file, PATHINFO_EXTENSION));
+            }
         }
 
         // Override the "to"

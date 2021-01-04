@@ -56,7 +56,7 @@ class FileUploadHandler implements EventSubscriberInterface
         $files = $this->uploadFiles($filename, $file, $path);
 
         if (isset($fieldConfig['attach']) && $fieldConfig['attach']) {
-            $event->addAttachments($files);
+            $event->addAttachments([$field->getName() => $files]);
         }
     }
 
