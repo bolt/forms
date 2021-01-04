@@ -4,8 +4,6 @@
             {%- set field = attribute(config.fields, fieldname) %}
             {%- set label = field.options.label|default(fieldname) %}
 
-            {% dump(field.type) %}
-
             {% if not (field.type == 'file' and field.attach|default) %}
                 {%- if values is iterable %}
                     <li>
