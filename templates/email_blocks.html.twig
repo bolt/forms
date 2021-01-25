@@ -35,7 +35,7 @@
 {% endblock %}
 
 {% block field_label %}
-    {%- if label is not empty %}{{ label }}: {% endif %}
+    {%- if label is not empty %}{{ label|striptags }}: {% endif %}
 {% endblock %}
 
 {% block field_value %}
