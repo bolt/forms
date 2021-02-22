@@ -92,7 +92,11 @@ class FormRuntime implements RuntimeExtensionInterface
             $honeypotName = false;
         }
 
-        $template = $config->get('templates')['form'];
+        if ($formConfig->has('templates') && isset($formConfig->get('templates')['form'])) {
+            $template = $formConfig->get('templates')['form'];
+        } else {
+            $template = $config->get('templates')['form'];
+        }
 
         return $this->twig->render($template, [
             'boltforms_config' => $config,
