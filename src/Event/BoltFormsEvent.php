@@ -65,7 +65,7 @@ class BoltFormsEvent extends FormEvent
         if (in_array($this->formsEventName, [FormEvents::PRE_SUBMIT, BoltFormsEvents::PRE_SUBMIT])) {
             $this->event->setData($data);
         } else {
-            throw new \RuntimeException(self::class . '::' . __FUNCTION__ . ' can only be called in BoltFormsEvents::PRE_SUBMIT');
+            throw new \RuntimeException(self::class . '::' . __FUNCTION__ . ' can only be called in BoltFormsEvents::PRE_SUBMIT or FormEvents::PRE_SUBMIT');
         }
     }
 
