@@ -35,7 +35,7 @@ spam-action: mark-as-spam # Either 'block', 'none' or 'mark-as-spam'
 # The namespace is configured in config/packages/twig.yaml
 templates:
     form: '@boltforms/form.html.twig'
-    email: '@boltforms/email.html.twig'
+    email: '@boltforms/email_table.html.twig' # Replace with @boltforms/email.html.twig to send simple list-based emails.
     subject: '@boltforms/subject.html.twig'
     files: '@boltforms/file_browser.twig'
 
