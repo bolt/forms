@@ -1,0 +1,21 @@
+{#
+# Passed in variables:
+#   email    — The mail's WrappedTemplatedEmail instance
+#   data     — POSTed data
+#   formname — Field data from the form configuration
+#   config   — Current Form's configuration data
+#   meta     — Meta data (IP, URL, Timestamp)
+#}
+<p>Dear <strong>{{ email.toName }}</strong>, </p>
+
+<p>Somebody used the form <strong>{{ formname }}</strong> on {{ meta.url }} to send you a message.</p>
+
+<p>The posted data is as follows:</p>
+
+<hr size="1">
+{{ block('submission_summary', '@boltforms/email_blocks_table.html.twig') }}
+<hr size="1">
+
+<br>
+
+<em>Sent by the <a href="https://github.com/bolt/boltforms">BoltForms</a> extension for <a href="https://boltcms.io">Bolt</a>.</em>
