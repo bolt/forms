@@ -22,6 +22,9 @@ class EmailFactory
     /** @var Collection */
     private $notification;
 
+    /** @var Collection */
+    private $formConfig;
+
     /**
      * @param Collection $formConfig The config specific for the current form
      * @param Collection $config The global config defined config/extensions/bolt-boltforms.yaml
@@ -33,6 +36,7 @@ class EmailFactory
         $this->config = $config;
         $this->notification = collect($formConfig->get('notification', []));
         $this->form = $form;
+        $this->formConfig = $formConfig;
 
         $debug = (bool) $this->config->get('debug')['enabled'];
 
@@ -146,7 +150,13 @@ class EmailFactory
             return '@boltforms/email.html.twig';
         }
 
-        return $templates['email'];
+        if ($this->formConfig->has('templates') && isset($this->formConfig->get('templates')['email'])) {
+            $template = $this->formConfig->get('templates')['email'];
+        } else {
+            $template = $templates['email'];
+        }
+
+        return $template;
     }
 
     private function parsePartial(string $partial): string
