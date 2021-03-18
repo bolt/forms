@@ -6,6 +6,11 @@
 
             {{ block('print_field') }}
         {%- endfor %}
+
+        {%- for label, value in meta %}
+            {% set label = label|capitalize %}
+            {{ block('print_field') }}
+        {%- endfor %}
     </table>
 
     <style>
@@ -37,7 +42,7 @@
 {% block print_label %}
     {% if block('label_'~label) is defined %}
         {{ block('label_'~label) }}
-    {% elseif block('label_'~definition.type) is defined %}
+    {% elseif block('label_'~definition.type|default) is defined %}
         {{ block('label_'~definition.type) }}
     {% else %}
         {{ block('label_generic') }}
@@ -62,7 +67,7 @@
 {% block print_value %}
     {% if block('value_'~label) is defined %}
         {{ block('value_'~label) }}
-    {% elseif block('value_'~definition.type) is defined %}
+    {% elseif block('value_'~definition.type|default) is defined %}
         {{ block('value_'~definition.type) }}
     {% else %}
         {{ block('value_generic') }}
