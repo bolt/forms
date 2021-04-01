@@ -47,7 +47,7 @@ class Redirect implements EventSubscriberInterface
     {
         $this->event = $event;
 
-        // Don't send mails, if the form isn't valid
+        // Don't redirect, if the form isn't valid
         if (! $this->event->getForm()->isValid()) {
             return;
         }
