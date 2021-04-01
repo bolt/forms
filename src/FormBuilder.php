@@ -30,7 +30,7 @@ class FormBuilder
         $this->formFactory = $formFactory;
     }
 
-    public function build(string $formName, Collection $config, EventDispatcherInterface $eventDispatcher): Form
+    public function build(string $formName, array $data, Collection $config, EventDispatcherInterface $eventDispatcher): Form
     {
         /** @var SymfonyFormBuilder $formBuilder */
         $formBuilder = $this->formFactory->createNamedBuilder($formName, FormType::class, [], [
@@ -41,6 +41,11 @@ class FormBuilder
         $formBuilder->addEventSubscriber(new SymfonyFormProxySubscriber($eventDispatcher));
 
         foreach ($config->get($formName)['fields'] as $name => $field) {
+            // If we passed in a default value, set it as the Field's `data`-value
+            if (array_key_exists($name, $data)) {
+                $field['options']['data'] = $data[$name];
+            }
+
             if ($field['type'] === 'captcha') {
                 $this->addCaptchaField($formBuilder, $name, $field, $config);
             } else {

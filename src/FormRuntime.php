@@ -58,7 +58,7 @@ class FormRuntime implements RuntimeExtensionInterface
         return $extension->getConfig();
     }
 
-    public function run(string $formName = '', bool $warn = true)
+    public function run(string $formName = '', array $data = [], bool $warn = true)
     {
         $config = $this->getConfig();
         $extension = $this->registry->getExtension(Extension::class);
@@ -71,7 +71,7 @@ class FormRuntime implements RuntimeExtensionInterface
         }
 
         $formConfig = collect($config->get($formName));
-        $form = $this->builder->build($formName, $config, $this->dispatcher);
+        $form = $this->builder->build($formName, $data, $config, $this->dispatcher);
 
         $form->handleRequest($this->request);
 
