@@ -78,6 +78,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
             $form->getData()
         );
 
+        // Map given data to fields, using the mapping
         foreach ($data as $field => $value) {
             $name = $mapping->get($field, $field);
             if ($name !== null) {
@@ -95,6 +96,13 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
                 }
 
                 $content->setFieldValue($name, $value);
+            }
+        }
+
+        // And the reverse: Map the mapping to fields from the data
+        foreach ($mapping as $mappingName => $fieldName) {
+            if ($content->hasFieldDefined($mappingName) && array_key_exists($fieldName, $data)) {
+                $content->setFieldValue($mappingName, $data[$fieldName]);
             }
         }
     }
