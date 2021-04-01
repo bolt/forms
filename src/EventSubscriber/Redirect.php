@@ -34,7 +34,6 @@ class Redirect implements EventSubscriberInterface
 
     /**
      * Redirect constructor.
-     * @param UrlMatcherInterface $urlMatcher
      */
     public function __construct(RequestStack $requestStack, UrlMatcherInterface $urlMatcher)
     {
