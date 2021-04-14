@@ -10,3 +10,7 @@ appveyor.yml
 vendor/
 composer.lock
 var/
+
+.couscous
+couscous
+couscous.phar
