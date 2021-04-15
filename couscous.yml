@@ -2,8 +2,11 @@
 # See couscous.io for details.
 
 template:
-    # The following assumes you have a checkout of the template folder in ../couscous-template
-    directory: ../couscous-template/public
+    # The following assumes you have a checkout of the template folder in
+    # ../Extension-docs-template
+    directory: ../Extension-docs-template/public
+    # Alternatively, use it directly from the repository, without checking it
+    # out on your local dev environment
     # url: https://github.com/bolt/Extension-docs-template
     index: index.md
 
@@ -17,8 +20,10 @@ title: BoltForms
 subTitle: A Bolt extension to make forms.
 github:
     user: bolt
-    repo: boltforms
-    editlink: https://github.com/bolt/forms/edit/master/docs/
+    repo: forms
+    branch: master
+    # Editlink is not required, if user, repo and branch are given
+    # editlink: https://github.com/bolt/forms/edit/master/docs/
 
 menu:
     index.md:
@@ -33,7 +38,7 @@ menu:
         label: Save to ContentType
         class: sub
     handlers/save_to_database.md:
-        label: Save to ContentType
+        label: Save to Database
         class: sub
     captcha.md:
         label: Add CAPTCHA challenges
