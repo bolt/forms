@@ -30,10 +30,11 @@ menu:
         label: Getting Started
     setting_up_contact.md:
         label: Setting up a contact form
-        # class: sub
     creating_new_forms.md:
         label: Creating new forms
-        # class: sub
+    handlers/index.md:
+        label: Handlers and Events
+        section: Handlers / Events
     handlers/save_to_contenttype.md:
         label: Save to ContentType
         class: sub
@@ -41,8 +42,8 @@ menu:
         label: Save to Database
         class: sub
     captcha.md:
-        label: Add CAPTCHA challenges
+        label: CAPTCHA challenges
     tips.md:
-        label: tips
+        label: Tips
     coding_standards.md:
         label: Coding Standards

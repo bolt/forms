@@ -15,7 +15,7 @@ private_key (secret key) settings. Set the `enabled` node to true.
 
 Please note: `theme` can either be `light` or `dark` - it only applies to hCaptcha and reCAPTCHA v2 checkbox.)
 
-hCaptcha:
+## hCaptcha
 
 ```yaml
 hcaptcha:
@@ -25,7 +25,7 @@ hcaptcha:
     theme: dark
 ```
 
-reCAPTCHA:
+## reCAPTCHA
 
 ```yaml
 recaptcha:
