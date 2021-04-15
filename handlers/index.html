@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Coding Standards &raquo; BoltForms</title>
+        <title>Handlers and Events &raquo; BoltForms</title>
 
         <link rel="stylesheet" href="https://bolt.github.io/forms/css/main.css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,600,700" rel="stylesheet">
@@ -61,7 +61,7 @@
                 </li>
                                             <li class="divider">Handlers / Events</li>
                                                                 <li class="">
-                    <a href="https://bolt.github.io/forms/handlers/index.html" class="">
+                    <a href="https://bolt.github.io/forms/handlers/index.html" class="is-active">
                         Handlers and Events
                     </a>
                 </li>
@@ -86,7 +86,7 @@
                     </a>
                 </li>
                                                                             <li class="">
-                    <a href="https://bolt.github.io/forms/coding_standards.html" class="is-active">
+                    <a href="https://bolt.github.io/forms/coding_standards.html" class="">
                         Coding Standards
                     </a>
                 </li>
@@ -106,7 +106,7 @@
 
                 <header class="docs__main--header">
     <div class="pagetitle">
-        Coding Standards
+        Handlers and Events
     </div>
 
             <a href="https://github.com/bolt/forms" class="button is-info is-hidden-touch" aria-label="This extension on GitHub">
@@ -121,7 +121,7 @@
             </span>
             <span>Fork</span>
         </a>
-                        <a href="https://github.com/bolt/forms/edit/master/docs/coding_standards.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
+                        <a href="https://github.com/bolt/forms/edit/master/docs/handlers/index.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
             <span class="icon is-small">
                 <i class="fab fa-github"></i>
             </span>
@@ -131,11 +131,10 @@
     </header>
                 <div class="docs__main--body">
                     <section id="content" class="content">
-                        <h1 id="running-phpstan-and-easy-codings-standard">Running PHPStan and Easy Codings Standard</h1>
-<p>First, make sure dependencies are installed:</p>
-<pre><code class="language-bash">COMPOSER_MEMORY_LIMIT=-1 composer update</code></pre>
-<p>And then run ECS:</p>
-<pre><code class="language-bash">vendor/bin/ecs check src</code></pre>
+                        <h1 id="handlers-and-events">Handlers and Events</h1>
+<p>All actions that are taken after (or sometimes before) a form is submitted, are
+handled by Symfony Events. These take care of things like logginf, sending out
+emails and determining if a submission might be spam.</p>
                     </section>
                 </div>
             </main>
