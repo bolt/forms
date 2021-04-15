@@ -1,10 +1,10 @@
-                                                                                                                            <!DOCTYPE html>
+                                                                                                        <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Save to Database &raquo; BoltForms</title>
+        <title>BoltForms</title>
 
         <link rel="stylesheet" href="https://bolt.github.io/forms/css/main.css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,600,700" rel="stylesheet">
@@ -65,7 +65,7 @@
                                     </a>
                                 </li>
                                                                                                                             <li class="sub">
-                                    <a href="https://bolt.github.io/forms/handlers/save_to_database.html" class="is-active">
+                                    <a href="https://bolt.github.io/forms/handlers/save_to_database.html" class="">
                                         Save to Database
                                     </a>
                                 </li>
@@ -99,7 +99,7 @@
             <main class="docs__main">
                 <header class="docs__main--header">
                     <div class="pagetitle">
-                        Save to Database
+                        A Bolt extension to make forms.
                     </div>
 
                                             <a href="https://github.com/bolt/forms" class="button is-info is-hidden-touch" aria-label="This extension on GitHub">
@@ -114,7 +114,7 @@
                             </span>
                             <span>Fork</span>
                         </a>
-                                                                        <a href="https://github.com/bolt/forms/edit/master/docs/handlers/save_to_database.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
+                                                                        <a href="https://github.com/bolt/forms/edit/master/docs/search.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
                             <span class="icon is-small">
                                 <i class="fab fa-github"></i>
                             </span>
@@ -125,19 +125,8 @@
 
                 <div class="docs__main--body">
                     <section id="content" class="content">
-                        <h1 id="create-a-form-and-save-it-to-a-custom-database-table">Create a form and save it to a custom database table</h1>
-<p>Instead of saving the data to a Bolt ContentType, you can also save it to a custom
-table of your own making. To do so, just update the <code>database</code> option in the form
-configuration:</p>
-<pre><code class="language-yaml">    database:
-        table:
-            name: custom_quotations # save all form submissions to the custom_quotations table in the database
-            field_map: # optional
-                timestamp: ~ # do not save the timestamp
-                url: ~ # do not save the url
-                path: ~ # do not save the path
-                ip: ~ # do not save the ip
-                attachments: ~ # do not save attached files</code></pre>
+                        <h1 id="search">Search</h1>
+<div id="tipue_search_content"></div>
                     </section>
                 </div>
             </main>

@@ -66,7 +66,7 @@
                                 </li>
                                                                                                                             <li class="sub">
                                     <a href="https://bolt.github.io/forms/handlers/save_to_database.html" class="">
-                                        Save to ContentType
+                                        Save to Database
                                     </a>
                                 </li>
                                                                                                                             <li class="">
@@ -102,25 +102,26 @@
                         Add CAPTCHA challenges
                     </div>
 
-                                            <a href="https://github.com/bolt/boltforms" class="button is-info is-hidden-touch" aria-label="This extension on GitHub">
+                                            <a href="https://github.com/bolt/forms" class="button is-info is-hidden-touch" aria-label="This extension on GitHub">
                             <span class="icon is-small">
                                 <i class="fas fa-home"></i>
                             </span>
                             <span>GitHub</span>
                         </a>
-                        <a href="https://github.com/bolt/boltforms/fork" class="button is-info is-hidden-touch" aria-label="Fork bolt/boltforms on GitHub">
+                        <a href="https://github.com/bolt/forms/fork" class="button is-info is-hidden-touch" aria-label="Fork bolt/forms on GitHub">
                             <span class="icon is-small">
                                 <i class="fas fa-code-branch"></i>
                             </span>
                             <span>Fork</span>
                         </a>
-                                                <a href="https://github.com/bolt/boltforms/edit/4.2/docs/captcha.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
+                                                                        <a href="https://github.com/bolt/forms/edit/master/docs/captcha.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
                             <span class="icon is-small">
                                 <i class="fab fa-github"></i>
                             </span>
                             <span>Edit this page</span>
                         </a>
-                                                            </header>
+                        
+                                    </header>
 
                 <div class="docs__main--body">
                     <section id="content" class="content">
@@ -135,13 +136,13 @@
 <p>Uncomment either the <code>hcaptcha</code> or <code>recaptcha</code> nodes in your config, and populate the public_key (site key) and
 private_key (secret key) settings. Set the <code>enabled</code> node to true.</p>
 <p>Please note: <code>theme</code> can either be <code>light</code> or <code>dark</code> - it only applies to hCaptcha and reCAPTCHA v2 checkbox.)</p>
-<p>hCaptcha:</p>
+<h2 id="hcaptcha">hCaptcha</h2>
 <pre><code class="language-yaml">hcaptcha:
     enabled: true
     public_key: "..."
     private_key: "..."
     theme: dark</code></pre>
-<p>reCAPTCHA:</p>
+<h2 id="recaptcha">reCAPTCHA</h2>
 <pre><code class="language-yaml">recaptcha:
     enabled: true
     public_key: '...'
