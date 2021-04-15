@@ -88,7 +88,7 @@
 {% endblock %}
 
 {% block value_date %}
-    {{ value|localdate }}
+    {{ value|date('F j, Y') }}
 {% endblock %}
 
 {% block value_datetime %}
@@ -97,6 +97,10 @@
 
 {% block value_dateinterval %}
     {{ value|localdate }}
+{% endblock %}
+
+{% block value_time %}
+    {{ value|date('H:i') }}
 {% endblock %}
 
 {# Don't show any file fields. #}
