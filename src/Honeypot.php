@@ -51,8 +51,8 @@ class Honeypot
 
         // Note: we're using mt_rand here, because we explicitly want
         // pseudo-random results, to make sure it's reproducible.
-        for ($i = 0; $i <= mt_rand(2, 3); $i++) {
-            $parts[] = $values[mt_rand(0, \count($values) - 1)];
+        for ($i = 0; $i <= random_int(2, 3); $i++) {
+            $parts[] = $values[random_int(0, \count($values) - 1)];
         }
 
         return implode('_', $parts);

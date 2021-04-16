@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Tightenco\Collect\Support\Collection;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 

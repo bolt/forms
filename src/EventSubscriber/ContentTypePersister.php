@@ -87,7 +87,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
 
                     // Don't save the full path. Only the path without the project dir.
                     $newValue = [];
-                    foreach ($value as $i => $path) {
+                    foreach ($value as $path) {
                         $newValue[] = str_replace($this->projectDir, '', $path);
                     }
 

@@ -1,0 +1,47 @@
+parameters:
+    level: 5
+
+    paths:
+        - src
+
+    scanDirectories:
+        # In order to 'recognize' Bolt, Twig and Carbon functions in global scope
+        - %currentWorkingDirectory%/vendor/bolt/core/src/
+        - %currentWorkingDirectory%/vendor/twig/twig/src/Extension
+        - %currentWorkingDirectory%/vendor/nesbot/carbon/src/Carbon
+
+    ignoreErrors:
+        # false positive: `Unreachable statement - code above always terminates.`
+        # Note: https://github.com/phpstan/phpstan/issues/2651 is marked as fixed, but the issue remains.
+        -
+            message: '#Unreachable statement - code above always terminates#'
+            path: %currentWorkingDirectory%/src/*
+
+        # false positive: `TranslationInterface does not know about FieldTranslation::getValue().` Skip this error.
+        -
+            message: '#Call to an undefined method Knp\\DoctrineBehaviors\\Contract\\Entity\\TranslationInterface#'
+            path: %currentWorkingDirectory%/src/*
+
+        # Parameters in Storage\Directive\OrderDirective::orderByNumericField() aren't seen as ints
+        -
+            message: '#of method Doctrine\\ORM\\Query\\Expr::substring\(\) expects int#'
+            path: %currentWorkingDirectory%/src/Storage/Directive/OrderDirective.php
+
+        # Call to undefined __get()
+        -
+            message: '#Call to an undefined method Sirius\\Upload\\Result\\ResultInterface|Symfony\\Component\\HttpFoundation\\File\\File::__get\(\)#'
+            path:  %currentWorkingDirectory%/src/Controller/Backend/Async/UploadController.php
+
+includes:
+	- vendor/phpstan/phpstan-symfony/extension.neon
+	- vendor/phpstan/phpstan-doctrine/extension.neon
+#    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon # make ON when thecodingmachine/safe will get stable
+
+services:
+	-
+		class: Symplify\CodingStandard\Rules\ForbiddenFuncCallRule
+		tags: [phpstan.rules.rule]
+		arguments:
+			forbiddenFunctions: ['d', 'dd', 'dump', 'var_dump', 'extract']
+
+	- Symplify\PackageBuilder\Matcher\ArrayStringAndFnMatcher
