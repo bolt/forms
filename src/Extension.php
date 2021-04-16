@@ -18,11 +18,6 @@ class Extension extends BaseExtension
         $this->addTwigNamespace('boltforms');
     }
 
-    public function initializeCLI(): void
-    {
-        $this->initialize();
-    }
-
     public function dump($var, ...$moreVars): void
     {
         if (! $this->getService('kernel')->isDebug() || ! $this->getConfig()->get('debug')['enabled']) {

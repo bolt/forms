@@ -35,13 +35,17 @@ class FormRuntime implements RuntimeExtensionInterface
     /** @var EventDispatcher */
     private $dispatcher;
 
+    /** @var BoltFormsConfig */
+    private $config;
+
     public function __construct(
         ExtensionRegistry $extensionRegistry,
         Notifications $notifications,
         Environment $twig,
         FormBuilder $builder,
         RequestStack $requestStack,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
+        BoltFormsConfig $boltFormsConfig
     ) {
         $this->registry = $extensionRegistry;
         $this->notifications = $notifications;
@@ -49,18 +53,13 @@ class FormRuntime implements RuntimeExtensionInterface
         $this->builder = $builder;
         $this->request = $requestStack->getCurrentRequest();
         $this->dispatcher = $dispatcher;
-    }
-
-    private function getConfig(): Collection
-    {
-        $extension = $this->registry->getExtension('Bolt\\BoltForms');
-
-        return $extension->getConfig();
+        $this->config = $boltFormsConfig;
     }
 
     public function run(string $formName = '', array $data = [], bool $warn = true)
     {
-        $config = $this->getConfig();
+        $config = $this->config->getConfig();
+
         $extension = $this->registry->getExtension(Extension::class);
 
         if (! $config->has($formName)) {
