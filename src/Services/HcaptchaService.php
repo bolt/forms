@@ -27,7 +27,7 @@ class HcaptchaService
         $this->registry = $extensionRegistry;
     }
 
-    public function setKeys($siteKey, $secretKey): void
+    public function setKeys(string $siteKey, string $secretKey): void
     {
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;

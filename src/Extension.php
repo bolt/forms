@@ -18,12 +18,12 @@ class Extension extends BaseExtension
         $this->addTwigNamespace('boltforms');
     }
 
-    public function dump($var, ...$moreVars): void
+    public function dump(...$moreVars): void
     {
         if (! $this->getService('kernel')->isDebug() || ! $this->getConfig()->get('debug')['enabled']) {
             return;
         }
 
-        dump($var, ...$moreVars);
+        dump(...$moreVars);
     }
 }

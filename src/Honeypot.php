@@ -36,7 +36,7 @@ class Honeypot
         $this->formBuilder->add($fieldname, TextType::class, $options);
     }
 
-    public function generateFieldName($withFormName = false)
+    public function generateFieldName($withFormName = false): string
     {
         $seed = preg_replace('/[^0-9]/', '', md5($_SERVER['APP_SECRET'] . $_SERVER['REMOTE_ADDR']));
         mt_srand($seed % PHP_INT_MAX);

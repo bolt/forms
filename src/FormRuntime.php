@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Bolt\BoltForms;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
-use Bolt\Extension\ExtensionRegistry;
 use Bolt\Twig\Notifications;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +15,6 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 class FormRuntime implements RuntimeExtensionInterface
 {
-    /** @var ExtensionRegistry */
-    private $registry;
-
     /** @var Notifications */
     private $notifications;
 
@@ -38,7 +34,6 @@ class FormRuntime implements RuntimeExtensionInterface
     private $config;
 
     public function __construct(
-        ExtensionRegistry $extensionRegistry,
         Notifications $notifications,
         Environment $twig,
         FormBuilder $builder,
@@ -46,7 +41,6 @@ class FormRuntime implements RuntimeExtensionInterface
         EventDispatcherInterface $dispatcher,
         BoltFormsConfig $boltFormsConfig
     ) {
-        $this->registry = $extensionRegistry;
         $this->notifications = $notifications;
         $this->twig = $twig;
         $this->builder = $builder;
