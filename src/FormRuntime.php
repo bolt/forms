@@ -52,8 +52,7 @@ class FormRuntime implements RuntimeExtensionInterface
     public function run(string $formName = '', array $data = [], bool $warn = true)
     {
         $config = $this->config->getConfig();
-
-        $extension = $this->registry->getExtension(Extension::class);
+        $extension = $this->config->getExtension();
 
         if (! $config->has($formName)) {
             return $warn ? $this->notifications->warning(
@@ -68,7 +67,7 @@ class FormRuntime implements RuntimeExtensionInterface
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted()) {
-            $event = new PostSubmitEvent($form, $config, $formName, $this->request, $this->registry);
+            $event = new PostSubmitEvent($form, $this->config, $formName, $this->request);
             $this->dispatcher->dispatch($event, PostSubmitEvent::NAME);
 
             $extension->dump(sprintf('Form "%s" has been submitted', $formName));
