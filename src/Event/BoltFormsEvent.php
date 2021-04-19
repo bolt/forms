@@ -33,12 +33,15 @@ use Symfony\Component\Form\FormInterface;
  */
 class BoltFormsEvent extends FormEvent
 {
-    /** @var \Symfony\Component\Form\FormEvent */
+    /** @var FormEvent */
     protected $event;
+
     /** @var array */
     protected $data = [];
-    /** @var \Symfony\Component\Form\FormInterface */
+
+    /** @var FormInterface */
     protected $form;
+
     /** @var string */
     protected $formsEventName;
 

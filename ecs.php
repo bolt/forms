@@ -47,6 +47,11 @@ use Symplify\CodingStandard\Fixer\ArrayNotation\StandaloneLineInMultilineArrayFi
 use Symplify\CodingStandard\Fixer\Commenting\RemoveSuperfluousDocBlockWhitespaceFixer;
 use Symplify\CodingStandard\Fixer\Strict\BlankLineAfterStrictTypesFixer;
 
+// Suppress `Notice:`s in ECS 8.x This is probably fixed in the 9.x versions,
+// but we can't update to that version, because it's PHP > 7.3 only.
+// See: https://github.com/bolt/core/issues/2519
+error_reporting(error_reporting() & ~E_NOTICE);
+
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
@@ -71,6 +76,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         UnaryOperatorSpacesFixer::class => null,
         ArrayOpenerAndCloserNewlineFixer::class => null,
         ArrayListItemNewlineFixer::class => null,
+        // Don't change mt_rand to random_int, because we intentionally want pseudo-randomness
         RandomApiMigrationFixer::class => null,
     ]);
 
