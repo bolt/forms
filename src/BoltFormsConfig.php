@@ -7,6 +7,8 @@ namespace Bolt\BoltForms;
 use Bolt\Configuration\Config;
 use Bolt\Extension\ExtensionInterface;
 use Bolt\Extension\ExtensionRegistry;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Yaml;
 use Tightenco\Collect\Support\Collection;
 
 class BoltFormsConfig
@@ -34,7 +36,10 @@ class BoltFormsConfig
         if ($this->config === null) {
             // We get the defaults as baseline, and merge (override) with all the
             // configured Settings
-            $this->config = $this->getDefaults()->replaceRecursive($this->getExtension()->getConfig());
+
+            /** @var Extension $extension */
+            $extension = $this->getExtension();
+            $this->config = $this->getDefaults()->replaceRecursive($this->getAdditionalFormConfigs())->replaceRecursive($extension->getConfig());
         }
 
         return $this->config;
@@ -60,5 +65,28 @@ class BoltFormsConfig
             'csrf' => false,
             'foo' => 'bar',
         ]);
+    }
+
+    private function getAdditionalFormConfigs(): array
+    {
+        $configPath = explode('.yaml', $this->getExtension()->getConfigFilenames()['main'])[0] . DIRECTORY_SEPARATOR;
+
+        $finder = new Finder();
+
+        $finder->files()->in($configPath)->name('*.yaml');
+
+        if (! $finder->hasResults()) {
+            return [];
+        }
+
+        $result = [];
+
+        foreach ($finder as $file) {
+            $formName = basename($file->getBasename(), '.yaml');
+
+            $result[$formName] = Yaml::parseFile($file->getRealPath());
+        }
+
+        return $result;
     }
 }
