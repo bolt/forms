@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms;
 
 use Bolt\Extension\BaseExtension;
+use Symfony\Component\Filesystem\Filesystem;
 
 class Extension extends BaseExtension
 {
@@ -25,5 +26,13 @@ class Extension extends BaseExtension
         }
 
         dump(...$moreVars);
+    }
+
+    public function install(): void
+    {
+        $projectDir = $this->getContainer()->getParameter('kernel.project_dir');
+
+        $filesystem = new Filesystem();
+        $filesystem->mkdir($projectDir . '/config/extensions/bolt-boltforms/');
     }
 }
