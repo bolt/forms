@@ -1,12 +1,9 @@
 Create a form and save it to a ContentType
 ==========================================
 
-Scroll down to `contact:` where you'll find the configuration for the default
-contact form.
-
-To create a new form and store submissions in a Bolt ContentType, add a new key
-to the yaml file, along with the options for the new form. For example, create 
-a file `quotation.yaml` in the folder `config/extensions/bolt-boltforms`:
+To create a new form and store submissions in a Bolt ContentType, first 
+create a new form. For example, create a file `quotation.yaml` in the folder 
+`config/extensions/bolt-boltforms`:
 
 ```yaml
 # config/extensions/bolt-boltforms/quotation.yaml
