@@ -132,68 +132,102 @@
                 <div class="docs__main--body">
                     <section id="content" class="content">
                         <h1 id="create-a-form-and-save-it-to-a-contenttype">Create a form and save it to a ContentType</h1>
-<p>Scroll down to <code>contact:</code> where you'll find the configuration for the default
-contact form.</p>
-<p>To create a new form and store submissions in a Bolt ContentType, add a new key
-to the yaml file, along with the options for the new form. For example:</p>
-<pre><code class="language-yaml">quotations:
-    templates:                      # Override the global Twig templates if you want
-    #        form: @theme/form.twig
-    #        email: @theme/email.twig
-    #        subject: @theme/subject.twig
-    #        files: @theme/file_browser.twig
-    feedback:
-        success: Quotation request is received. We'll be in touch soon.
-        error: There are errors in the form, please fix before trying to resubmit
-    database:
-        contenttype:
-            name: quotations # save all form submissions to the quotations contenttype
-            field_map:
-                timestamp: ~ # do not save the timestamp
-                url: ~ # do not save the url
-                path: ~ # do not save the path
-                ip: ~ # do not save the ip
-    fields:
-        name:
-            type: text
-            options:
-                required: true
-                label: Name
-                attr:
-                    placeholder: Your name...
-                constraints: [ NotBlank, { Length: { 'min': 3, 'max': 128 } } ]
-        email:
-            type: email
-            options:
-                required: true
-                label: Email address
-                attr:
-                    placeholder: Your email...
-                constraints: [ NotBlank, Email ]
-        needhelp:
-            type: choice
-            options:
-                required: true
-                label: What project do you need help with?
-                choices: { 'Web development': 'web-development', 'Mobile development': 'mobile-development', 'Marketing': 'marketing' }
-        details:
-            type: textarea
-            options:
-                required: true
-                label: Please descript your desired app
-        submit:
-            type: submit
-            options:
-                label: Request quotation »
-                attr:
-                    class: button primary</code></pre>
+<p>To create a new form and store submissions in a Bolt ContentType, first
+create a new form. For example, create a file <code>quotation.yaml</code> in the folder
+<code>config/extensions/bolt-boltforms</code>:</p>
+<pre><code class="language-yaml"># config/extensions/bolt-boltforms/quotation.yaml
+
+templates:  # Override the global Twig templates if you want
+templates:                      # Override the global Twig templates if you want
+#        form: @theme/form.twig
+#        email: @theme/email.twig
+#        subject: @theme/subject.twig
+#        files: @theme/file_browser.twig
+feedback:
+  success: Quotation request has been received. We'll be in touch soon.
+  error: There are errors in the form. Please fix them, before trying to resubmit
+database:
+  contenttype:
+    name: quotations # save all form submissions to the quotations contenttype
+    ignore_missing: true # ignore fields in the form that aren't defined in the ContentType
+fields:
+  name:
+    type: text
+    options:
+      required: true
+      label: Name
+      attr:
+        placeholder: Your name...
+      constraints: [ NotBlank, { Length: { 'min': 3, 'max': 128 } } ]
+  email:
+    type: email
+    options:
+      required: true
+      label: Email address
+      attr:
+        placeholder: Your email...
+      constraints: [ NotBlank, Email ]
+  needhelp:
+    type: choice
+    options:
+      required: true
+      label: What project do you need help with?
+      choices: { 'Web development': 'web-development', 'Mobile development': 'mobile-development', 'Marketing': 'marketing' }
+  details:
+    type: textarea
+    options:
+      required: true
+      label: Description
+      attr:
+        placeholder: Please describe your desired website or app…
+  submit:
+    type: submit
+    options:
+      label: Request quotation »
+      attr:
+        class: button primary</code></pre>
+<p>To store the data, you'd need a ContentType <code>quotations</code>, as referenced in the
+form above. For example: </p>
+<pre><code class="language-yaml"># config/bolt/contenttypes.yaml
+
+quotations:
+  name: Quotations
+  singular_name: Quotation
+  title_format: "Quotation request from: {name}"
+  fields:
+    name:
+      type: text
+      variant: inline
+    email:
+      type: text
+      variant: inline
+    needhelp:
+      type: text
+      variant: inline
+    details:
+      type: textarea
+    timestamp:
+      type: text
+      variant: inline
+    url:
+      type: text
+      variant: inline
+    path:
+      type: text
+      variant: inline
+    ip:
+      type: text
+      variant: inline</code></pre>
+<p>As a result, the submissions of the form will be stored as proper Records in
+your Bolt backend. See this screenshot as an example: </p>
+<p><img src="https://user-images.githubusercontent.com/1833361/122095553-d34f0500-ce0d-11eb-827d-00077c00c53f.png" alt="Form saved as Bolt Record" /></p>
 <p>If the name of the fields in your ContentType and the form do not match exactly,
 use the <code>field_map</code> option to override the default mapping:</p>
 <pre><code class="language-yaml">    database:
         contenttype:
-            name: quotations # save all form submissions to the quotations contenttype
+            name: quotations # save all form submissions to the quotations ContentType
             field_map:
-                name: customer_name # name is the form field. customer_name is the contenttype field.</code></pre>
+                name: customer_name # name is the form field. customer_name is the ContentType field.</code></pre>
 <p>In addition to all form fields, you can also keep the following information:</p>
 <ul>
 <li><code>timestamp</code> - the timestamp when the form is submitted</li>
@@ -202,9 +236,19 @@ use the <code>field_map</code> option to override the default mapping:</p>
 <li><code>ip</code> - the ip address of the user submitting the form</li>
 <li><code>attachments</code> - an array of attached files from file fields</li>
 </ul>
-<p>To store that information in a ContentType, simply create a field for each option that
-you want to keep, and remove the override from the form config, e.g.
-<code>ip: ~ # do not save the ip &lt;- REMOVE THIS LINE</code></p>
+<p>To store that information in a ContentType, simply create a field for each
+option that you want to keep, and remove the override from the form config:</p>
+<p><code>ip: ~ # do not save the ip &lt;- REMOVE THIS LINE</code></p>
+<p>By default, Boltforms silently ignores fields from the form that are missing from the ContentType. Often this is what you want, because you might not need an <code>attachments</code> field, if the form has no file uploads. However, if you do want to have this strict behaviour, set <code>ignore_missing: false</code>, like so: </p>
+<pre><code class="language-yaml">    database:
+        contenttype:
+            name: quotations # save all form submissions to the quotations ContentType
+            field_map:
+              timestamp: ~ # do not save the timestamp
+              url: ~ # do not save the url
+              path: ~ # do not save the path
+              ip: ~ # do not save the ip
+            ignore_missing: false</code></pre>
                     </section>
                 </div>
             </main>

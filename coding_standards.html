@@ -132,10 +132,17 @@
                 <div class="docs__main--body">
                     <section id="content" class="content">
                         <h1 id="running-phpstan-and-easy-codings-standard">Running PHPStan and Easy Codings Standard</h1>
+<p>If you're working on improving this extension (as opposed to working <em>with</em>
+this extension), you might want to run the built-in configurations for ECS and
+PHPStan.</p>
 <p>First, make sure dependencies are installed:</p>
-<pre><code class="language-bash">COMPOSER_MEMORY_LIMIT=-1 composer update</code></pre>
-<p>And then run ECS:</p>
+<pre><code class="language-bash">composer install</code></pre>
+<p>And then run ECS to find potential issues:</p>
 <pre><code class="language-bash">vendor/bin/ecs check src</code></pre>
+<p>Or to fix them automatically:</p>
+<pre><code class="language-bash">vendor/bin/ecs check src --fix</code></pre>
+<p>Run PHPStan:</p>
+<pre><code class="language-bash">vendor/bin/phpstan</code></pre>
                     </section>
                 </div>
             </main>
