@@ -80,20 +80,31 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
         // Map given data to fields, using the mapping
         foreach ($data as $field => $value) {
             $name = $mapping->get($field, $field);
-            if ($name !== null) {
-                if (in_array($name, array_keys($data['attachments'] ?? null), true)) {
-                    // Don't save the file. Rather, save the filename that's in attachments.
-                    $value = $data['attachments'][$name];
 
-                    // Don't save the full path. Only the path without the project dir.
-                    $newValue = [];
-                    foreach ($value as $path) {
-                        $newValue[] = str_replace($this->projectDir, '', $path);
-                    }
+            if ($name === null) {
+                continue;
+            }
 
-                    $value = $newValue;
+            if (is_array($value)) {
+                $value = implode(", ", $value);
+            }
+            $value = (string) $value;
+
+            if (in_array($name, array_keys($data['attachments'] ?? null), true)) {
+                // Don't save the file. Rather, save the filename that's in attachments.
+                $value = $data['attachments'][$name];
+
+                // Don't save the full path. Only the path without the project dir.
+                $newValue = [];
+                foreach ($value as $i => $path) {
+                    $newValue[] = str_replace($this->projectDir, '', $path);
                 }
 
+                $value = $newValue;
+            }
+
+
+            if ($content->hasFieldDefined($name) || !($config['ignore_missing'] ?? false)) {
                 $content->setFieldValue($name, $value);
             }
         }
