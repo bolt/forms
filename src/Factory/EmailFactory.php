@@ -63,10 +63,6 @@ class EmailFactory
             $email->bcc($this->getBcc());
         }
 
-        if ($this->hasBcc()) {
-            $email->bcc($this->getBcc());
-        }
-
         if ($this->hasReplyTo()) {
             $email->replyTo($this->getReplyTo());
         }
