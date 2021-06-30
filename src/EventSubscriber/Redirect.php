@@ -7,11 +7,8 @@ namespace Bolt\BoltForms\EventSubscriber;
 use Bolt\BoltForms\Event\PostSubmitEvent;
 use Bolt\Common\Str;
 use Bolt\Log\LoggerTrait;
-use Bolt\Utils\Html;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Tightenco\Collect\Support\Collection;
 
 class Redirect implements EventSubscriberInterface
@@ -23,17 +20,6 @@ class Redirect implements EventSubscriberInterface
 
     /** @var Collection */
     private $feedback;
-
-    /** @var UrlMatcherInterface */
-    private $urlMatcher;
-
-    /**
-     * Redirect constructor.
-     */
-    public function __construct(UrlMatcherInterface $urlMatcher)
-    {
-        $this->urlMatcher = $urlMatcher;
-    }
 
     public function handleEvent(PostSubmitEvent $event): void
     {
@@ -81,7 +67,7 @@ class Redirect implements EventSubscriberInterface
         parse_str($parsedUrl['query'], $query);
 
         if (isset($this->formConfig['feedback']['redirect']['query'])) {
-            foreach($this->formConfig['feedback']['redirect']['query'] as $key) {
+            foreach ($this->formConfig['feedback']['redirect']['query'] as $key) {
                 if ($this->event->getForm()->has($key)) {
                     $query[$key] = $this->event->getForm()->get($key)->getNormData();
                 }
@@ -95,7 +81,6 @@ class Redirect implements EventSubscriberInterface
         }
 
         return '/' . ltrim($url, '/');
-
     }
 
     public static function getSubscribedEvents()
