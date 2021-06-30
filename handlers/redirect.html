@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Getting Started &raquo; BoltForms</title>
+        <title>Redirect the browser &raquo; BoltForms</title>
 
         <link rel="stylesheet" href="https://bolt.github.io/forms/css/main.css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,600,700" rel="stylesheet">
@@ -45,7 +45,7 @@
     <nav id="sidebar" class="menu" role="navigation">
         <ul class="menu-list">
                                                                             <li class="">
-                    <a href="https://bolt.github.io/forms/index.html" class="is-active">
+                    <a href="https://bolt.github.io/forms/index.html" class="">
                         Getting Started
                     </a>
                 </li>
@@ -76,7 +76,7 @@
                     </a>
                 </li>
                                                                             <li class="sub">
-                    <a href="https://bolt.github.io/forms/handlers/redirect.html" class="">
+                    <a href="https://bolt.github.io/forms/handlers/redirect.html" class="is-active">
                         Redirect the browser
                     </a>
                 </li>
@@ -111,7 +111,7 @@
 
                 <header class="docs__main--header">
     <div class="pagetitle">
-        Getting Started
+        Redirect the browser
     </div>
 
             <a href="https://github.com/bolt/forms" class="button is-info is-hidden-touch" aria-label="This extension on GitHub">
@@ -126,7 +126,7 @@
             </span>
             <span>Fork</span>
         </a>
-                        <a href="https://github.com/bolt/forms/edit/master/docs/index.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
+                        <a href="https://github.com/bolt/forms/edit/master/docs/handlers/redirect.md" class="button is-info is-hidden-touch" aria-label="Edit the contents of this page on GitHub">
             <span class="icon is-small">
                 <i class="fab fa-github"></i>
             </span>
@@ -136,10 +136,26 @@
     </header>
                 <div class="docs__main--body">
                     <section id="content" class="content">
-                        <h1 id="getting-started">Getting Started</h1>
-<p>This Bolt extension can be used to handle forms in your Bolt 4 project.</p>
-<p>Installation:</p>
-<pre><code class="language-bash">composer require bolt/forms</code></pre>
+                        <h1 id="redirect-after-a-succesful-submit">Redirect after a succesful submit</h1>
+<p>After the form has been successfully submitted, the visitor will normally get
+redirected to the originating page. You can use the Redirect handler to send
+them elsewhere, instead. </p>
+<p>You can do this, by setting <code>redirect:</code> in the <code>feedback:</code> section of the
+form's configuration.</p>
+<pre><code class="language-yaml">feedback:
+    success: …
+    error: …
+    redirect:
+        target: page/another-page
+        query: [name, email]</code></pre>
+<p>The <code>target:</code> specifies where the visitor will be sent. Note that you can add
+optional get parameters in this URI, that will get sent as-is. For example: </p>
+<pre><code class="language-yaml">      target: page/another-page?foo=bar&amp;qux=boo</code></pre>
+<p>The optional <code>query:</code> lets you set additional parameters that will contain the
+corresponding values from the form. For example, the configuration above will redirect the visitor to a URL like this, after a correct form has been posted: </p>
+<pre><code>/page/another-page?foo=bar&amp;qux=boo&amp;name=Bob&amp;email=bob%40twokings.nl</code></pre>
+<p>Please note that these will be sent as <code>GET</code> parameters, so do not use these to
+pass around sensitive information.</p>
                     </section>
                 </div>
             </main>

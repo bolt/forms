@@ -1,4 +1,4 @@
-                                                                                                                                        <!DOCTYPE html>
+                                                                                                                                                    <!DOCTYPE html>
 <html lang="en">
         <head>
         <meta charset="utf-8">
@@ -75,6 +75,11 @@
                         Save to Database
                     </a>
                 </li>
+                                                                            <li class="sub">
+                    <a href="https://bolt.github.io/forms/handlers/redirect.html" class="">
+                        Redirect the browser
+                    </a>
+                </li>
                                                                             <li class="">
                     <a href="https://bolt.github.io/forms/captcha.html" class="">
                         CAPTCHA challenges
@@ -137,7 +142,6 @@ create a new form. For example, create a file <code>quotation.yaml</code> in the
 <code>config/extensions/bolt-boltforms</code>:</p>
 <pre><code class="language-yaml"># config/extensions/bolt-boltforms/quotation.yaml
 
-templates:  # Override the global Twig templates if you want
 templates:                      # Override the global Twig templates if you want
 #        form: @theme/form.twig
 #        email: @theme/email.twig
@@ -258,7 +262,7 @@ option that you want to keep, and remove the override from the form config:</p>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
-var tipuesearch_pages = ["https://bolt.github.io/forms/index.html", "https://bolt.github.io/forms/setting_up_contact.html", "https://bolt.github.io/forms/creating_new_forms.html", "https://bolt.github.io/forms/handlers/index.html", "https://bolt.github.io/forms/handlers/save_to_contenttype.html", "https://bolt.github.io/forms/handlers/save_to_database.html", "https://bolt.github.io/forms/captcha.html", "https://bolt.github.io/forms/tips.html", "https://bolt.github.io/forms/coding_standards.html"];
+var tipuesearch_pages = ["https://bolt.github.io/forms/index.html", "https://bolt.github.io/forms/setting_up_contact.html", "https://bolt.github.io/forms/creating_new_forms.html", "https://bolt.github.io/forms/handlers/index.html", "https://bolt.github.io/forms/handlers/save_to_contenttype.html", "https://bolt.github.io/forms/handlers/save_to_database.html", "https://bolt.github.io/forms/handlers/redirect.html", "https://bolt.github.io/forms/captcha.html", "https://bolt.github.io/forms/tips.html", "https://bolt.github.io/forms/coding_standards.html"];
 </script>
 <script src="https://bolt.github.io/forms/tipuesearch/tipuesearch_set.js"></script>
 <script src="https://bolt.github.io/forms/tipuesearch/tipuesearch.min.js"></script>
