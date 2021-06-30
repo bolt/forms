@@ -11,18 +11,18 @@ form's configuration.
 
 ```yaml
 feedback:
-  success: …
-  error: …
-  redirect:
-    target: page/another-page?foo=bar&qux=boo
-    query: [name, email, tralala]
+    success: …
+    error: …
+    redirect:
+        target: page/another-page
+        query: [name, email]
 ```
 
 The `target:` specifies where the visitor will be sent. Note that you can add 
 optional get parameters in this URI, that will get sent as-is. For example: 
 
 ```yaml
-    target: page/another-page?foo=bar&qux=boo
+      target: page/another-page?foo=bar&qux=boo
 ```
 
 The optional `query:` lets you set additional parameters that will contain the 

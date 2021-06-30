@@ -41,6 +41,9 @@ menu:
     handlers/save_to_database.md:
         label: Save to Database
         class: sub
+    handlers/redirect.md:
+        label: Redirect the browser
+        class: sub
     captcha.md:
         label: CAPTCHA challenges
     tips.md:
