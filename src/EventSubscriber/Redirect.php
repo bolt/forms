@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
+use Bolt\Common\Str;
 use Bolt\Log\LoggerTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Tightenco\Collect\Support\Collection;
 
 class Redirect implements EventSubscriberInterface
@@ -21,17 +20,6 @@ class Redirect implements EventSubscriberInterface
 
     /** @var Collection */
     private $feedback;
-
-    /** @var UrlMatcherInterface */
-    private $urlMatcher;
-
-    /**
-     * Redirect constructor.
-     */
-    public function __construct(UrlMatcherInterface $urlMatcher)
-    {
-        $this->urlMatcher = $urlMatcher;
-    }
 
     public function handleEvent(PostSubmitEvent $event): void
     {
@@ -56,30 +44,43 @@ class Redirect implements EventSubscriberInterface
         }
 
         if (isset($this->feedback->get('redirect')['target']) && ! empty($this->feedback->get('redirect')['target'])) {
-            $response = $this->getRedirectResponse($this->feedback->get('redirect')['target']);
+            $response = $this->getRedirectResponse($this->feedback->get('redirect'));
 
-            if ($response instanceof RedirectResponse) {
-                $response->send();
-            }
+            $response->send();
         }
 
         throw new HttpException(Response::HTTP_FOUND, '', null, []);
     }
 
-    protected function getRedirectResponse($target)
+    protected function getRedirectResponse(array $redirect): ?RedirectResponse
     {
-        if ((mb_strpos($target, 'http') === 0) || (mb_strpos($target, '#') === 0)) {
-            return new RedirectResponse($target);
-        }
-        try {
-            $url = '/' . ltrim($target, '/');
-            $this->urlMatcher->match($url);
+        $url = $this->makeUrl($redirect);
 
-            return new RedirectResponse($url);
-        } catch (ResourceNotFoundException $e) {
-            // No route found… Go home site admin, you're… um… putting a bad route in!
-            return $this->valid = false;
+        return new RedirectResponse($url);
+    }
+
+    private function makeUrl($redirect): string
+    {
+        $parsedUrl = parse_url($redirect['target']);
+
+        // parse_str returns result in `$query` ¯\_(ツ)_/¯
+        parse_str($parsedUrl['query'], $query);
+
+        if (isset($this->formConfig['feedback']['redirect']['query'])) {
+            foreach ($this->formConfig['feedback']['redirect']['query'] as $key) {
+                if ($this->event->getForm()->has($key)) {
+                    $query[$key] = $this->event->getForm()->get($key)->getNormData();
+                }
+            }
         }
+
+        $url = Str::splitFirst($redirect['target'], '?') . '?' . http_build_query($query);
+
+        if ((mb_strpos($url, 'http') === 0) || (mb_strpos($url, '#') === 0)) {
+            return $url;
+        }
+
+        return '/' . ltrim($url, '/');
     }
 
     public static function getSubscribedEvents()

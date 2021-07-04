@@ -8,7 +8,6 @@ create a new form. For example, create a file `quotation.yaml` in the folder
 ```yaml
 # config/extensions/bolt-boltforms/quotation.yaml
 
-templates:  # Override the global Twig templates if you want
 templates:                      # Override the global Twig templates if you want
 #        form: @theme/form.twig
 #        email: @theme/email.twig

@@ -86,7 +86,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
             }
 
             if (is_array($value)) {
-                $value = implode(", ", $value);
+                $value = implode(', ', $value);
             }
             $value = (string) $value;
 
@@ -96,7 +96,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
 
                 // Don't save the full path. Only the path without the project dir.
                 $newValue = [];
-                foreach ($value as $i => $path) {
+                foreach ($value as $path) {
                     $newValue[] = str_replace($this->projectDir, '', $path);
                 }
 
