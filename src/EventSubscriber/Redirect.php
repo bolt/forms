@@ -64,7 +64,7 @@ class Redirect implements EventSubscriberInterface
         $parsedUrl = parse_url($redirect['target']);
 
         // parse_str returns result in `$query` ¯\_(ツ)_/¯
-        parse_str($parsedUrl['query'], $query);
+        parse_str($parsedUrl['query'] ?? '', $query);
 
         if (isset($this->formConfig['feedback']['redirect']['query'])) {
             foreach ($this->formConfig['feedback']['redirect']['query'] as $key) {
