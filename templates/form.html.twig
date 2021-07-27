@@ -42,5 +42,5 @@
 
 {% if not valid %}
     {% include '@boltforms/honeypotstyle.html.twig' with {'honeypot_name': honeypot_name} %}
-    {{ form(form) }}
+    {{ form(form, {'attr': { 'id': form.vars.id|default }}) }}
 {% endif %}
