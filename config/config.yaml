@@ -55,6 +55,8 @@ layout:
 #    public_key: ''
 #    private_key: ''
 #    theme: light|dark
+#    recaptcha_v3_threshold: 
+#    recaptcha_v3_fail_message:  
 
 ## hCaptcha set up
 #

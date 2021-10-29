@@ -40,7 +40,9 @@ class RecaptchaValidator extends ConstraintValidator
         }
 
         $this->service->setKeys($constraint->siteKey, $constraint->secretKey);
-        $this->service->setV3Thresold($constraint->v3Threshold);
+        if(isset($constraint->v3Threshold)){
+            $this->service->setV3Thresold($constraint->v3Threshold);            
+        }
 
         $result = $this->service->validateTokenFromRequest($this->request);
 
