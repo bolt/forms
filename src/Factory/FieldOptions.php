@@ -6,6 +6,7 @@ namespace Bolt\BoltForms\Factory;
 
 use Bolt\BoltForms\Validator\Constraints\Hcaptcha;
 use Bolt\BoltForms\Validator\Constraints\Recaptcha;
+use Exception;
 use Tightenco\Collect\Support\Collection;
 
 class FieldOptions
@@ -50,6 +51,10 @@ class FieldOptions
                         break;
 
                     case 'recaptcha_v3':
+                        $options['constraints'] = [
+                            new Recaptcha($config['recaptcha']['public_key'], $config['recaptcha']['private_key'], $config['recaptcha']['recaptcha_v3_threshold'], $config['recaptcha']['recaptcha_v3_fail_message']),
+                        ];      
+                        break;                  
                     case 'recaptcha_v2':
                         $options['constraints'] = [
                             new Recaptcha($config['recaptcha']['public_key'], $config['recaptcha']['private_key']),

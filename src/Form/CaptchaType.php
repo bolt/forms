@@ -30,7 +30,7 @@ class CaptchaType extends HiddenType
             'hcaptcha_theme' => 'light',
             'recaptcha_theme' => 'light',
             'hcaptcha_public_key' => '',
-            'recaptcha_public_key' => '',
+            'recaptcha_public_key' => ''
         ]);
     }
 

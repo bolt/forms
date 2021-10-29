@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\Validator\Constraints;
 
 use Bolt\BoltForms\Services\RecaptchaService;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
@@ -29,7 +30,7 @@ class RecaptchaValidator extends ConstraintValidator
     {
         if (! $constraint instanceof Recaptcha) {
             throw new UnexpectedTypeException($constraint, Recaptcha::class);
-        }
+        } 
 
         if (empty($this->request->get(RecaptchaService::POST_FIELD_NAME))) {
             $this->context->buildViolation($constraint->incompleteMessage)
@@ -39,13 +40,19 @@ class RecaptchaValidator extends ConstraintValidator
         }
 
         $this->service->setKeys($constraint->siteKey, $constraint->secretKey);
+        $this->service->setV3Thresold($constraint->v3Threshold);
 
         $result = $this->service->validateTokenFromRequest($this->request);
 
         if ($result !== true) {
-            $this->context->buildViolation($constraint->message)
+            if($result === false){
+                $this->context->buildViolation($constraint->v3ThresholdFailedMessage)
+                ->addViolation();                
+            } else {
+                $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ error }}', $result)
                 ->addViolation();
+            }
         }
     }
 }

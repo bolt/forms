@@ -7,6 +7,7 @@ namespace Bolt\BoltForms\Services;
 use Bolt\BoltForms\CaptchaException;
 use Bolt\BoltForms\Extension;
 use Bolt\Extension\ExtensionRegistry;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class RecaptchaService
@@ -19,6 +20,9 @@ class RecaptchaService
     /** @var string */
     private $secretKey;
 
+    /** @var float */
+    private $v3Threshold;
+
     public function __construct(ExtensionRegistry $extensionRegistry)
     {
         $this->registry = $extensionRegistry;
@@ -28,6 +32,10 @@ class RecaptchaService
     {
         // Note: $siteKey is not used, but here to stay in sync with HcaptchaService.php
         $this->secretKey = $secretKey;
+    }
+
+    public function setV3Thresold(float $v3Threshold): void {
+        $this->v3Threshold = $v3Threshold;
     }
 
     public function validateTokenFromRequest(Request $request)
@@ -62,6 +70,9 @@ class RecaptchaService
         }
 
         if ($jsonResponse->success) {
+            if($jsonResponse->score < $this->v3Threshold){
+                return false;
+            }
             return true;
         }
 

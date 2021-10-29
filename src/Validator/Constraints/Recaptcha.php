@@ -20,9 +20,17 @@ class Recaptcha extends Constraint
     /** @var string */
     public $siteKey;
 
-    public function __construct($siteKey, $secretKey)
+    /** @var float */
+    public $v3Threshold;
+
+    /** @var string */
+    public $v3ThresholdFailedMessage;
+
+    public function __construct($siteKey, $secretKey, $v3Threshold = 0.0, $v3ThresholdFailedMessage = '')
     {
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;
+        $this->v3Threshold = $v3Threshold;
+        $this->v3ThresholdFailedMessage = $v3ThresholdFailedMessage;
     }
 }
