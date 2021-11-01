@@ -6,7 +6,6 @@ namespace Bolt\BoltForms\Factory;
 
 use Bolt\BoltForms\Validator\Constraints\Hcaptcha;
 use Bolt\BoltForms\Validator\Constraints\Recaptcha;
-use Exception;
 use Tightenco\Collect\Support\Collection;
 
 class FieldOptions
@@ -46,6 +45,7 @@ class FieldOptions
                 switch ($options['captcha_type']) {
                     case 'hcaptcha':
                         $options['constraints'] = [
+
                             new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key']),
                         ];
                         break;

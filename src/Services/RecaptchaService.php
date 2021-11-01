@@ -34,7 +34,15 @@ class RecaptchaService
     }
 
     public function setV3Thresold(float $v3Threshold): void {
-        $this->v3Threshold = $v3Threshold;
+        
+        $v3Threshold = round($v3Threshold, 1);
+
+        if($v3Threshold >= 0.0 && $v3Threshold <= 1.0){
+            $this->v3Threshold = $v3Threshold;            
+        } else {
+            throw new CaptchaException('Score must be between 0.0 and 1.0, you provided: ' . $v3Threshold);
+        }
+        
     }
 
     public function validateTokenFromRequest(Request $request)
