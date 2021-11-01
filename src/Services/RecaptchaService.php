@@ -7,7 +7,6 @@ namespace Bolt\BoltForms\Services;
 use Bolt\BoltForms\CaptchaException;
 use Bolt\BoltForms\Extension;
 use Bolt\Extension\ExtensionRegistry;
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class RecaptchaService

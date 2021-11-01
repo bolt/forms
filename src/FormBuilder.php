@@ -7,7 +7,6 @@ namespace Bolt\BoltForms;
 use Bolt\BoltForms\EventSubscriber\SymfonyFormProxySubscriber;
 use Bolt\BoltForms\Factory\FieldOptions;
 use Bolt\BoltForms\Factory\FieldType;
-use Exception;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
