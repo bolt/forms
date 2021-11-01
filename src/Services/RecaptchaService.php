@@ -19,6 +19,9 @@ class RecaptchaService
     /** @var string */
     private $secretKey;
 
+    /** @var float */
+    private $v3Threshold;
+
     public function __construct(ExtensionRegistry $extensionRegistry)
     {
         $this->registry = $extensionRegistry;
@@ -28,6 +31,18 @@ class RecaptchaService
     {
         // Note: $siteKey is not used, but here to stay in sync with HcaptchaService.php
         $this->secretKey = $secretKey;
+    }
+
+    public function setV3Threshold(float $v3Threshold): void {
+        
+        $v3Threshold = round($v3Threshold, 1);
+
+        if($v3Threshold >= 0.0 && $v3Threshold <= 1.0){
+            $this->v3Threshold = $v3Threshold;            
+        } else {
+            throw new CaptchaException('Score must be between 0.0 and 1.0, you provided: ' . $v3Threshold);
+        }
+        
     }
 
     public function validateTokenFromRequest(Request $request)
@@ -62,6 +77,9 @@ class RecaptchaService
         }
 
         if ($jsonResponse->success) {
+            if($jsonResponse->score < $this->v3Threshold){
+                return false;
+            }
             return true;
         }
 

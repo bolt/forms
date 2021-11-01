@@ -13,6 +13,8 @@ You will need to obtain a site key and secret key from either of the above platf
 Uncomment either the `hcaptcha` or `recaptcha` nodes in your config, and populate the public_key (site key) and
 private_key (secret key) settings. Set the `enabled` node to true.
 
+For reCAPTCHA v3, you can set a threshold for the score that's returned from Google. If the score is not met, the string set in `recaptcha_v3_threshold` is returned to the form.
+
 Please note: `theme` can either be `light` or `dark` - it only applies to hCaptcha and reCAPTCHA v2 checkbox.)
 
 ## hCaptcha
@@ -33,6 +35,8 @@ recaptcha:
     public_key: '...'
     private_key: '...'
     theme: light
+    recaptcha_v3_threshold: 0.0 # A threshold of 0.0 allows all scores returned from Google to be submitted.
+    recaptcha_v3_fail_message: We've been unable to verify whether you're human! Please, try resubmitting the form or get in touch via an alternative contact method.
 ```
 
 Finally, insert a captcha field in your form where you would like the CAPTCHA challenge to appear. If an invisible
