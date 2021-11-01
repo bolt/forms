@@ -47,8 +47,10 @@ class RecaptchaValidator extends ConstraintValidator
 
         if ($result !== true) {
             if($result === false){
+
                 $this->context->buildViolation($constraint->v3ThresholdFailedMessage)
-                ->addViolation();                
+                ->addViolation();  
+             
             } else {
                 $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ error }}', $result)
