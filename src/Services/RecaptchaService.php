@@ -33,7 +33,7 @@ class RecaptchaService
         $this->secretKey = $secretKey;
     }
 
-    public function setV3Thresold(float $v3Threshold): void {
+    public function setV3Threshold(float $v3Threshold): void {
         
         $v3Threshold = round($v3Threshold, 1);
 

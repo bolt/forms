@@ -45,7 +45,6 @@ class FieldOptions
                 switch ($options['captcha_type']) {
                     case 'hcaptcha':
                         $options['constraints'] = [
-
                             new Hcaptcha($config['hcaptcha']['public_key'], $config['hcaptcha']['private_key']),
                         ];
                         break;

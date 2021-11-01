@@ -35,8 +35,8 @@ recaptcha:
     public_key: '...'
     private_key: '...'
     theme: light
-    recaptcha_v3_threshold:
-    recaptcha_v3_fail_message:     
+    recaptcha_v3_threshold: 0.0 # A threshold of 0.0 allows all scores returned from Google to be submitted.
+    recaptcha_v3_fail_message: We've been unable to verify whether you're human! Please, try resubmitting the form or get in touch via an alternative contact method.
 ```
 
 Finally, insert a captcha field in your form where you would like the CAPTCHA challenge to appear. If an invisible
