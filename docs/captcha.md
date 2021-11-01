@@ -13,7 +13,7 @@ You will need to obtain a site key and secret key from either of the above platf
 Uncomment either the `hcaptcha` or `recaptcha` nodes in your config, and populate the public_key (site key) and
 private_key (secret key) settings. Set the `enabled` node to true.
 
-For recaptcha v3, you can set a threshold for the score that's returned from google. If the score is not met, the string set in `recaptcha_v3_threshold` is returned to the form.
+For reCAPTCHA v3, you can set a threshold for the score that's returned from Google. If the score is not met, the string set in `recaptcha_v3_threshold` is returned to the form.
 
 Please note: `theme` can either be `light` or `dark` - it only applies to hCaptcha and reCAPTCHA v2 checkbox.)
 
