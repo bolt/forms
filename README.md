@@ -2,7 +2,7 @@
 
 Authors: Bob den Otter, Ivo Valchev
 
-This Bolt extension can be used to handle forms in your Bolt 4 project.
+This Bolt extension can be used to handle forms in your Bolt 4/5 project.
 
 Installation:
 
