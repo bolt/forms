@@ -85,7 +85,7 @@ class EmailFactory
     protected function getSubject(): string
     {
         $subject = $this->notification->get('subject', 'Untitled email');
-        $subject = Str::ensureStartsWith($subject, $this->notification->get('subject_prefix', '[Boltforms] ') . ' ');
+        // $subject = Str::ensureStartsWith($subject, $this->notification->get('subject_prefix', '[Boltforms] ') . ' ');
 
         return $this->parsePartial($subject);
     }

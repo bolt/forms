@@ -139,7 +139,7 @@ class FormBuilder
                 $attr = [
                     'class' => 'g-recaptcha',
                     'data-sitekey' => $config['recaptcha']['public_key'],
-                    'data-callback' => 'onRecaptchaSubmitted',
+                    'data-callback' => 'onRecaptchaSubmitted'.$formName,
                     // pass the name of the form as the Action for reCAPTCHA v3
                     'data-action' => $formName,
                 ];
