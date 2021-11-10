@@ -6,16 +6,16 @@
  #   config   — Current Form's configuration data
  #   meta     — Meta data (IP, URL, Timestamp)
  #}
-<p>Dear <strong>{{ email.toName }}</strong>, </p>
+{# <p>Dear <strong>{{ email.toName }}</strong>, </p>
 
 <p>Somebody used the form <strong>{{ formname }}</strong> on {{ meta.url }} to send you a message.</p>
 
-<p>The posted data is as follows:</p>
+<p>The posted data is as follows:</p> #}
 
-<hr size="1">
     {{ block('submission_summary', '@boltforms/email_blocks.html.twig') }}
 <hr size="1">
 
 <br>
 
-<em>Sent by the <a href="https://github.com/bolt/boltforms">BoltForms</a> extension for <a href="https://boltcms.io">Bolt</a>.</em>
+<p>Registered in England, Company No. 5518204.</p>
+<p>Registered Office: Military House, 24 Castle Street, Chester, CH1 2DS</p>

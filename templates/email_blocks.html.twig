@@ -16,9 +16,9 @@
                         <li>
                             {{ block('field_label') }}
                             {% if field.type in ['date', 'datetime', 'dateinterval'] %}
-                                {{ block('field_date') }}
+                                {{ block('field_date') |trim  }}
                             {% else %}
-                                {{ block('field_value') }}
+                                {{ block('field_value') |trim }}
                             {% endif %}
                         </li>
                     {% endapply %}
