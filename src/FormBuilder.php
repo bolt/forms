@@ -139,6 +139,7 @@ class FormBuilder
                 $attr = [
                     'class' => 'g-recaptcha',
                     'data-sitekey' => $config['recaptcha']['public_key'],
+                    // Including form name in function to prevent multiple submits 
                     'data-callback' => 'onRecaptchaSubmitted'.$formName,
                     // pass the name of the form as the Action for reCAPTCHA v3
                     'data-action' => $formName,

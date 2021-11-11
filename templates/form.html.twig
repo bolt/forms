@@ -13,6 +13,7 @@
 {% if boltforms_config.recaptcha.enabled|default() %}
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
+        //Including form name in function to prevent multiple submits 
         function onRecaptchaSubmitted{{form.vars.name}}(token) {
             var elementsWithName = document.getElementsByName('{{ form.vars.name }}');
             for (var i = 0; i < elementsWithName.length; i++) {
