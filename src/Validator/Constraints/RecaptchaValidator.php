@@ -29,7 +29,7 @@ class RecaptchaValidator extends ConstraintValidator
     {
         if (! $constraint instanceof Recaptcha) {
             throw new UnexpectedTypeException($constraint, Recaptcha::class);
-        } 
+        }
 
         if (empty($this->request->get(RecaptchaService::POST_FIELD_NAME))) {
             $this->context->buildViolation($constraint->incompleteMessage)
@@ -39,22 +39,20 @@ class RecaptchaValidator extends ConstraintValidator
         }
 
         $this->service->setKeys($constraint->siteKey, $constraint->secretKey);
-        if(isset($constraint->v3Threshold)){
-            $this->service->setV3Threshold($constraint->v3Threshold);            
+        if (isset($constraint->v3Threshold)) {
+            $this->service->setV3Threshold($constraint->v3Threshold);
         }
 
         $result = $this->service->validateTokenFromRequest($this->request);
 
         if ($result !== true) {
-            if($result === false){
-
+            if ($result === false) {
                 $this->context->buildViolation($constraint->v3ThresholdFailedMessage)
-                ->addViolation();  
-             
+                    ->addViolation();
             } else {
                 $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ error }}', $result)
-                ->addViolation();
+                    ->setParameter('{{ error }}', $result)
+                    ->addViolation();
             }
         }
     }

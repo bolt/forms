@@ -104,7 +104,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
             }
 
             // We forcibly set it, if the field is defined OR (`ignore_missing` is set AND it is `false`)
-            if ($content->hasFieldDefined($name) || (isset($config['ignore_missing']) && !$config['ignore_missing'])) {
+            if ($content->hasFieldDefined($name) || (isset($config['ignore_missing']) && ! $config['ignore_missing'])) {
                 $content->setFieldValue($name, $value);
             }
         }
