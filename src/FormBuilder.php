@@ -136,13 +136,32 @@ class FormBuilder
             $attr = [];
 
             if ($this->hasRecaptchaV3) {
+                //Fix for allowing multiple recaptcha v3 forms on a single page
+
+                //Used to converted snake case into camel case
+                $splitFormName = explode("_", $formName);
+                if(count($splitFormName) > 1){
+                    foreach($splitFormName as $item){
+                        $item = ucfirst($item);
+                    }
+                    $formNameJs = join(" ", $splitFormName);
+                } else {
+                    $formNameJs = ucfirst($formName);
+                }
                 $attr = [
                     'class' => 'g-recaptcha',
                     'data-sitekey' => $config['recaptcha']['public_key'],
-                    'data-callback' => 'onRecaptchaSubmitted',
+                    'data-callback' => 'onRecaptchaSubmitted' . $formNameJs,
                     // pass the name of the form as the Action for reCAPTCHA v3
                     'data-action' => $formName,
-                ];
+                ];                
+                // $attr = [
+                //     'class' => 'g-recaptcha',
+                //     'data-sitekey' => $config['recaptcha']['public_key'],
+                //     'data-callback' => 'onRecaptchaSubmitted',
+                //     // pass the name of the form as the Action for reCAPTCHA v3
+                //     'data-action' => $formName,
+                // ];
             } elseif ($this->hasRecaptchaV2Invisible) {
                 $attr = [
                     'class' => 'g-recaptcha',
