@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
+use Bolt\BoltForms\Event\PostSubmitEventDispatcher;
 use Bolt\Twig\Notifications;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,13 +34,17 @@ class FormRuntime implements RuntimeExtensionInterface
     /** @var BoltFormsConfig */
     private $config;
 
+    /** @var PostSubmitEventDispatcher */
+    private $postSubmitEventDispatcher;
+
     public function __construct(
         Notifications $notifications,
         Environment $twig,
         FormBuilder $builder,
         RequestStack $requestStack,
         EventDispatcherInterface $dispatcher,
-        BoltFormsConfig $boltFormsConfig
+        BoltFormsConfig $boltFormsConfig,
+        PostSubmitEventDispatcher $postSubmitEventDispatcher
     ) {
         $this->notifications = $notifications;
         $this->twig = $twig;
@@ -47,6 +52,7 @@ class FormRuntime implements RuntimeExtensionInterface
         $this->request = $requestStack->getCurrentRequest();
         $this->dispatcher = $dispatcher;
         $this->config = $boltFormsConfig;
+        $this->postSubmitEventDispatcher = $postSubmitEventDispatcher;
     }
 
     public function run(string $formName = '', array $data = [], bool $warn = true)
@@ -67,10 +73,7 @@ class FormRuntime implements RuntimeExtensionInterface
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted()) {
-            $event = new PostSubmitEvent($form, $this->config, $formName, $this->request);
-            $this->dispatcher->dispatch($event, PostSubmitEvent::NAME);
-
-            $extension->dump(sprintf('Form "%s" has been submitted', $formName));
+            $this->postSubmitEventDispatcher->handle($formName, $form, $this->request);
         }
 
         $extension->dump($formConfig);
