@@ -5,3 +5,6 @@ services:
   Bolt\BoltForms\EventSubscriber\FileUploadHandler:
     arguments:
       $projectDir: '%kernel.project_dir%'
+  Bolt\BoltForms\Event\PostSubmitEvent:
+    autowire: false
+    autoconfigure: false
