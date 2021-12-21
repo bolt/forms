@@ -155,13 +155,6 @@ class FormBuilder
                     // pass the name of the form as the Action for reCAPTCHA v3
                     'data-action' => $formName,
                 ];                
-                // $attr = [
-                //     'class' => 'g-recaptcha',
-                //     'data-sitekey' => $config['recaptcha']['public_key'],
-                //     'data-callback' => 'onRecaptchaSubmitted',
-                //     // pass the name of the form as the Action for reCAPTCHA v3
-                //     'data-action' => $formName,
-                // ];
             } elseif ($this->hasRecaptchaV2Invisible) {
                 $attr = [
                     'class' => 'g-recaptcha',
