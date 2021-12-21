@@ -10,10 +10,10 @@ class FieldConstraints
 {
     public const SF_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
 
-    public static function get(string $formName, array $field): ?array
+    public static function get(string $formName, array $field): array
     {
         if (! \array_key_exists('constraints', $field)) {
-            return null;
+            return [];
         }
 
         $result = [];
