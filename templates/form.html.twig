@@ -11,9 +11,19 @@
 {% endif %}
 
 {% if boltforms_config.recaptcha.enabled|default() %}
+    {% set formSplit = form.vars.name|split("_") %}
+    {% if formSplit|length > 1 %}
+        {% for item in formSplit %}
+            {% set item = item|capitalize %}
+        {% endfor %}
+        {% set formNameJs = formSplit|join %}
+    {% else %}
+        {% set formNameJs = form.vars.name|capitalize %}
+    {% endif %}
+
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
-        function onRecaptchaSubmitted(token) {
+        function onRecaptchaSubmitted{{formNameJs}}(token) {
             var elementsWithName = document.getElementsByName('{{ form.vars.name }}');
             for (var i = 0; i < elementsWithName.length; i++) {
                 if (elementsWithName[i].tagName.toLowerCase() == 'form') {
