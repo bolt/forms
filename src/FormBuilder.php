@@ -154,7 +154,7 @@ class FormBuilder
                     'data-callback' => 'onRecaptchaSubmitted' . $formNameJs,
                     // pass the name of the form as the Action for reCAPTCHA v3
                     'data-action' => $formName,
-                ];                
+                ];
             } elseif ($this->hasRecaptchaV2Invisible) {
                 $attr = [
                     'class' => 'g-recaptcha',
