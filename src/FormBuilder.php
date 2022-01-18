@@ -144,7 +144,7 @@ class FormBuilder
                     foreach($splitFormName as $item){
                         $item = ucfirst($item);
                     }
-                    $formNameJs = join(" ", $splitFormName);
+                    $formNameJs = join("", $splitFormName);
                 } else {
                     $formNameJs = ucfirst($formName);
                 }
