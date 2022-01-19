@@ -11,26 +11,52 @@
 {% endif %}
 
 {% if boltforms_config.recaptcha.enabled|default() %}
+
     {% set formSplit = form.vars.name|split("_") %}
     {% if formSplit|length > 1 %}
         {% for item in formSplit %}
             {% set item = item|capitalize %}
         {% endfor %}
-        {% set formNameJs = formSplit|join %}
+        {% set formNameJs = formSplit|join("") %}
     {% else %}
         {% set formNameJs = form.vars.name|capitalize %}
     {% endif %}
 
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
-        function onRecaptchaSubmitted{{formNameJs}}(token) {
-            var elementsWithName = document.getElementsByName('{{ form.vars.name }}');
-            for (var i = 0; i < elementsWithName.length; i++) {
-                if (elementsWithName[i].tagName.toLowerCase() == 'form') {
-                    elementsWithName[i].submit();
-                }
+        window["onRecaptchaSubmitted{{formNameJs}}"] = function(token) {
+
+            var form = document.querySelector("form[name={{ form.vars.name }}]",
+                fields = [].slice.call(form.elements),
+                field;
+
+            function checkValidity (field){
+                var required = (
+                    field.id.slice(-5) !== "token" && // hop over the captcha field
+                    field.hasAttribute("required") && // only test required fields
+                    field.getAttribute("required") !== "false"
+                );
+                return (
+                    required === false || 
+                    field.checkValidity()
+                );
             }
-        }
+
+            if (form.noValidate === false) {
+
+                while (fields.length) {
+                    field = fields.shift();
+                    if (checkValidity(field) === false) {
+                        field.reportValidity();
+                        return;
+                    }
+                }
+
+            }
+
+            form.submit();
+
+        };
     </script>
 {% endif %}
 
