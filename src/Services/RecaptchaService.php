@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 class RecaptchaService
 {
     public const POST_FIELD_NAME = 'g-recaptcha-response';
+    public const RECAPTCHA_VERSION_2 = 'recaptcha_v2';
+    public const RECAPTCHA_VERSION_3 = 'recaptcha_v3';
 
     /** @var ExtensionRegistry */
     private $registry;
@@ -22,6 +24,9 @@ class RecaptchaService
     /** @var float */
     private $v3Threshold;
 
+    /** @var string */
+    private $recaptchaVersion;
+
     public function __construct(ExtensionRegistry $extensionRegistry)
     {
         $this->registry = $extensionRegistry;
@@ -31,6 +36,14 @@ class RecaptchaService
     {
         // Note: $siteKey is not used, but here to stay in sync with HcaptchaService.php
         $this->secretKey = $secretKey;
+    }
+
+    /**
+     * @param string $recaptchaVersion
+     */
+    public function setRecaptchaVersion(string $recaptchaVersion): void
+    {
+        $this->recaptchaVersion = $recaptchaVersion;
     }
 
     public function setV3Threshold(float $v3Threshold): void
@@ -76,7 +89,7 @@ class RecaptchaService
         }
 
         if ($jsonResponse->success) {
-            if ($jsonResponse->score < $this->v3Threshold) {
+            if ($this->recaptchaVersion === self::RECAPTCHA_VERSION_3 && $jsonResponse->score < $this->v3Threshold) {
                 return false;
             }
 
