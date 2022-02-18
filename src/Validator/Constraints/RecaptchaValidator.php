@@ -39,6 +39,7 @@ class RecaptchaValidator extends ConstraintValidator
         }
 
         $this->service->setKeys($constraint->siteKey, $constraint->secretKey);
+        $this->service->setRecaptchaVersion($constraint->recaptchaVersion);
         if (isset($constraint->v3Threshold)) {
             $this->service->setV3Threshold($constraint->v3Threshold);
         }
