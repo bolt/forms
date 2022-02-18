@@ -25,6 +25,8 @@ class Hcaptcha extends Constraint
 
     public function __construct($siteKey, $secretKey)
     {
+        parent::__construct();
+
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;
     }

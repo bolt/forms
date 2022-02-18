@@ -30,6 +30,8 @@ class Recaptcha extends Constraint
 
     public function __construct($siteKey, $secretKey, $recaptchaVersion, $v3Threshold = 0.0, $v3ThresholdFailedMessage = '')
     {
+        parent::__construct();
+
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;
         $this->recaptchaVersion = $recaptchaVersion;
