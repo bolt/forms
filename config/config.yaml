@@ -39,10 +39,13 @@ templates:
     subject: '@boltforms/subject.html.twig'
     files: '@boltforms/file_browser.twig'
 
-# If the default templates are used, customise the layout.
+# If the default templates are used, customise the layout, or see all options here: 
+# https://symfony.com/doc/current/form/form_themes.html#symfony-builtin-forms
+# Note that when using 'form_div_layout.html.twig', checkboxes and radio-buttons 
+# do not show labels by default. 
 layout:
-    form: 'form_div_layout.html.twig' # or see all options here: https://github.com/symfony/symfony/tree/5.x/src/Symfony/Bridge/Twig/Resources/views/Form
-    bootstrap: false # if true, bootstrap will automatically be included.
+    form: 'bootstrap_5_layout.html.twig' 
+    bootstrap: true # if set to `true`, Bootstrap's CSS will automatically be included from CDN
 
 ## reCAPTCHa set up
 #
