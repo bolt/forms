@@ -152,6 +152,17 @@
             "oranges": "Oranges"
         expanded: true
         multiple: true</code></pre>
+<p>A <em>single</em> checkbox can be added like this:</p>
+<pre><code class="language-yaml">newsletter:
+    type: checkbox
+    options:
+        label: "Yes, I'd like to subscribe to your newsletter"
+        required: false</code></pre>
+<p>Note that when using <code>form_div_layout.html.twig</code> as layout in <code>bolt-boltforms.yaml</code>, checkboxes and radio-buttons do not show labels by default.
+If you want to use this layout, it's advised to copy it to your theme folder, change its name, modify it, and configure it like this:</p>
+<pre><code class="language-yaml">layout:
+    form: 'my_form_layout.html.twig'
+    bootstrap: false</code></pre>
 <p>More options regarding the <code>choice</code> field are available on the <a href="https://symfony.com/doc/current/reference/forms/types/choice.html#select-tag-checkboxes-or-radio-buttons">official Symfony Forms documentation</a> page.</p>
                     </section>
                 </div>

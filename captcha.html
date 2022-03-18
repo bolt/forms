@@ -146,6 +146,7 @@
 <p><strong>Please note it is not possible to use both. hCaptcha has been designed to easily replace reCAPTCHA, so it takes over.</strong></p>
 <p>Uncomment either the <code>hcaptcha</code> or <code>recaptcha</code> nodes in your config, and populate the public_key (site key) and
 private_key (secret key) settings. Set the <code>enabled</code> node to true.</p>
+<p>For reCAPTCHA v3, you can set a threshold for the score that's returned from Google. If the score is not met, the string set in <code>recaptcha_v3_threshold</code> is returned to the form.</p>
 <p>Please note: <code>theme</code> can either be <code>light</code> or <code>dark</code> - it only applies to hCaptcha and reCAPTCHA v2 checkbox.)</p>
 <h2 id="hcaptcha">hCaptcha</h2>
 <pre><code class="language-yaml">hcaptcha:
@@ -158,7 +159,9 @@ private_key (secret key) settings. Set the <code>enabled</code> node to true.</p
     enabled: true
     public_key: '...'
     private_key: '...'
-    theme: light</code></pre>
+    theme: light
+    recaptcha_v3_threshold: 0.0 # A threshold of 0.0 allows all scores returned from Google to be submitted.
+    recaptcha_v3_fail_message: We've been unable to verify whether you're human! Please, try resubmitting the form or get in touch via an alternative contact method.</code></pre>
 <p>Finally, insert a captcha field in your form where you would like the CAPTCHA challenge to appear. If an invisible
 CAPTCHA is being used (reCAPTCHA v3 or v2 invisible), this is where any validation errors will be rendered.</p>
 <p>This field must be before the submit button for reCAPTCHA v3 and v2 invisible. The field name can
