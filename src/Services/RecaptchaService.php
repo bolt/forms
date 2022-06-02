@@ -39,7 +39,6 @@ class RecaptchaService
     }
 
     /**
-     * @param string $recaptchaVersion
      */
     public function setRecaptchaVersion(string $recaptchaVersion): void
     {

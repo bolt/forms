@@ -87,7 +87,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
 
             if (is_array($value)) {
                 $value = implode(', ', array_map(function ($entry) {
-                  return $entry[0];
+                    return $entry[0];
                 }, $value));
             }
             $value = (string) $value;

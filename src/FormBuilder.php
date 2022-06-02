@@ -140,8 +140,8 @@ class FormBuilder
 
                 //Used to converted snake case into camel case
                 $splitFormName = explode("_", $formName);
-                if(count($splitFormName) > 1){
-                    foreach($splitFormName as $item){
+                if (count($splitFormName) > 1) {
+                    foreach ($splitFormName as $item) {
                         $item = ucfirst($item);
                     }
                     $formNameJs = join("", $splitFormName);
