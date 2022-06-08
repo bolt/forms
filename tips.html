@@ -164,6 +164,32 @@ If you want to use this layout, it's advised to copy it to your theme folder, ch
     form: 'my_form_layout.html.twig'
     bootstrap: false</code></pre>
 <p>More options regarding the <code>choice</code> field are available on the <a href="https://symfony.com/doc/current/reference/forms/types/choice.html#select-tag-checkboxes-or-radio-buttons">official Symfony Forms documentation</a> page.</p>
+<h2 id="using-content-as-choices">Using Content as Choices</h2>
+<p>With <code>type: contenttype</code>, you can use content as choices. This makes additional <code>params</code> option is available.
+These are the same options as what you'd use for regular <code>setcontent</code> queries.</p>
+<pre><code class="language-yaml">favourite_food:
+    type: contenttype
+    options:
+        expanded: true
+        multiple: true
+        params:
+            contenttype: pages
+            label: title
+            value: slug
+            limit: 10
+            sort: title
+            criteria:
+                status: 'draft || published' # by default only published items are queried</code></pre>
+<p>Options for <code>choice</code> are available here; <code>choices</code> will be overwritten by the queried values.
+The following options are available for <code>params</code>:</p>
+<ul>
+<li><code>contenttype</code>: the contenttype to query.</li>
+<li><code>label</code>: the name of the field to use as labels.</li>
+<li><code>value</code>: the name of the field to use as values.</li>
+<li><code>limit</code>: the number of records to return.</li>
+<li><code>sort</code>: the field value to sort on; prefix with <code>-</code> for descending order.</li>
+<li><code>criteria</code>: the <code>where</code> clause.</li>
+</ul>
                     </section>
                 </div>
             </main>
