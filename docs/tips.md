@@ -44,3 +44,34 @@ layout:
 ```
 
 More options regarding the `choice` field are available on the [official Symfony Forms documentation](https://symfony.com/doc/current/reference/forms/types/choice.html#select-tag-checkboxes-or-radio-buttons) page.
+
+## Using Content as Choices
+
+With `type: contenttype`, you can use content as choices. This makes additional `params` option is available.
+These are the same options as what you'd use for regular `setcontent` queries.
+
+```yaml
+favourite_food:
+    type: contenttype
+    options:
+        expanded: true
+        multiple: true
+        params:
+            contenttype: pages
+            label: title
+            value: slug
+            limit: 10
+            sort: title
+            criteria:
+                status: 'draft || published' # by default only published items are queried
+```
+
+Options for `choice` are available here; `choices` will be overwritten by the queried values.
+The following options are available for `params`:
+
+* `contenttype`: the contenttype to query.
+* `label`: the name of the field to use as labels.
+* `value`: the name of the field to use as values.
+* `limit`: the number of records to return.
+* `sort`: the field value to sort on; prefix with `-` for descending order.
+* `criteria`: the `where` clause.

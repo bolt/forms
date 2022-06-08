@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use PhpCsFixer\Fixer\Alias\MbStrFunctionsFixer;
-use PhpCsFixer\Fixer\Alias\RandomApiMigrationFixer;
 use PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer;
 use PhpCsFixer\Fixer\ArrayNotation\WhitespaceAfterCommaInArrayFixer;
 use PhpCsFixer\Fixer\Basic\BracesFixer;
@@ -46,14 +45,15 @@ use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer
 use Symplify\CodingStandard\Fixer\ArrayNotation\StandaloneLineInMultilineArrayFixer;
 use Symplify\CodingStandard\Fixer\Commenting\RemoveSuperfluousDocBlockWhitespaceFixer;
 use Symplify\CodingStandard\Fixer\Strict\BlankLineAfterStrictTypesFixer;
+use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 // Suppress `Notice:`s in ECS 8.x This is probably fixed in the 9.x versions,
 // but we can't update to that version, because it's PHP > 7.3 only.
 // See: https://github.com/bolt/core/issues/2519
 error_reporting(error_reporting() & ~E_NOTICE);
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $parameters = $containerConfigurator->parameters();
+return static function (ECSConfig $ecsConfig): void {
+    $parameters = $ecsConfig->parameters();
 
     $parameters->set('sets', ['clean-code', 'common', 'php70', 'php71', 'psr12', 'symfony', 'symfony-risky']);
 
@@ -76,11 +76,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         UnaryOperatorSpacesFixer::class => null,
         ArrayOpenerAndCloserNewlineFixer::class => null,
         ArrayListItemNewlineFixer::class => null,
-        // Don't change mt_rand to random_int, because we intentionally want pseudo-randomness
-        RandomApiMigrationFixer::class => null,
     ]);
 
-    $services = $containerConfigurator->services();
+    $services = $ecsConfig->services();
 
     $services->set(StandaloneLineInMultilineArrayFixer::class);
 
@@ -111,7 +109,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(OrderedImportsFixer::class)
         ->call('configure', [[
-            'importsOrder' => ['class', 'const', 'function'],
+            'imports_order' => ['class', 'const', 'function'],
         ]]);
 
     $services->set(DeclareEqualNormalizeFixer::class)
