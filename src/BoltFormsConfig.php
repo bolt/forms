@@ -69,24 +69,39 @@ class BoltFormsConfig
 
     private function getAdditionalFormConfigs(): array
     {
-        $configPath = explode('.yaml', $this->getExtension()->getConfigFilenames()['main'])[0] . DIRECTORY_SEPARATOR;
-
+        $mainConfigPath = $this->getExtension()->getConfigFilenames()['main'];
+        $boltFormsRoot = explode('.yaml', $mainConfigPath)[0];
+        $extrasConfigPath = $boltFormsRoot . DIRECTORY_SEPARATOR;
+        
+        $global_aliases = file_get_contents($boltFormsRoot.'-global.yaml');
+        
+        if (is_null($global_aliases) ) {$global_aliases = '';}
         $finder = new Finder();
-
-        $finder->files()->in($configPath)->name('*.yaml');
-
+    
+        $finder->files()->in($extrasConfigPath)->name('*.yaml');
+    
         if (! $finder->hasResults()) {
             return [];
         }
-
         $result = [];
-
+    
         foreach ($finder as $file) {
             $formName = basename($file->getBasename(), '.yaml');
-
-            $result[$formName] = Yaml::parseFile($file->getRealPath());
+            $ymlContents = '';
+            
+            if (is_file($file->getRealPath()) && is_readable($file->getRealPath())){
+                $ymlContents = file_get_contents($file->getRealPath());
+            }
+            try {
+                $result[$formName] = Yaml::parse($global_aliases . $ymlContents);
+            } catch (ParseException $e) {
+                $e;
+                throw new ParseException(sprintf('Error detected on form %s: %s', $formName, $e->getMessage()));
+            }
+            
+            unset($result[$formName]['global_aliases']);
         }
-
+    
         return $result;
     }
 }
