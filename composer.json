@@ -12,7 +12,8 @@
     "require": {
         "php": ">=7.2.9",
         "twig/twig": "^2.12 || ^3.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "gregwar/captcha-bundle": "^2.2"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12",

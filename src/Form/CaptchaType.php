@@ -36,6 +36,6 @@ class CaptchaType extends HiddenType
 
     public function getBlockPrefix()
     {
-        return 'captcha';
+        return 'boltFormsCaptcha';
     }
 }
