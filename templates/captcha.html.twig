@@ -1,10 +1,10 @@
-{% block captcha_label %}
+{% block boltFormsCaptcha_label %}
     {% if captcha_type != 'recaptcha_v3' and (captcha_type != 'recaptcha_v2' or not captcha_invisible) and label !== false %}
         {{ block('form_label') }}
     {% endif %}
 {% endblock %}
 
-{% block captcha_widget %}
+{% block boltFormsCaptcha_widget %}
     {% if captcha_type == 'hcaptcha' %}
         <div class="h-captcha" data-sitekey="{{ hcaptcha_public_key }}" data-theme="{{ hcaptcha_theme }}"></div>
     {% elseif captcha_type == 'recaptcha_v3' %}

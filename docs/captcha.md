@@ -5,6 +5,7 @@ Bolt forms support the following CAPTCHA platforms:
 
 * [Google reCAPTCHA](https://www.google.com/recaptcha/about/) (v3, v2 checkbox, v2 invisible)
 * [hCaptcha](https://www.hcaptcha.com/)
+* [gregwarCaptcha](https://github.com/Gregwar/CaptchaBundle) (Captcha without 3rd party dependencies)
 
 You will need to obtain a site key and secret key from either of the above platforms.
 
@@ -74,6 +75,10 @@ contact:
             options:
                 captcha_type: recaptcha_v2
                 captcha_invisible: true
+
+        # Gregwar Captcha:
+        my_gregwar_captcha:
+            type: gregwarCaptcha
 
         # submit button must come after the CAPTCHA
 ```

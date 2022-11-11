@@ -157,6 +157,9 @@ class FieldType
             case 'week':
                 $type = WeekType::class;
                 break;
+            case 'gregwarCaptcha':
+                $type = \Gregwar\CaptchaBundle\Type\CaptchaType::class;
+                break;
             default:
                 $type = TextType::class;
                 break;
