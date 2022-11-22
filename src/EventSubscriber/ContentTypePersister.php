@@ -9,6 +9,7 @@ use Bolt\Configuration\Config;
 use Bolt\Entity\Content;
 use Bolt\Enum\Statuses;
 use Bolt\Repository\UserRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
@@ -90,6 +91,11 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
                     return $entry[0];
                 }, $value));
             }
+            
+            if ($value instanceof \DateTimeInterface) {
+                $value = Carbon::createFromInterface($value);
+            }
+            
             $value = (string) $value;
 
             if (in_array($name, array_keys($data['attachments'] ?? null), true)) {
