@@ -41,6 +41,8 @@ class ContenttypeType extends AbstractType
             'limit'       => 4,
             'sort'        => 'title',
             'criteria'    => [],
+            'cache'       => false,
+            'cache_lifetime' => 3600
         ];
     }
 
@@ -62,10 +64,27 @@ class ContenttypeType extends AbstractType
                 $entries = $this->query->getContent($params['contenttype'], $criteria);
 
                 $choices = [];
-                foreach ($entries->getCurrentPageResults() as $entry) {
-                    $value = $entry->getFieldValue($params['value']);
-                    $label = $entry->getFieldValue($params['label']);
-                    $choices[$label] = $value;
+                if ($params['cache']) {
+                    $cachedChoices = $this->cache->getItem('choices');
+
+                    if (!$cachedChoices->isHit()) {
+                        foreach ($entries->getCurrentPageResults() as $entry) {
+                            $value = $entry->getFieldValue($params['value']);
+                            $label = $entry->getFieldValue($params['label']);
+                            $choices[$label] = $value;
+                        }
+                        $cachedChoices->set($choices);
+                        $cachedChoices->expiresAfter($params['cache_lifetime']);
+                        $this->cache->save($cachedChoices);
+                    }
+
+                    $choices = $cachedChoices->get();
+                } else {
+                    foreach ($entries->getCurrentPageResults() as $entry) {
+                        $value = $entry->getFieldValue($params['value']);
+                        $label = $entry->getFieldValue($params['label']);
+                        $choices[$label] = $value;
+                    }
                 }
 
                 $options['choices'] = $choices;
