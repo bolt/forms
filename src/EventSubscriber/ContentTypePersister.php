@@ -93,7 +93,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
             }
             
             if ($value instanceof \DateTimeInterface) {
-                $value = Carbon::createFromInterface($value);
+                $value = Carbon::instance($value);
             }
             
             $value = (string) $value;
