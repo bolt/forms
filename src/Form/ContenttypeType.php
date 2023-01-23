@@ -14,14 +14,17 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class ContenttypeType extends AbstractType
 {
     private $query;
+    private $cache;
 
-    public function __construct(Query $query)
+    public function __construct(Query $query, CacheInterface $cache)
     {
         $this->query = $query;
+        $this->cache = $cache;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
