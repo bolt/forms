@@ -67,7 +67,7 @@ class PostSubmitEvent extends Event
         return new Collection($this->getConfig()->get($this->formName));
     }
 
-    public function getMeta()
+    public function getMeta(): array
     {
         return [
             'ip' => $this->request->getClientIp(),

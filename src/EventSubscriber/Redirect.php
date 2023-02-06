@@ -63,6 +63,11 @@ class Redirect implements EventSubscriberInterface
     {
         $parsedUrl = parse_url($redirect['target']);
 
+        // Special case, if redirecting to 'self', get the current URL and return it
+        if ($redirect['target'] == 'self') {
+            return $this->event->getMeta()['path'];
+        }
+
         // parse_str returns result in `$query` ¯\_(ツ)_/¯
         parse_str($parsedUrl['query'] ?? '', $query);
 
