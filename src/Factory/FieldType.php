@@ -6,6 +6,8 @@ namespace Bolt\BoltForms\Factory;
 
 use Bolt\BoltForms\Form\CaptchaType;
 use Bolt\BoltForms\Form\ContenttypeType;
+use Gregwar\CaptchaBundle\Type\CaptchaType as GregwarCaptchaType;
+use PixelOpen\CloudflareTurnstileBundle\Type\TurnstileType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -158,7 +160,10 @@ class FieldType
                 $type = WeekType::class;
                 break;
             case 'gregwarCaptcha':
-                $type = \Gregwar\CaptchaBundle\Type\CaptchaType::class;
+                $type = GregwarCaptchaType::class;
+                break;
+            case 'turnstileCaptcha':
+                $type = TurnstileType::class;
                 break;
             default:
                 $type = TextType::class;
