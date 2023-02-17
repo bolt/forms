@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
+use Carbon\Carbon;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Psr\Log\LoggerInterface;
@@ -67,12 +68,19 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
     private function saveToTable(string $table, array $fields): void
     {
         $columns = [];
+        $parameters = [];
 
         foreach (array_keys($fields) as $name) {
             $columns[$name] = '?';
         }
 
-        $parameters = array_values($fields);
+        foreach(array_values($fields) as $value) {
+            if ($value instanceof \DateTimeInterface) {
+                $parameters[] = Carbon::instance($value);
+            } else {
+                $parameters[] = $value;
+            }
+        }
 
         $this->query
             ->insert($table)
