@@ -48,6 +48,7 @@ class Redirect implements EventSubscriberInterface
             $response = $this->getRedirectResponse($this->feedback->get('redirect'));
 
             $response->send();
+            return;
         }
 
         throw new HttpException(Response::HTTP_FOUND, '', null, []);
