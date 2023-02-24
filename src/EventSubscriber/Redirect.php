@@ -9,6 +9,7 @@ use Bolt\Common\Str;
 use Bolt\Log\LoggerTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tightenco\Collect\Support\Collection;
 
 class Redirect implements EventSubscriberInterface
@@ -47,6 +48,7 @@ class Redirect implements EventSubscriberInterface
             $response = $this->getRedirectResponse($this->feedback->get('redirect'));
 
             $response->send();
+            return;
         }
 
         throw new HttpException(Response::HTTP_FOUND, '', null, []);
