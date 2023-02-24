@@ -184,6 +184,11 @@ class FormBuilder
         $type = FieldType::get($field);
         $options = FieldOptions::get($name, $field, $config);
 
+        // This part is needed for the `repeated` type
+        if (isset($options['type'])) {
+            $options['type'] = FieldType::get($options);
+        }
+
         $formBuilder->add($name, $type, $options);
     }
 
