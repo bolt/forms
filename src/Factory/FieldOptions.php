@@ -6,6 +6,7 @@ namespace Bolt\BoltForms\Factory;
 
 use Bolt\BoltForms\Validator\Constraints\Hcaptcha;
 use Bolt\BoltForms\Validator\Constraints\Recaptcha;
+use PixelOpen\CloudflareTurnstileBundle\Constraints\CloudflareTurnstile;
 use Tightenco\Collect\Support\Collection;
 
 class FieldOptions
@@ -61,6 +62,10 @@ class FieldOptions
                         break;
                 }
             }
+        } elseif ($field['type'] === 'turnstileCaptcha') {
+            $options['constraints'] = [
+                new CloudflareTurnstile(),
+            ];
         }
 
         return $options;
