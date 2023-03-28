@@ -62,6 +62,14 @@ fields:
             label: Do you want us to contact you back?
             choices: { 'Yes': 'yes', 'No': 'no' }
             multiple: false
+    upload:
+        type: file
+        attach: true             # Not only upload the file, but also attach it to the mail
+        options:
+            required: false
+            label: Upload your file
+            attr:
+                class: upload
     submit:
         type: submit
         options:
