@@ -191,7 +191,6 @@ contact:
 #        cc_email: info@example.com
 #        bcc_name: Manager Person
 #        bcc_email: manager@example.com
-#        attach_files: false
 #    templates:                      # Override the global Twig templates for this form
 #        form: @boltforms/form.twig
 #        email: @boltforms/email.twig
@@ -345,6 +344,7 @@ contact:
 #                multiple: false
 #        upload:
 #            type: file
+#            attach: true  # attach your file if you need to send it or save it 
 #            options:
 #                required: false
 #                label: Picture of your pet that you want us to add to our site
