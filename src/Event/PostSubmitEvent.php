@@ -7,6 +7,7 @@ namespace Bolt\BoltForms\Event;
 use Bolt\BoltForms\BoltFormsConfig;
 use Carbon\Carbon;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 use Tightenco\Collect\Support\Collection;
@@ -40,6 +41,34 @@ class PostSubmitEvent extends Event
         $this->formName = $formName;
         $this->request = $request;
         $this->attachments = collect([]);
+
+        $formConfig = $config->getConfig()->get($formName);
+        if ($formConfig["attach"] ?? false) {
+            foreach ($formConfig["fields"] as $field => $fieldConfig) {
+                if ($fieldConfig["type"] !== "file") {
+                    continue;
+                }
+
+                $files = $form->get($field)->getData();
+                if (!is_iterable($files)) {
+                    $files = [$files];
+                }
+                foreach ($files as $file) {
+                    if (!$file instanceof UploadedFile || $file->getError()) {
+                        continue;
+                    }
+
+                    $item = [
+                        "content" => $file->getContent(),
+                        "filename" => $file->getClientOriginalName(),
+                        "mimetype" => $file->getMimeType(),
+                    ];
+                    $this->attachments->add(
+                        $item
+                    );
+                }
+            }
+        }
     }
 
     public function getFormName(): string
