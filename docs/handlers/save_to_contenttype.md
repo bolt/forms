@@ -20,7 +20,7 @@ database:
   contenttype:
     name: quotations # save all form submissions to the quotations contenttype
     ignore_missing: true # ignore fields in the form that aren't defined in the ContentType
-    status: draft # save entry with publication status published|held|draft
+    status: draft # save entry with publication status: published|held|draft
 fields:
   name:
     type: text
