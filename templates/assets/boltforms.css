@@ -49,3 +49,7 @@ li.boltform-error {
 .boltforms-preview-image {
     display: inline-block;
 }
+
+div.grecaptcha-badge, div.grecaptcha-logo {
+    padding: 0;
+}
