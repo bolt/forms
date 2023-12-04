@@ -71,6 +71,10 @@ class BoltFormsConfig
     {
         $configPath = explode('.yaml', $this->getExtension()->getConfigFilenames()['main'])[0] . DIRECTORY_SEPARATOR;
 
+        if (!is_dir($configPath)) {
+            return [];
+        }
+
         $finder = new Finder();
 
         $finder->files()->in($configPath)->name('*.yaml');
