@@ -43,7 +43,7 @@ class FormBuilder
         foreach ($config->get($formName)['fields'] as $name => $field) {
             // If we passed in a default value, set it as the Field's `data`-value
             if (array_key_exists($name, $data)) {
-                if(is_iterable($data[$name])){
+                if (is_iterable($data[$name])) {
                     $field['options'] = array_merge($field['options'], $data[$name]['options']);
                 } else {
                     $field['options']['data'] = $data[$name];
