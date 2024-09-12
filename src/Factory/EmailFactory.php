@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\Factory;
 
 use Bolt\Common\Str;
-use File;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mime\Address;
 use Tightenco\Collect\Support\Collection;
 
@@ -67,10 +67,11 @@ class EmailFactory
             $email->replyTo($this->getReplyTo());
         }
 
-        foreach ($attachments as $name => $attachment) {
-            /** @var File $attachment */
-            foreach ($attachment as $file) {
-                $email->attachFromPath($file, $name . '.' . pathinfo($file, PATHINFO_EXTENSION));
+        foreach ($attachments as $attachment) {
+            try {
+                $email->attach($attachment["content"], $attachment["filename"], $attachment["mimetype"]);
+            } catch (\Exception $e) {
+                // Re-submit of the form will have an "empty" file, for example.
             }
         }
 
