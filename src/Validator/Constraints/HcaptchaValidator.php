@@ -16,12 +16,10 @@ class HcaptchaValidator extends ConstraintValidator
     /** @var Request */
     private $request;
 
-    /** @var HcaptchaService */
-    private $service;
-
-    public function __construct(HcaptchaService $service, RequestStack $requestStack)
-    {
-        $this->service = $service;
+    public function __construct(
+        private HcaptchaService $service,
+        RequestStack $requestStack
+    ) {
         $this->request = $requestStack->getCurrentRequest();
     }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Event;
 
+use RuntimeException;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
@@ -33,24 +34,11 @@ use Symfony\Component\Form\FormInterface;
  */
 class BoltFormsEvent extends FormEvent
 {
-    /** @var FormEvent */
-    protected $event;
-
-    /** @var array */
-    protected $data = [];
-
-    /** @var FormInterface */
-    protected $form;
-
-    /** @var string */
-    protected $formsEventName;
-
-    public function __construct(FormEvent $event, string $formsEventName)
-    {
+    public function __construct(
+        protected FormEvent $event,
+        protected string $formsEventName
+    ) {
         parent::__construct($event->getForm(), $event->getData());
-
-        $this->event = $event;
-        $this->formsEventName = $formsEventName;
     }
 
     public function getEvent(): FormEvent
@@ -68,12 +56,7 @@ class BoltFormsEvent extends FormEvent
         if (in_array($this->formsEventName, [FormEvents::PRE_SUBMIT, BoltFormsEvents::PRE_SUBMIT], true)) {
             $this->event->setData($data);
         } else {
-            throw new \RuntimeException(self::class . '::' . __FUNCTION__ . ' can only be called in BoltFormsEvents::PRE_SUBMIT or FormEvents::PRE_SUBMIT');
+            throw new RuntimeException(self::class . '::' . __FUNCTION__ . ' can only be called in BoltFormsEvents::PRE_SUBMIT or FormEvents::PRE_SUBMIT');
         }
-    }
-
-    public function getForm(): FormInterface
-    {
-        return $this->form;
     }
 }

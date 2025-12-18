@@ -15,30 +15,18 @@ class PostSubmitEvent extends Event
 {
     public const NAME = 'boltforms.post_submit';
 
-    /** @var Form */
-    private $form;
-
-    /** @var Collection */
-    private $config;
-
-    /** @var string */
-    private $formName;
-
     /** @var bool */
     private $spam = false;
-
-    /** @var Request */
-    private $request;
 
     /** @var Collection */
     private $attachments;
 
-    public function __construct(Form $form, BoltFormsConfig $config, string $formName, Request $request)
-    {
-        $this->form = $form;
-        $this->config = $config;
-        $this->formName = $formName;
-        $this->request = $request;
+    public function __construct(
+        private Form $form,
+        private BoltFormsConfig $config,
+        private string $formName,
+        private Request $request
+    ) {
         $this->attachments = collect([]);
     }
 

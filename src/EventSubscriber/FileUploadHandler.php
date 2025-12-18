@@ -18,16 +18,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploadHandler implements EventSubscriberInterface
 {
-    /** @var string */
-    private $projectDir;
-
-    /** @var FormHelper */
-    private $helper;
-
-    public function __construct(string $projectDir = '', FormHelper $helper)
-    {
-        $this->helper = $helper;
-        $this->projectDir = $projectDir;
+    public function __construct(
+        private string $projectDir = '',
+        private FormHelper $helper
+    ) {
     }
 
     public function handleEvent(PostSubmitEvent $event): void

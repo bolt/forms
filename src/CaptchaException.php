@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms;
 
-class CaptchaException extends \Exception
+use Exception;
+
+class CaptchaException extends Exception
 {
 }

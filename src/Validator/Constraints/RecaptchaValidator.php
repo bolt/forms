@@ -16,12 +16,10 @@ class RecaptchaValidator extends ConstraintValidator
     /** @var Request */
     private $request;
 
-    /** @var RecaptchaService */
-    private $service;
-
-    public function __construct(RecaptchaService $service, RequestStack $requestStack)
-    {
-        $this->service = $service;
+    public function __construct(
+        private RecaptchaService $service,
+        RequestStack $requestStack
+    ) {
         $this->request = $requestStack->getCurrentRequest();
     }
 

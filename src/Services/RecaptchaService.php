@@ -15,9 +15,6 @@ class RecaptchaService
     public const RECAPTCHA_VERSION_2 = 'recaptcha_v2';
     public const RECAPTCHA_VERSION_3 = 'recaptcha_v3';
 
-    /** @var ExtensionRegistry */
-    private $registry;
-
     /** @var string */
     private $secretKey;
 
@@ -27,9 +24,9 @@ class RecaptchaService
     /** @var string */
     private $recaptchaVersion;
 
-    public function __construct(ExtensionRegistry $extensionRegistry)
-    {
-        $this->registry = $extensionRegistry;
+    public function __construct(
+        private ExtensionRegistry $registry
+    ) {
     }
 
     public function setKeys(?string $siteKey = null, string $secretKey): void

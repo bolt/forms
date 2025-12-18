@@ -13,18 +13,15 @@ class HcaptchaService
 {
     public const POST_FIELD_NAME = 'h-captcha-response';
 
-    /** @var ExtensionRegistry */
-    private $registry;
-
     /** @var string */
     private $secretKey;
 
     /** @var string */
     private $siteKey;
 
-    public function __construct(ExtensionRegistry $extensionRegistry)
-    {
-        $this->registry = $extensionRegistry;
+    public function __construct(
+        private ExtensionRegistry $registry
+    ) {
     }
 
     public function setKeys(string $siteKey, string $secretKey): void
