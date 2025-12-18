@@ -17,7 +17,7 @@ class PostSubmitEventDispatcher
         private readonly BoltFormsConfig $config,
         private readonly EventDispatcherInterface $dispatcher
     ) {
-        $this->dispatchedForms = collect([]);
+        $this->dispatchedForms = collect();
     }
 
     public function handle(string $formName, Form $form, Request $request): void
