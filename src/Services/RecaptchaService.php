@@ -69,6 +69,7 @@ class RecaptchaService
             'Content-Type: application/x-www-form-urlencoded',
         ]);
 
+        /** @var string $response */
         $response = curl_exec($ch);
         $extension->dump($response);
 
