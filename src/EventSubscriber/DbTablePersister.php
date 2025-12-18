@@ -17,11 +17,11 @@ use Throwable;
 
 class DbTablePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {
-    private QueryBuilder $query;
+    private readonly QueryBuilder $query;
 
     public function __construct(
         Connection $connection,
-        private LoggerInterface $log
+        private readonly LoggerInterface $log
     ) {
         $this->query = $connection->createQueryBuilder();
     }

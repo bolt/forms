@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUploadHandler implements EventSubscriberInterface
 {
     public function __construct(
-        private string $projectDir = '',
-        private FormHelper $helper
+        private readonly string $projectDir = '',
+        private readonly FormHelper $helper
     ) {
     }
 

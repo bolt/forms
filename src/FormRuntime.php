@@ -14,13 +14,13 @@ use Twig\Extension\RuntimeExtensionInterface;
 class FormRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
-        private Notifications $notifications,
-        private Environment $twig,
-        private FormBuilder $builder,
-        private RequestStack $requestStack,
-        private EventDispatcherInterface $dispatcher,
-        private BoltFormsConfig $config,
-        private PostSubmitEventDispatcher $postSubmitEventDispatcher
+        private readonly Notifications $notifications,
+        private readonly Environment $twig,
+        private readonly FormBuilder $builder,
+        private readonly RequestStack $requestStack,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly BoltFormsConfig $config,
+        private readonly PostSubmitEventDispatcher $postSubmitEventDispatcher
     ) {
     }
 
