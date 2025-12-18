@@ -48,6 +48,7 @@ class RecaptchaService
 
     public function validateTokenFromRequest(Request $request): bool|string
     {
+        /** @var Extension $extension */
         $extension = $this->registry->getExtension(Extension::class);
 
         $validationData = [

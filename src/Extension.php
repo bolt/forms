@@ -19,7 +19,7 @@ class Extension extends BaseExtension
         $this->addTwigNamespace('boltforms');
     }
 
-    public function dump(...$moreVars): void
+    public function dump(mixed ...$moreVars): void
     {
         if (! $this->getService('kernel')->isDebug() || ! $this->getConfig()->get('debug')['enabled']) {
             return;
