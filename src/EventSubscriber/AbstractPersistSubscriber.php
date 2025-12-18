@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
+use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
-use Tightenco\Collect\Support\Collection;
 
 abstract class AbstractPersistSubscriber implements EventSubscriberInterface
 {

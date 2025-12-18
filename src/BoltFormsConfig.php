@@ -7,9 +7,9 @@ namespace Bolt\BoltForms;
 use Bolt\Configuration\Config;
 use Bolt\Extension\ExtensionInterface;
 use Bolt\Extension\ExtensionRegistry;
+use Illuminate\Support\Collection;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
-use Tightenco\Collect\Support\Collection;
 
 class BoltFormsConfig
 {

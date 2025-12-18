@@ -3,10 +3,10 @@
 namespace Bolt\BoltForms\Event;
 
 use Bolt\BoltForms\BoltFormsConfig;
+use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Tightenco\Collect\Support\Collection;
 
 class PostSubmitEventDispatcher
 {

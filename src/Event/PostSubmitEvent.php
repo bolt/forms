@@ -6,10 +6,10 @@ namespace Bolt\BoltForms\Event;
 
 use Bolt\BoltForms\BoltFormsConfig;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
-use Tightenco\Collect\Support\Collection;
 
 class PostSubmitEvent extends Event
 {

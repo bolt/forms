@@ -8,10 +8,10 @@ use Bolt\BoltForms\Event\PostSubmitEvent;
 use Bolt\BoltForms\Factory\EmailFactory;
 use Bolt\Common\Str;
 use Bolt\Log\LoggerTrait;
+use Illuminate\Support\Collection;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Tightenco\Collect\Support\Collection;
 
 class Mailer implements EventSubscriberInterface
 {

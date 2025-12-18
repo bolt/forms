@@ -11,9 +11,9 @@ use Bolt\Enum\Statuses;
 use Bolt\Repository\UserRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
-use Tightenco\Collect\Support\Collection;
 
 class ContentTypePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {

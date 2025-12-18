@@ -7,12 +7,12 @@ namespace Bolt\BoltForms;
 use Bolt\BoltForms\EventSubscriber\SymfonyFormProxySubscriber;
 use Bolt\BoltForms\Factory\FieldOptions;
 use Bolt\BoltForms\Factory\FieldType;
+use Illuminate\Support\Collection;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Tightenco\Collect\Support\Collection;
 
 class FormBuilder
 {
