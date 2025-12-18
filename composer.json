@@ -17,8 +17,8 @@
         "ext-curl": "*",
         "ext-json": "*",
         "twig/twig": "^3.21",
-        "gregwar/captcha-bundle": "^2.2",
-        "pixelopen/cloudflare-turnstile-bundle": "^0.1.3"
+        "gregwar/captcha-bundle": "^2.4",
+        "pixelopen/cloudflare-turnstile-bundle": "^0.4"
     },
     "require-dev": {
         "bolt/core": "^6.0",
