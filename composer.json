@@ -21,9 +21,12 @@
     },
     "require-dev": {
         "bolt/core": "^6.0",
-        "phpstan/phpstan": "^0.12",
-        "phpstan/phpstan-doctrine": "^0.12",
-        "phpstan/phpstan-symfony": "^0.12",
+        "phpstan/extension-installer": "1.4.3",
+        "phpstan/phpstan": "2.1.33",
+        "phpstan/phpstan-deprecation-rules": "2.0.3",
+        "phpstan/phpstan-doctrine": "2.0.12",
+        "phpstan/phpstan-symfony": "2.0.9",
+        "rector/rector": "2.2.14",
         "symplify/easy-coding-standard": "^13"
     },
     "autoload": {
@@ -44,7 +47,8 @@
             "symfony/flex": false,
             "drupol/composer-packages": false,
             "dealerdirect/phpcodesniffer-composer-installer": false,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "phpstan/extension-installer": true
         }
     }
 }
