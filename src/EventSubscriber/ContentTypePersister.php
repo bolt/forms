@@ -92,11 +92,11 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
                     return (is_array($entry) && count($entry) > 0) ? $entry[0] : '';
                 }, $value));
             }
-            
+
             if ($value instanceof \DateTimeInterface) {
                 $value = Carbon::instance($value);
             }
-            
+
             $value = (string) $value;
 
             if (in_array($name, array_keys($data['attachments'] ?? null), true)) {

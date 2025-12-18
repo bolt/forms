@@ -87,7 +87,7 @@ class Redirect implements EventSubscriberInterface
             return $url;
         }
 
-        return '/' . ltrim($url, '/');
+        return '/' . mb_ltrim($url, '/');
     }
 
     public static function getSubscribedEvents()

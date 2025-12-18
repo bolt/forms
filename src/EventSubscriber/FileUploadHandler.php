@@ -11,10 +11,10 @@ use Cocur\Slugify\Slugify;
 use Sirius\Upload\Handler;
 use Sirius\Upload\Result\File;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Tightenco\Collect\Support\Collection;
-use Symfony\Component\Filesystem\Path;
 
 class FileUploadHandler implements EventSubscriberInterface
 {

@@ -11,8 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContenttypeType extends AbstractType
@@ -28,7 +26,7 @@ class ContenttypeType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => [],
-            'params'  => $this->getDefaultParams(),
+            'params' => $this->getDefaultParams(),
         ]);
     }
 
@@ -36,25 +34,25 @@ class ContenttypeType extends AbstractType
     {
         return [
             'contenttype' => 'pages',
-            'label'       => 'title',
-            'value'       => 'slug',
-            'limit'       => 4,
-            'sort'        => 'title',
-            'criteria'    => [],
+            'label' => 'title',
+            'value' => 'slug',
+            'limit' => 4,
+            'sort' => 'title',
+            'criteria' => [],
         ];
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
                 $form = $event->getForm();
                 $params = array_merge($this->getDefaultParams(), $options['params']);
 
                 $criteria = [
                     'status' => Statuses::PUBLISHED,
-                    'limit'  => $params['limit'],
-                    'order'  => $params['sort'],
+                    'limit' => $params['limit'],
+                    'order' => $params['sort'],
                 ];
 
                 $criteria = array_merge($criteria, $params['criteria']);

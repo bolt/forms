@@ -24,7 +24,7 @@
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-symfony": "^0.12",
-        "symplify/easy-coding-standard": "^10.2"
+        "symplify/easy-coding-standard": "^13"
     },
     "autoload": {
         "psr-4": {
