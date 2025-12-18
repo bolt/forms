@@ -45,130 +45,49 @@ use Symfony\Component\Form\Extension\Core\Type\WeekType;
 
 class FieldType
 {
-    public static function get($field): string
+    public static function get(array $field): string
     {
-        switch ($field['type']) {
-            case 'captcha':
-                $type = CaptchaType::class;
-                break;
-            case 'birthday':
-                $type = BirthdayType::class;
-                break;
-            case 'button':
-                $type = ButtonType::class;
-                break;
-            case 'checkbox':
-                $type = CheckboxType::class;
-                break;
-            case 'choice':
-                $type = ChoiceType::class;
-                break;
-            case 'collection':
-                $type = CollectionType::class;
-                break;
-            case 'color':
-                $type = ColorType::class;
-                break;
-            case 'contenttype':
-                $type = ContenttypeType::class;
-                break;
-            case 'country':
-                $type = CountryType::class;
-                break;
-            case 'currency':
-                $type = CurrencyType::class;
-                break;
-            case 'dateinterval':
-                $type = DateIntervalType::class;
-                break;
-            case 'datetime':
-                $type = DateTimeType::class;
-                break;
-            case 'date':
-                $type = DateType::class;
-                break;
-            case 'email':
-                $type = EmailType::class;
-                break;
-            case 'file':
-                $type = FileType::class;
-                break;
-                // case 'form':
-                //     $type = FormType::class;
-                //     break;
-            case 'hidden':
-                $type = HiddenType::class;
-                break;
-            case 'integer':
-                $type = IntegerType::class;
-                break;
-            case 'language':
-                $type = LanguageType::class;
-                break;
-            case 'locale':
-                $type = LocaleType::class;
-                break;
-            case 'money':
-                $type = MoneyType::class;
-                break;
-            case 'number':
-                $type = NumberType::class;
-                break;
-            case 'password':
-                $type = PasswordType::class;
-                break;
-            case 'percent':
-                $type = PercentType::class;
-                break;
-            case 'radio':
-                $type = RadioType::class;
-                break;
-            case 'range':
-                $type = RangeType::class;
-                break;
-            case 'repeated':
-                $type = RepeatedType::class;
-                break;
-            case 'reset':
-                $type = ResetType::class;
-                break;
-            case 'search':
-                $type = SearchType::class;
-                break;
-            case 'submit':
-                $type = SubmitType::class;
-                break;
-            case 'tel':
-                $type = TelType::class;
-                break;
-            case 'text':
-                $type = TextType::class;
-                break;
-            case 'textarea':
-                $type = TextareaType::class;
-                break;
-            case 'time':
-                $type = TimeType::class;
-                break;
-            case 'timezone':
-                $type = TimezoneType::class;
-                break;
-            case 'url':
-                $type = UrlType::class;
-                break;
-            case 'week':
-                $type = WeekType::class;
-                break;
-            case 'gregwarCaptcha':
-                $type = GregwarCaptchaType::class;
-                break;
-            case 'turnstileCaptcha':
-                $type = TurnstileType::class;
-                break;
-            default:
-                $type = TextType::class;
-                break;
-        }
+        $type = match ($field['type']) {
+            'captcha' => CaptchaType::class,
+            'birthday' => BirthdayType::class,
+            'button' => ButtonType::class,
+            'checkbox' => CheckboxType::class,
+            'choice' => ChoiceType::class,
+            'collection' => CollectionType::class,
+            'color' => ColorType::class,
+            'contenttype' => ContenttypeType::class,
+            'country' => CountryType::class,
+            'currency' => CurrencyType::class,
+            'dateinterval' => DateIntervalType::class,
+            'datetime' => DateTimeType::class,
+            'date' => DateType::class,
+            'email' => EmailType::class,
+            'file' => FileType::class,
+            'hidden' => HiddenType::class,
+            'integer' => IntegerType::class,
+            'language' => LanguageType::class,
+            'locale' => LocaleType::class,
+            'money' => MoneyType::class,
+            'number' => NumberType::class,
+            'password' => PasswordType::class,
+            'percent' => PercentType::class,
+            'radio' => RadioType::class,
+            'range' => RangeType::class,
+            'repeated' => RepeatedType::class,
+            'reset' => ResetType::class,
+            'search' => SearchType::class,
+            'submit' => SubmitType::class,
+            'tel' => TelType::class,
+            'text' => TextType::class,
+            'textarea' => TextareaType::class,
+            'time' => TimeType::class,
+            'timezone' => TimezoneType::class,
+            'url' => UrlType::class,
+            'week' => WeekType::class,
+            'gregwarCaptcha' => GregwarCaptchaType::class,
+            'turnstileCaptcha' => TurnstileType::class,
+            default => TextType::class,
+        };
 
         return $type;
     }

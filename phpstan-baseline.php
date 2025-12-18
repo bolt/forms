@@ -392,8 +392,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/src/Factory/FieldOptions.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Bolt\\\\BoltForms\\\\Factory\\\\FieldType\\:\\:get\\(\\) has parameter \\$field with no type specified\\.$#',
-	'identifier' => 'missingType.parameter',
+	'message' => '#^Method Bolt\\\\BoltForms\\\\Factory\\\\FieldType\\:\\:get\\(\\) has parameter \\$field with no value type specified in iterable type array\\.$#',
+	'identifier' => 'missingType.iterableValue',
 	'count' => 1,
 	'path' => __DIR__ . '/src/Factory/FieldType.php',
 ];
@@ -442,12 +442,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method Bolt\\\\BoltForms\\\\FormBuilder\\:\\:addField\\(\\) has parameter \\$formBuilder with generic interface Symfony\\\\Component\\\\Form\\\\FormBuilderInterface but does not specify its types\\: TData$#',
 	'identifier' => 'missingType.generics',
-	'count' => 1,
-	'path' => __DIR__ . '/src/FormBuilder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Bolt\\\\BoltForms\\\\FormBuilder\\:\\:addField\\(\\) has parameter \\$formName with no type specified\\.$#',
-	'identifier' => 'missingType.parameter',
 	'count' => 1,
 	'path' => __DIR__ . '/src/FormBuilder.php',
 ];
