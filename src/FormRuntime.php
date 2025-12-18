@@ -6,6 +6,7 @@ namespace Bolt\BoltForms;
 
 use Bolt\BoltForms\Event\PostSubmitEventDispatcher;
 use Bolt\Twig\Notifications;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
@@ -30,16 +31,20 @@ class FormRuntime implements RuntimeExtensionInterface
         $extension = $this->config->getExtension();
 
         if (! $config->has($formName)) {
-            return $warn ? $this->notifications->warning(
-                '[Boltforms] Incorrect usage of form',
-                'The form "' . $formName . '" is not defined. '
-            ) : '';
+            if ($warn) {
+                $this->notifications->warning(
+                    '[Boltforms] Incorrect usage of form',
+                    'The form "' . $formName . '" is not defined. '
+                );
+            }
+
+            return '';
         }
 
         $formConfig = collect($config->get($formName));
         $form = $this->builder->build($formName, $data, $config, $this->dispatcher);
 
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest() ?? throw new RuntimeException('Request is missing');
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 readonly class Honeypot
 {
@@ -14,7 +14,7 @@ readonly class Honeypot
     ) {
     }
 
-    public function addField(SymfonyFormBuilder $formBuilder): void
+    public function addField(FormBuilderInterface $formBuilder): void
     {
         $fieldName = $this->generateFieldName();
 
