@@ -14,7 +14,7 @@ class Logger implements EventSubscriberInterface
 {
     use LoggerTrait;
 
-    private ?PostSubmitEvent $event = null;
+    private PostSubmitEvent $event;
 
     public function handleEvent(PostSubmitEvent $event): void
     {

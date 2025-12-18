@@ -30,7 +30,7 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
     {
         $config = collect($config->get('table', []));
 
-        if (! $config) {
+        if ($config->isEmpty()) {
             return;
         }
 
@@ -87,7 +87,7 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
             ->setParameters($parameters);
 
         try {
-            $this->query->execute();
+            $this->query->executeQuery();
         } catch (Throwable $exception) {
             $this->log->error($exception->getMessage());
         }
