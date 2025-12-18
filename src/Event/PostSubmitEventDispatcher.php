@@ -10,20 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostSubmitEventDispatcher
 {
-    /** @var BoltFormsConfig */
-    private $config;
-
     /** @var Collection */
     private $dispatchedForms;
 
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
-
-    public function __construct(BoltFormsConfig $config, EventDispatcherInterface $dispatcher)
-    {
-        $this->config = $config;
+    public function __construct(
+        private BoltFormsConfig $config,
+        private EventDispatcherInterface $dispatcher
+    ) {
         $this->dispatchedForms = collect([]);
-        $this->dispatcher = $dispatcher;
     }
 
     public function handle(string $formName, Form $form, Request $request): void

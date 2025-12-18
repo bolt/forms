@@ -13,22 +13,16 @@ use Symfony\Component\Yaml\Yaml;
 
 class BoltFormsConfig
 {
-    /** @var ExtensionRegistry */
-    private $registry;
-
-    /** @var Config */
-    private $boltConfig;
-
     /** @var Collection */
     private $config = null;
 
     /** @var ExtensionInterface */
     private $extension = null;
 
-    public function __construct(ExtensionRegistry $registry, Config $boltConfig)
-    {
-        $this->registry = $registry;
-        $this->boltConfig = $boltConfig;
+    public function __construct(
+        private ExtensionRegistry $registry,
+        private Config $boltConfig
+    ) {
     }
 
     public function getConfig(): Collection

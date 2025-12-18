@@ -7,6 +7,7 @@ namespace Bolt\BoltForms;
 use Bolt\BoltForms\EventSubscriber\SymfonyFormProxySubscriber;
 use Bolt\BoltForms\Factory\FieldOptions;
 use Bolt\BoltForms\Factory\FieldType;
+use Exception;
 use Illuminate\Support\Collection;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
@@ -66,7 +67,7 @@ class FormBuilder
     {
         // Can't do anything if we don't know what type of CAPTCHA is required
         if (! isset($field['options']['captcha_type'])) {
-            throw new \Exception(sprintf('The CAPTCHA field \'%s\' does not have a captcha_type option defined.', $name));
+            throw new Exception(sprintf('The CAPTCHA field \'%s\' does not have a captcha_type option defined.', $name));
         }
 
         // If we're using reCaptcha V3 or V2 invisible, we need to add some attributes to the submit button
@@ -82,11 +83,11 @@ class FormBuilder
                 $this->hasRecaptchaV3 = true;
 
                 if (! isset($config['recaptcha']['public_key'])) {
-                    throw new \Exception('You must specify your site key using the public_key option under the recaptcha node in your forms config.');
+                    throw new Exception('You must specify your site key using the public_key option under the recaptcha node in your forms config.');
                 }
 
                 if (! isset($config['recaptcha']['private_key'])) {
-                    throw new \Exception('You must specify your secret key using the private_key option under the recaptcha node in your forms config.');
+                    throw new Exception('You must specify your secret key using the private_key option under the recaptcha node in your forms config.');
                 }
                 break;
 
@@ -99,11 +100,11 @@ class FormBuilder
                 $this->hasRecaptchaV2Invisible = isset($field['options']['captcha_invisible']) && (bool) ($field['options']['captcha_invisible']);
 
                 if (! isset($config['recaptcha']['public_key'])) {
-                    throw new \Exception('You must specify your site key using the public_key option under the recaptcha node in your forms config.');
+                    throw new Exception('You must specify your site key using the public_key option under the recaptcha node in your forms config.');
                 }
 
                 if (! isset($config['recaptcha']['private_key'])) {
-                    throw new \Exception('You must specify your secret key using the private_key option under the recaptcha node in your forms config.');
+                    throw new Exception('You must specify your secret key using the private_key option under the recaptcha node in your forms config.');
                 }
                 break;
 
@@ -114,16 +115,16 @@ class FormBuilder
                 }
 
                 if (! isset($config['hcaptcha']['public_key'])) {
-                    throw new \Exception('You must specify your site key using the public_key option under the hcaptcha node in your forms config.');
+                    throw new Exception('You must specify your site key using the public_key option under the hcaptcha node in your forms config.');
                 }
 
                 if (! isset($config['hcaptcha']['private_key'])) {
-                    throw new \Exception('You must specify your secret key using the private_key option under the hcaptcha node in your forms config.');
+                    throw new Exception('You must specify your secret key using the private_key option under the hcaptcha node in your forms config.');
                 }
                 break;
 
             default:
-                throw new \Exception(sprintf('The captcha_type value \'%s\' is not supported on the \'%s\' field.', $field['options']['captcha_type'], $name));
+                throw new Exception(sprintf('The captcha_type value \'%s\' is not supported on the \'%s\' field.', $field['options']['captcha_type'], $name));
         }
 
         $type = FieldType::get($field);

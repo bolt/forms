@@ -9,16 +9,10 @@ use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 
 class Honeypot
 {
-    /** @var SymfonyFormBuilder */
-    private $formBuilder;
-
-    /** @var string */
-    private $formName;
-
-    public function __construct(string $formName, ?SymfonyFormBuilder $formBuilder = null)
-    {
-        $this->formName = $formName;
-        $this->formBuilder = $formBuilder;
+    public function __construct(
+        private string $formName,
+        private ?SymfonyFormBuilder $formBuilder = null
+    ) {
     }
 
     public function addField(): void

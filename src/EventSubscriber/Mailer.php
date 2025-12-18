@@ -20,15 +20,12 @@ class Mailer implements EventSubscriberInterface
     /** @var PostSubmitEvent */
     private $event;
 
-    /** @var MailerInterface */
-    private $mailer;
-
     /** @var Collection */
     private $notification;
 
-    public function __construct(MailerInterface $mailer)
-    {
-        $this->mailer = $mailer;
+    public function __construct(
+        private MailerInterface $mailer
+    ) {
     }
 
     public function handleEvent(PostSubmitEvent $event): void

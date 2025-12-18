@@ -10,6 +10,7 @@ use Bolt\Entity\Content;
 use Bolt\Enum\Statuses;
 use Bolt\Repository\UserRepository;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,24 +18,12 @@ use Symfony\Component\Form\Form;
 
 class ContentTypePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {
-    /** @var Config */
-    private $boltConfig;
-
-    /** @var UserRepository */
-    private $userRepository;
-
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /** @var string */
-    private $projectDir;
-
-    public function __construct(Config $boltConfig, UserRepository $userRepository, EntityManagerInterface $em, string $projectDir = '')
-    {
-        $this->boltConfig = $boltConfig;
-        $this->userRepository = $userRepository;
-        $this->em = $em;
-        $this->projectDir = $projectDir;
+    public function __construct(
+        private Config $boltConfig,
+        private UserRepository $userRepository,
+        private EntityManagerInterface $em,
+        private string $projectDir = ''
+    ) {
     }
 
     public function save(PostSubmitEvent $event, Form $form, Collection $config): void
@@ -93,7 +82,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
                 }, $value));
             }
 
-            if ($value instanceof \DateTimeInterface) {
+            if ($value instanceof DateTimeInterface) {
                 $value = Carbon::instance($value);
             }
 

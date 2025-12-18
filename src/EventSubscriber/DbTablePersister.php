@@ -6,25 +6,24 @@ namespace Bolt\BoltForms\EventSubscriber;
 
 use Bolt\BoltForms\Event\PostSubmitEvent;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Support\Collection;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
+use Throwable;
 
 class DbTablePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {
-    /** @var QueryBuilder */
-    private $query;
+    private QueryBuilder $query;
 
-    /** @var Logger */
-    private $log;
-
-    public function __construct(Connection $connection, LoggerInterface $log)
-    {
+    public function __construct(
+        Connection $connection,
+        private LoggerInterface $log
+    ) {
         $this->query = $connection->createQueryBuilder();
-        $this->log = $log;
     }
 
     public function save(PostSubmitEvent $event, Form $form, Collection $config): void
@@ -75,7 +74,7 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
         }
 
         foreach (array_values($fields) as $value) {
-            if ($value instanceof \DateTimeInterface) {
+            if ($value instanceof DateTimeInterface) {
                 $parameters[] = Carbon::instance($value);
             } else {
                 $parameters[] = $value;
@@ -89,7 +88,7 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
 
         try {
             $this->query->execute();
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             $this->log->error($exception->getMessage());
         }
     }
