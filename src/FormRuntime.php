@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms;
 
-use Bolt\BoltForms\Event\PostSubmitEvent;
 use Bolt\BoltForms\Event\PostSubmitEventDispatcher;
 use Bolt\Twig\Notifications;
 use Symfony\Component\EventDispatcher\EventDispatcher;

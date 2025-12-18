@@ -43,7 +43,7 @@ class FormBuilder
         foreach ($config->get($formName)['fields'] as $name => $field) {
             // If we passed in a default value, set it as the Field's `data`-value
             if (array_key_exists($name, $data)) {
-                if(is_iterable($data[$name])){
+                if (is_iterable($data[$name])) {
                     $field['options'] = array_merge($field['options'], $data[$name]['options']);
                 } else {
                     $field['options']['data'] = $data[$name];
@@ -143,12 +143,12 @@ class FormBuilder
                 //Fix for allowing multiple recaptcha v3 forms on a single page
 
                 //Used to converted snake case into camel case
-                $splitFormName = explode("_", $formName);
+                $splitFormName = explode('_', $formName);
                 if (count($splitFormName) > 1) {
                     foreach ($splitFormName as $item) {
                         $item = ucfirst($item);
                     }
-                    $formNameJs = join("", $splitFormName);
+                    $formNameJs = join('', $splitFormName);
                 } else {
                     $formNameJs = ucfirst($formName);
                 }

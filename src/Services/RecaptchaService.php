@@ -38,8 +38,6 @@ class RecaptchaService
         $this->secretKey = $secretKey;
     }
 
-    /**
-     */
     public function setRecaptchaVersion(string $recaptchaVersion): void
     {
         $this->recaptchaVersion = $recaptchaVersion;

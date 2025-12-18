@@ -40,9 +40,6 @@ class SymfonyFormProxySubscriber implements EventSubscriberInterface
     /** @var EventDispatcher */
     private $boltFormsDispatcher;
 
-    /**
-     * SymfonyFormProxySubscriber constructor.
-     */
     public function __construct(EventDispatcherInterface $boltFormsDispatcher)
     {
         $this->boltFormsDispatcher = $boltFormsDispatcher;

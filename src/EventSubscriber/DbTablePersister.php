@@ -74,7 +74,7 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
             $columns[$name] = '?';
         }
 
-        foreach(array_values($fields) as $value) {
+        foreach (array_values($fields) as $value) {
             if ($value instanceof \DateTimeInterface) {
                 $parameters[] = Carbon::instance($value);
             } else {
