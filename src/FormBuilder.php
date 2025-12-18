@@ -10,30 +10,27 @@ use Bolt\BoltForms\Factory\FieldType;
 use Exception;
 use Illuminate\Support\Collection;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class FormBuilder
 {
-    /** @var FormFactory */
-    private $formFactory;
+    private bool $hasRecaptchaV2Invisible = false;
+    private bool $hasRecaptchaV3 = false;
 
-    /** @var bool */
-    private $hasRecaptchaV2Invisible = false;
-
-    /** @var bool */
-    private $hasRecaptchaV3 = false;
-
-    public function __construct(FormFactoryInterface $formFactory)
-    {
-        $this->formFactory = $formFactory;
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory
+    ) {
     }
 
-    public function build(string $formName, array $data, Collection $config, EventDispatcherInterface $eventDispatcher): Form
-    {
-        /** @var SymfonyFormBuilder $formBuilder */
+    public function build(
+        string $formName,
+        array $data,
+        Collection $config,
+        EventDispatcherInterface $eventDispatcher
+    ): FormInterface {
         $formBuilder = $this->formFactory->createNamedBuilder($formName, FormType::class, [], [
             'attr' => [
                 'class' => 'boltforms',
@@ -63,8 +60,12 @@ class FormBuilder
         return $formBuilder->getForm();
     }
 
-    private function addCaptchaField(SymfonyFormBuilder $formBuilder, string $name, array $field, Collection $config): void
-    {
+    private function addCaptchaField(
+        FormBuilderInterface $formBuilder,
+        string $name,
+        array $field,
+        Collection $config
+    ): void {
         // Can't do anything if we don't know what type of CAPTCHA is required
         if (! isset($field['options']['captcha_type'])) {
             throw new Exception(sprintf('The CAPTCHA field \'%s\' does not have a captcha_type option defined.', $name));
@@ -133,8 +134,13 @@ class FormBuilder
         $formBuilder->add($name, $type, $options);
     }
 
-    private function addField(SymfonyFormBuilder $formBuilder, string $name, array $field, Collection $config, $formName): void
-    {
+    private function addField(
+        FormBuilderInterface $formBuilder,
+        string $name,
+        array $field,
+        Collection $config,
+        $formName
+    ): void {
         // If we're using reCaptcha V3 or V2 invisible, we need to add some attributes to the submit button
         // If we're adding a submit button, attach the attributes if we're using reCaptcha v3 or v2 invisible
         if ($field['type'] === 'submit' && ($this->hasRecaptchaV3 || $this->hasRecaptchaV2Invisible)) {
@@ -193,7 +199,7 @@ class FormBuilder
         $formBuilder->add($name, $type, $options);
     }
 
-    private function addHoneypot(string $formName, SymfonyFormBuilder $formBuilder, Collection $config): void
+    private function addHoneypot(string $formName, FormBuilderInterface $formBuilder, Collection $config): void
     {
         if ($config->get('honeypot', false)) {
             $honeypot = new Honeypot($formName);

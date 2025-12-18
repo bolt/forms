@@ -7,10 +7,10 @@ namespace Bolt\BoltForms\EventSubscriber;
 use Bolt\BoltForms\Event\BoltFormsEvent;
 use Bolt\BoltForms\Event\BoltFormsEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Dedicated subscriber interface for BoltForms
