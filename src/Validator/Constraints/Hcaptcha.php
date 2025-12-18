@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraint;
 class Hcaptcha extends Constraint
 {
     public string $incompleteMessage = 'Please complete the CAPTCHA challenge.';
-
     public string $message = 'The CAPTCHA challenge failed with "{{ error }}". Please try again or contact the site owner.';
 
     public function __construct(

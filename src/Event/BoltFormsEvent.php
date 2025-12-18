@@ -7,7 +7,6 @@ namespace Bolt\BoltForms\Event;
 use RuntimeException;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * External event interface for BoltForms

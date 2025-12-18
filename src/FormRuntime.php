@@ -6,7 +6,6 @@ namespace Bolt\BoltForms;
 
 use Bolt\BoltForms\Event\PostSubmitEventDispatcher;
 use Bolt\Twig\Notifications;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
@@ -14,19 +13,15 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 class FormRuntime implements RuntimeExtensionInterface
 {
-    /** @var Request */
-    private $request;
-
     public function __construct(
         private Notifications $notifications,
         private Environment $twig,
         private FormBuilder $builder,
-        RequestStack $requestStack,
+        private RequestStack $requestStack,
         private EventDispatcherInterface $dispatcher,
         private BoltFormsConfig $config,
         private PostSubmitEventDispatcher $postSubmitEventDispatcher
     ) {
-        $this->request = $requestStack->getCurrentRequest();
     }
 
     public function run(string $formName = '', array $data = [], bool $warn = true)
@@ -44,10 +39,11 @@ class FormRuntime implements RuntimeExtensionInterface
         $formConfig = collect($config->get($formName));
         $form = $this->builder->build($formName, $data, $config, $this->dispatcher);
 
-        $form->handleRequest($this->request);
+        $request = $this->requestStack->getCurrentRequest();
+        $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $this->postSubmitEventDispatcher->handle($formName, $form, $this->request);
+            $this->postSubmitEventDispatcher->handle($formName, $form, $request);
         }
 
         $extension->dump($formConfig);
