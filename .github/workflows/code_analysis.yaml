@@ -18,7 +18,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
-          extensions: json, mbstring, pdo, curl, pdo_sqlite
+          extensions: json, mbstring, pdo, curl, pdo_sqlite, gd
           coverage: none
           tools: symfony-cli
         env:
@@ -61,7 +61,7 @@ jobs:
         with:
           # test the lowest version, to make sure checks pass on it
           php-version: ${{ matrix.php-version }}
-          extensions: json, mbstring, pdo, curl, pdo_sqlite
+          extensions: json, mbstring, pdo, curl, pdo_sqlite, gd
           coverage: none
           tools: symfony-cli
         env:
