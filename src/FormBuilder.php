@@ -196,8 +196,8 @@ class FormBuilder
     private function addHoneypot(string $formName, SymfonyFormBuilder $formBuilder, Collection $config): void
     {
         if ($config->get('honeypot', false)) {
-            $honeypot = new Honeypot($formName, $formBuilder);
-            $honeypot->addField();
+            $honeypot = new Honeypot($formName);
+            $honeypot->addField($formBuilder);
         }
     }
 }
