@@ -14,22 +14,14 @@ class Logger implements EventSubscriberInterface
 {
     use LoggerTrait;
 
-    /** @var PostSubmitEvent */
-    private $event;
-
-    /** @var Collection */
-    private $notification;
-
-    public function __construct()
-    {
-    }
+    private ?PostSubmitEvent $event = null;
 
     public function handleEvent(PostSubmitEvent $event): void
     {
         $this->event = $event;
-        $this->notification = new Collection($this->event->getFormConfig()->get('notification'));
+        $notification = new Collection($this->event->getFormConfig()->get('notification'));
 
-        if (! $this->notification->get('log')) {
+        if (! $notification->get('log')) {
             $this->log();
         }
     }

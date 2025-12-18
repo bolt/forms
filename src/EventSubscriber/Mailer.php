@@ -17,28 +17,24 @@ class Mailer implements EventSubscriberInterface
 {
     use LoggerTrait;
 
-    /** @var PostSubmitEvent */
-    private $event;
-
-    /** @var Collection */
-    private $notification;
+    private ?PostSubmitEvent $event = null;
 
     public function __construct(
-        private MailerInterface $mailer
+        private readonly MailerInterface $mailer
     ) {
     }
 
     public function handleEvent(PostSubmitEvent $event): void
     {
         $this->event = $event;
-        $this->notification = new Collection($this->event->getFormConfig()->get('notification'));
+        $notification = new Collection($this->event->getFormConfig()->get('notification'));
 
         // Don't send mails, if the form isn't valid
         if (! $this->event->getForm()->isValid()) {
             return;
         }
 
-        if ($this->notification->get('enabled') || $this->notification->get('email')) {
+        if ($notification->get('enabled') || $notification->get('email')) {
             $this->mail();
         }
     }

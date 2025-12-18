@@ -16,11 +16,9 @@ class Redirect implements EventSubscriberInterface
 {
     use LoggerTrait;
 
-    /** @var PostSubmitEvent */
-    private $event;
-
-    /** @var Collection */
-    private $feedback;
+    private ?PostSubmitEvent $event = null;
+    private ?Collection $formConfig = null;
+    private ?Collection $feedback = null;
 
     public function handleEvent(PostSubmitEvent $event): void
     {

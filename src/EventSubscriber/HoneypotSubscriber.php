@@ -11,18 +11,9 @@ use Symfony\Component\Form\FormError;
 
 class HoneypotSubscriber implements EventSubscriberInterface
 {
-    /** @var PostSubmitEvent */
-    private $event;
-
-    public function __construct()
-    {
-    }
-
     public function handleEvent(PostSubmitEvent $event): PostSubmitEvent
     {
-        $this->event = $event;
-
-        $config = $this->event->getConfig();
+        $config = $event->getConfig();
 
         if (! $config->get('honeypot', false)) {
             return $event;
