@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Validator\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 
+#[Attribute]
 class Recaptcha extends Constraint
 {
     public string $incompleteMessage = 'Please complete the CAPTCHA challenge.';
