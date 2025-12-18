@@ -13,7 +13,7 @@ use Sirius\Upload\Handler;
 use Sirius\Upload\Result\File;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Filesystem\Path;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploadHandler implements EventSubscriberInterface
@@ -38,7 +38,7 @@ class FileUploadHandler implements EventSubscriberInterface
         }
     }
 
-    private function processFileField(Form $field, Collection $fieldConfig, PostSubmitEvent $event): void
+    private function processFileField(FormInterface $field, Collection $fieldConfig, PostSubmitEvent $event): void
     {
         $file = $field->getData();
         $form = $event->getForm();
@@ -54,7 +54,7 @@ class FileUploadHandler implements EventSubscriberInterface
         }
     }
 
-    private function getFilename(string $fieldname, Form $form, Collection $formConfig): string
+    private function getFilename(string $fieldname, FormInterface $form, Collection $formConfig): string
     {
         $filenameFormat = $formConfig->get('fields')[$fieldname]['file_format'] ?? 'Uploaded file' . uniqid();
         $filename = $this->helper->get($filenameFormat, $form);

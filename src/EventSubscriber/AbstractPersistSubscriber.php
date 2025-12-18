@@ -7,7 +7,7 @@ namespace Bolt\BoltForms\EventSubscriber;
 use Bolt\BoltForms\Event\PostSubmitEvent;
 use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 
 abstract class AbstractPersistSubscriber implements EventSubscriberInterface
 {
@@ -30,7 +30,7 @@ abstract class AbstractPersistSubscriber implements EventSubscriberInterface
         $this->save($event, $form, $config);
     }
 
-    abstract public function save(PostSubmitEvent $event, Form $form, Collection $config): void;
+    abstract public function save(PostSubmitEvent $event, FormInterface $form, Collection $config): void;
 
     public static function getSubscribedEvents(): array
     {

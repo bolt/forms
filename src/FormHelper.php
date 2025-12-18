@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms;
 
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 
 class FormHelper
 {
-    public function get(?string $format, Form $form, $values = []): ?string
+    public function get(?string $format, FormInterface $form, $values = []): ?string
     {
         if (! $format || ! $form->isSubmitted()) {
             return null;

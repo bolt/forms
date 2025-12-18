@@ -14,7 +14,7 @@ use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 
 class ContentTypePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {
@@ -26,7 +26,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
     ) {
     }
 
-    public function save(PostSubmitEvent $event, Form $form, Collection $config): void
+    public function save(PostSubmitEvent $event, FormInterface $form, Collection $config): void
     {
         $config = collect($config->get('contenttype', []));
 

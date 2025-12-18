@@ -12,7 +12,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Support\Collection;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Throwable;
 
 class DbTablePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
@@ -26,7 +26,7 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
         $this->query = $connection->createQueryBuilder();
     }
 
-    public function save(PostSubmitEvent $event, Form $form, Collection $config): void
+    public function save(PostSubmitEvent $event, FormInterface $form, Collection $config): void
     {
         $config = collect($config->get('table', []));
 
@@ -44,7 +44,7 @@ class DbTablePersister extends AbstractPersistSubscriber implements EventSubscri
         $this->saveToTable($table, $fields);
     }
 
-    private function parseForm(Form $form, PostSubmitEvent $event, Collection $config): array
+    private function parseForm(FormInterface $form, PostSubmitEvent $event, Collection $config): array
     {
         $mapping = collect($config->get('field_map'));
 
