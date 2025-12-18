@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\Event;
 
 use Bolt\BoltForms\BoltFormsConfig;
-use Bolt\Extension\ExtensionInterface;
+use Bolt\BoltForms\Extension;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Symfony\Component\Form\Form;
@@ -38,7 +38,7 @@ class PostSubmitEvent extends Event
         return $this->form;
     }
 
-    public function getExtension(): ?ExtensionInterface
+    public function getExtension(): ?Extension
     {
         return $this->config->getExtension();
     }

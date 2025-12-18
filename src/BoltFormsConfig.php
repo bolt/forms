@@ -41,7 +41,7 @@ class BoltFormsConfig
         return $this->boltConfig;
     }
 
-    public function getExtension(): ?ExtensionInterface
+    public function getExtension(): Extension
     {
         if ($this->extension === null) {
             $this->extension = $this->registry->getExtension(Extension::class);

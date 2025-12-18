@@ -55,7 +55,7 @@ class Logger implements EventSubscriberInterface
 
         $this->logger->info('[Boltforms] Form {formname} - submitted Form data (see \'Context\')', $data);
 
-        $this->event->getExtension()->dump('Submitted form data was logged in the System log.');
+        $this->event->getExtension()?->dump('Submitted form data was logged in the System log.');
     }
 
     public static function getSubscribedEvents(): array
