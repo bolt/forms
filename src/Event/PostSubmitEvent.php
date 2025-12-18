@@ -27,7 +27,7 @@ class PostSubmitEvent extends Event
         private readonly string $formName,
         private readonly Request $request
     ) {
-        $this->attachments = collect([]);
+        $this->attachments = collect();
     }
 
     public function getFormName(): string
