@@ -23,7 +23,7 @@ abstract class AbstractPersistSubscriber implements EventSubscriberInterface
         $config = collect($event->getFormConfig()->get('database', false));
 
         // If content type is not configured, bail out.
-        if (! $config) {
+        if ($config->isEmpty()) {
             return;
         }
 

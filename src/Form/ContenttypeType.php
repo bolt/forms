@@ -6,6 +6,7 @@ namespace Bolt\BoltForms\Form;
 
 use Bolt\Enum\Statuses;
 use Bolt\Storage\Query;
+use Pagerfanta\PagerfantaInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -58,10 +59,12 @@ class ContenttypeType extends AbstractType
                 $entries = $this->query->getContent($params['contenttype'], $criteria);
 
                 $choices = [];
-                foreach ($entries->getCurrentPageResults() as $entry) {
-                    $value = $entry->getFieldValue($params['value']);
-                    $label = $entry->getFieldValue($params['label']);
-                    $choices[$label] = $value;
+                if ($entries instanceof PagerfantaInterface) {
+                    foreach ($entries->getCurrentPageResults() as $entry) {
+                        $value = $entry->getFieldValue($params['value']);
+                        $label = $entry->getFieldValue($params['label']);
+                        $choices[$label] = $value;
+                    }
                 }
 
                 $options['choices'] = $choices;
@@ -69,7 +72,7 @@ class ContenttypeType extends AbstractType
 
                 $parent = $form->getParent();
                 $name = $form->getConfig()->getName();
-                $parent->add($name, ChoiceType::class, $options);
+                $parent?->add($name, ChoiceType::class, $options);
             })
         ;
     }

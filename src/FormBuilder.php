@@ -42,6 +42,7 @@ class FormBuilder
             // If we passed in a default value, set it as the Field's `data`-value
             if (array_key_exists($name, $data)) {
                 if (is_iterable($data[$name])) {
+                    /** @phpstan-ignore offsetAccess.nonOffsetAccessible */
                     $field['options'] = array_merge($field['options'], $data[$name]['options']);
                 } else {
                     $field['options']['data'] = $data[$name];
@@ -179,7 +180,7 @@ class FormBuilder
             // If a CSS class is already defined, append our new class instead of merging so it doesn't end up as an
             // array instead of a string
             if (isset($field['options']['attr']['class'])) {
-                $attr['class'] = sprintf('%s %s', $field['options']['attr']['class'], $attr['class']);
+                $attr['class'] = sprintf('%s %s', $field['options']['attr']['class'], $attr['class'] ?? '');
                 unset($field['options']['attr']['class']);
             }
 

@@ -17,7 +17,7 @@ class Mailer implements EventSubscriberInterface
 {
     use LoggerTrait;
 
-    private ?PostSubmitEvent $event = null;
+    private PostSubmitEvent $event;
 
     public function __construct(
         private readonly MailerInterface $mailer
@@ -62,7 +62,7 @@ class Mailer implements EventSubscriberInterface
         $email = (new EmailFactory())->create($this->event->getFormConfig(), $this->event->getConfig(), $this->event->getForm(), $meta);
 
         if ($this->event->isSpam()) {
-            $subject = Str::ensureStartsWith($email->getSubject(), '[SPAM] ');
+            $subject = Str::ensureStartsWith($email->getSubject() ?? '', '[SPAM] ');
             $email->subject($subject);
         }
 

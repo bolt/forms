@@ -12,6 +12,7 @@ use Bolt\Repository\UserRepository;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception\RuntimeException;
 use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
@@ -30,7 +31,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
     {
         $config = collect($config->get('contenttype', []));
 
-        if (! $config) {
+        if ($config->isEmpty()) {
             return;
         }
 
@@ -48,7 +49,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
     private function setContentData(Content $content, Collection $config): void
     {
         $content->setStatus($config->get('status', Statuses::PUBLISHED));
-        $contentType = $this->boltConfig->getContentType($config->get('name'));
+        $contentType = $this->boltConfig->getContentType($config->get('name')) ?? throw new RuntimeException('Content type not found');
         $content->setContentType($contentType->get('slug'));
         $content->setDefinition($contentType);
 
@@ -58,7 +59,7 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
         }
     }
 
-    private function setContentFields(Content $content, Form $form, PostSubmitEvent $event, Collection $config): void
+    private function setContentFields(Content $content, FormInterface $form, PostSubmitEvent $event, Collection $config): void
     {
         $mapping = collect($config->get('field_map'));
 

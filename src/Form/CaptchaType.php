@@ -34,7 +34,7 @@ class CaptchaType extends HiddenType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'boltFormsCaptcha';
     }

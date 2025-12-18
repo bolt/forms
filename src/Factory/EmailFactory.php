@@ -6,17 +6,16 @@ namespace Bolt\BoltForms\Factory;
 
 use Bolt\Common\Str;
 use Illuminate\Support\Collection;
-use Sirius\Upload\Result\File;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Mime\Address;
 
 class EmailFactory
 {
-    private ?FormInterface $form = null;
-    private ?Collection $config = null;
-    private ?Collection $notification = null;
-    private ?Collection $formConfig = null;
+    private FormInterface $form;
+    private Collection $config;
+    private Collection $notification;
+    private Collection $formConfig;
 
     /**
      * @param Collection $formConfig The config specific for the current form
@@ -61,7 +60,6 @@ class EmailFactory
         }
 
         foreach ($attachments as $name => $attachment) {
-            /** @var File $attachment */
             foreach ($attachment as $file) {
                 $email->attachFromPath($file, $name . '.' . pathinfo((string) $file, PATHINFO_EXTENSION));
             }

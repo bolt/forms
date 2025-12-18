@@ -10,15 +10,16 @@ use Bolt\Log\LoggerTrait;
 use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Redirect implements EventSubscriberInterface
 {
     use LoggerTrait;
 
-    private ?PostSubmitEvent $event = null;
-    private ?Collection $formConfig = null;
-    private ?Collection $feedback = null;
+    private PostSubmitEvent $event;
+    private Collection $formConfig;
+    private Collection $feedback;
 
     public function handleEvent(PostSubmitEvent $event): void
     {
@@ -52,7 +53,7 @@ class Redirect implements EventSubscriberInterface
         throw new HttpException(Response::HTTP_FOUND, '', null, []);
     }
 
-    protected function getRedirectResponse(array $redirect): ?RedirectResponse
+    protected function getRedirectResponse(array $redirect): RedirectResponse
     {
         $url = $this->makeUrl($redirect);
 

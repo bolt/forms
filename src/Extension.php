@@ -30,6 +30,7 @@ class Extension extends BaseExtension
 
     public function install(): void
     {
+        /** @var string $projectDir */
         $projectDir = $this->getContainer()->getParameter('kernel.project_dir');
 
         $filesystem = new Filesystem();

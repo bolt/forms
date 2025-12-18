@@ -23,9 +23,9 @@ class FieldConstraints
             $inputType = \gettype($item);
 
             if ($inputType === 'string') {
-                $class = static::getClassFromString($formName, $item);
+                $class = self::getClassFromString($formName, $item);
             } elseif ($inputType === 'array') {
-                $class = static::getClassFromArray($formName, $item);
+                $class = self::getClassFromArray($formName, $item);
             } else {
                 throw new RuntimeException(sprintf("Constraint for Field '%s' must be string or array. '%s' given.", $formName, $inputType));
             }
@@ -55,6 +55,6 @@ class FieldConstraints
 
     private static function getClassFromArray(string $formName, array $input): object
     {
-        return self::getClassFromString($formName, key($input), current($input));
+        return self::getClassFromString($formName, (string) key($input), current($input));
     }
 }

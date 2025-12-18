@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Bolt\BoltForms;
 
 use Bolt\Configuration\Config;
-use Bolt\Extension\ExtensionInterface;
 use Bolt\Extension\ExtensionRegistry;
 use Illuminate\Support\Collection;
 use Symfony\Component\Finder\Finder;
@@ -14,7 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 class BoltFormsConfig
 {
     private ?Collection $config = null;
-    private ?ExtensionInterface $extension = null;
+    private ?Extension $extension = null;
 
     public function __construct(
         private readonly ExtensionRegistry $registry,
@@ -44,7 +43,9 @@ class BoltFormsConfig
     public function getExtension(): Extension
     {
         if ($this->extension === null) {
-            $this->extension = $this->registry->getExtension(Extension::class);
+            /** @var Extension $retrievedExtension */
+            $retrievedExtension = $this->registry->getExtension(Extension::class);
+            $this->extension = $retrievedExtension;
         }
 
         return $this->extension;
