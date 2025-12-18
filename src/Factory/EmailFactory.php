@@ -6,10 +6,10 @@ namespace Bolt\BoltForms\Factory;
 
 use Bolt\Common\Str;
 use File;
+use Illuminate\Support\Collection;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Mime\Address;
-use Tightenco\Collect\Support\Collection;
 
 class EmailFactory
 {

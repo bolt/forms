@@ -7,10 +7,10 @@ namespace Bolt\BoltForms\EventSubscriber;
 use Bolt\BoltForms\Event\PostSubmitEvent;
 use Bolt\Common\Str;
 use Bolt\Log\LoggerTrait;
+use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Tightenco\Collect\Support\Collection;
 
 class Redirect implements EventSubscriberInterface
 {

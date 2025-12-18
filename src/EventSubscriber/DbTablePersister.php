@@ -8,10 +8,10 @@ use Bolt\BoltForms\Event\PostSubmitEvent;
 use Carbon\Carbon;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Support\Collection;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
-use Tightenco\Collect\Support\Collection;
 
 class DbTablePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {
