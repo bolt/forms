@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Bolt\BoltForms\Validator\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[Attribute]
 class Hcaptcha extends Constraint
 {
     public string $incompleteMessage = 'Please complete the CAPTCHA challenge.';
