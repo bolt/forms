@@ -7,7 +7,7 @@ on:
       - main
 
 env:
-  COMPOSER_HOME: /tmp/composer-cache
+  COMPOSER_CACHE_DIR: /tmp/composer-cache
 
 jobs:
   rector_analysis:
@@ -30,7 +30,7 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ env.COMPOSER_HOME }}
+          path: ${{ env.COMPOSER_CACHE_DIR }}
           key: ${{ runner.os }}-${{ env.PHP_VERSION }}-${{ hashFiles('**/composer.json') }}
 
       - run: composer install --no-progress --no-interaction
@@ -72,7 +72,7 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ env.COMPOSER_HOME }}
+          path: ${{ env.COMPOSER_CACHE_DIR }}
           key: ${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}
 
       - run: composer install --no-progress --no-interaction
