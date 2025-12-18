@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+env:
+  COMPOSER_HOME: /tmp/composer-cache
+
 jobs:
   rector_analysis:
     name: Rector analysis
@@ -27,11 +30,10 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: /tmp/composer-cache
+          path: ${{ env.COMPOSER_HOME }}
           key: ${{ runner.os }}-${{ env.PHP_VERSION }}-${{ hashFiles('**/composer.json') }}
-      - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ env.PHP_VERSION }}
+
+      - run: composer install --no-progress --no-interaction
 
       - run: vendor/bin/rector process -n --no-progress-bar --ansi
 
@@ -70,10 +72,9 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: /tmp/composer-cache
+          path: ${{ env.COMPOSER_HOME }}
           key: ${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}
-      - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ matrix.php-version }}
+
+      - run: composer install --no-progress --no-interaction
 
       - run: ${{ matrix.actions.run }}
