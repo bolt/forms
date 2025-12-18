@@ -60,7 +60,7 @@ class BoltFormsConfig
 
     private function getAdditionalFormConfigs(): array
     {
-        $configPath = explode('.yaml', $this->getExtension()->getConfigFilenames()['main'])[0] . DIRECTORY_SEPARATOR;
+        $configPath = explode('.yaml', (string) $this->getExtension()->getConfigFilenames()['main'])[0] . DIRECTORY_SEPARATOR;
 
         $finder = new Finder();
 

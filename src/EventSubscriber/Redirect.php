@@ -59,9 +59,9 @@ class Redirect implements EventSubscriberInterface
         return new RedirectResponse($url);
     }
 
-    private function makeUrl($redirect): string
+    private function makeUrl(array $redirect): string
     {
-        $parsedUrl = parse_url($redirect['target']);
+        $parsedUrl = parse_url((string) $redirect['target']);
 
         // Special case, if redirecting to 'self', get the current URL and return it
         if ($redirect['target'] == 'self') {
@@ -88,7 +88,7 @@ class Redirect implements EventSubscriberInterface
         return '/' . mb_ltrim($url, '/');
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'boltforms.post_submit' => ['handleEvent', 5],

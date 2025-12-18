@@ -15,21 +15,16 @@ class RecaptchaService
     public const RECAPTCHA_VERSION_2 = 'recaptcha_v2';
     public const RECAPTCHA_VERSION_3 = 'recaptcha_v3';
 
-    /** @var string */
-    private $secretKey;
-
-    /** @var float */
-    private $v3Threshold;
-
-    /** @var string */
-    private $recaptchaVersion;
+    private ?string $secretKey = null;
+    private ?float $v3Threshold = null;
+    private ?string $recaptchaVersion = null;
 
     public function __construct(
         private readonly ExtensionRegistry $registry
     ) {
     }
 
-    public function setKeys(?string $siteKey = null, string $secretKey): void
+    public function setKeys(?string $siteKey = null, string $secretKey = ''): void
     {
         // Note: $siteKey is not used, but here to stay in sync with HcaptchaService.php
         $this->secretKey = $secretKey;
@@ -51,7 +46,7 @@ class RecaptchaService
         }
     }
 
-    public function validateTokenFromRequest(Request $request)
+    public function validateTokenFromRequest(Request $request): bool|string
     {
         $extension = $this->registry->getExtension(Extension::class);
 
