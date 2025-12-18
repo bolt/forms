@@ -25,7 +25,7 @@ class HcaptchaValidator extends ConstraintValidator
         }
 
         $request = $this->requestStack->getCurrentRequest();
-        if (empty($request->get(HcaptchaService::POST_FIELD_NAME))) {
+        if (empty($request->request->get(HcaptchaService::POST_FIELD_NAME))) {
             $this->context->buildViolation($constraint->incompleteMessage)
                 ->addViolation();
 

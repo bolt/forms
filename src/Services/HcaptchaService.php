@@ -33,7 +33,7 @@ class HcaptchaService
 
         $validationData = [
             'secret' => $this->secretKey,
-            'response' => $request->get(self::POST_FIELD_NAME),
+            'response' => $request->request->get(self::POST_FIELD_NAME),
             'remoteip' => $request->getClientIp(),
             'sitekey' => $this->siteKey,
         ];
