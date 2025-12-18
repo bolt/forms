@@ -18,14 +18,14 @@ class HcaptchaValidator extends ConstraintValidator
     ) {
     }
 
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (! $constraint instanceof Hcaptcha) {
             throw new UnexpectedTypeException($constraint, Hcaptcha::class);
         }
 
         $request = $this->requestStack->getCurrentRequest();
-        if (empty($request->request->get(HcaptchaService::POST_FIELD_NAME))) {
+        if (empty($request?->request->get(HcaptchaService::POST_FIELD_NAME))) {
             $this->context->buildViolation($constraint->incompleteMessage)
                 ->addViolation();
 

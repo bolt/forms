@@ -18,14 +18,14 @@ class RecaptchaValidator extends ConstraintValidator
     ) {
     }
 
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (! $constraint instanceof Recaptcha) {
             throw new UnexpectedTypeException($constraint, Recaptcha::class);
         }
 
         $request = $this->requestStack->getCurrentRequest();
-        if (empty($request->request->get(RecaptchaService::POST_FIELD_NAME))) {
+        if (empty($request?->request->get(RecaptchaService::POST_FIELD_NAME))) {
             $this->context->buildViolation($constraint->incompleteMessage)
                 ->addViolation();
 

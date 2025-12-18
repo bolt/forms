@@ -27,7 +27,7 @@ class HcaptchaService
         $this->secretKey = $secretKey;
     }
 
-    public function validateTokenFromRequest(Request $request): bool|string
+    public function validateTokenFromRequest(Request $request): true|string
     {
         /** @var Extension $extension */
         $extension = $this->registry->getExtension(Extension::class);
@@ -51,6 +51,7 @@ class HcaptchaService
             'Content-Type: application/x-www-form-urlencoded',
         ]);
 
+        /** @var string $response */
         $response = curl_exec($ch);
         $extension->dump($response);
 
