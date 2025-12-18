@@ -5,25 +5,18 @@ declare(strict_types=1);
 namespace Bolt\BoltForms\Factory;
 
 use Bolt\Common\Str;
-use File;
 use Illuminate\Support\Collection;
+use Sirius\Upload\Result\File;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Mime\Address;
 
 class EmailFactory
 {
-    /** @var Form */
-    private $form;
-
-    /** @var Collection */
-    private $config;
-
-    /** @var Collection */
-    private $notification;
-
-    /** @var Collection */
-    private $formConfig;
+    private ?Form $form = null;
+    private ?Collection $config = null;
+    private ?Collection $notification = null;
+    private ?Collection $formConfig = null;
 
     /**
      * @param Collection $formConfig The config specific for the current form

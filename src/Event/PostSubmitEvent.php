@@ -15,11 +15,8 @@ class PostSubmitEvent extends Event
 {
     public const NAME = 'boltforms.post_submit';
 
-    /** @var bool */
-    private $spam = false;
-
-    /** @var Collection */
-    private $attachments;
+    private bool $spam = false;
+    private Collection $attachments;
 
     public function __construct(
         private readonly Form $form,

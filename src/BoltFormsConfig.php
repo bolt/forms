@@ -13,11 +13,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class BoltFormsConfig
 {
-    /** @var Collection */
-    private $config = null;
-
-    /** @var ExtensionInterface */
-    private $extension = null;
+    private ?Collection $config = null;
+    private ?ExtensionInterface $extension = null;
 
     public function __construct(
         private readonly ExtensionRegistry $registry,

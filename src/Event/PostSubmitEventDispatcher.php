@@ -10,8 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostSubmitEventDispatcher
 {
-    /** @var Collection */
-    private $dispatchedForms;
+    private Collection $dispatchedForms;
 
     public function __construct(
         private readonly BoltFormsConfig $config,
