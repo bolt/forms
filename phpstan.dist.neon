@@ -6,3 +6,6 @@ parameters:
 
     treatPhpDocTypesAsCertain: false
     reportUnmatchedIgnoredErrors: true
+
+includes:
+	- phpstan-baseline.php
