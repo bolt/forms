@@ -7,17 +7,16 @@ namespace Bolt\BoltForms;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 
-class Honeypot
+readonly class Honeypot
 {
     public function __construct(
-        private readonly string $formName,
-        private readonly ?SymfonyFormBuilder $formBuilder = null
+        private string $formName
     ) {
     }
 
-    public function addField(): void
+    public function addField(SymfonyFormBuilder $formBuilder): void
     {
-        $fieldname = $this->generateFieldName();
+        $fieldName = $this->generateFieldName();
 
         $options = [
             'required' => false,
@@ -27,12 +26,12 @@ class Honeypot
             ],
         ];
 
-        $this->formBuilder->add($fieldname, TextType::class, $options);
+        $formBuilder->add($fieldName, TextType::class, $options);
     }
 
-    public function generateFieldName($withFormName = false): string
+    public function generateFieldName(bool $withFormName = false): string
     {
-        $seed = preg_replace('/[^0-9]/', '', md5($_SERVER['APP_SECRET'] . $_SERVER['REMOTE_ADDR']));
+        $seed = (int) preg_replace('/[^0-9]/', '', md5($_SERVER['APP_SECRET'] . $_SERVER['REMOTE_ADDR']));
         mt_srand($seed % PHP_INT_MAX);
 
         $values = ['field', 'name', 'object', 'string', 'value', 'input', 'required', 'optional', 'first', 'last', 'phone', 'telephone', 'fax', 'twitter', 'contact', 'approve', 'city', 'state', 'province', 'company', 'card', 'number', 'recipient', 'processor', 'transaction', 'domain', 'date', 'type'];
@@ -50,10 +49,5 @@ class Honeypot
         }
 
         return implode('_', $parts);
-    }
-
-    public function isenabled(): bool
-    {
-        return $this->config->get('honeypot', false);
     }
 }
