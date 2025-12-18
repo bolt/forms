@@ -32,7 +32,7 @@ abstract class AbstractPersistSubscriber implements EventSubscriberInterface
 
     abstract public function save(PostSubmitEvent $event, Form $form, Collection $config): void;
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'boltforms.post_submit' => ['handleSave', 10],

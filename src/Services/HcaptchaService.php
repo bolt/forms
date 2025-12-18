@@ -13,11 +13,8 @@ class HcaptchaService
 {
     public const POST_FIELD_NAME = 'h-captcha-response';
 
-    /** @var string */
-    private $secretKey;
-
-    /** @var string */
-    private $siteKey;
+    private ?string $secretKey = null;
+    private ?string $siteKey = null;
 
     public function __construct(
         private readonly ExtensionRegistry $registry
@@ -30,7 +27,7 @@ class HcaptchaService
         $this->secretKey = $secretKey;
     }
 
-    public function validateTokenFromRequest(Request $request)
+    public function validateTokenFromRequest(Request $request): bool|string
     {
         $extension = $this->registry->getExtension(Extension::class);
 

@@ -63,7 +63,7 @@ class EmailFactory
         foreach ($attachments as $name => $attachment) {
             /** @var File $attachment */
             foreach ($attachment as $file) {
-                $email->attachFromPath($file, $name . '.' . pathinfo($file, PATHINFO_EXTENSION));
+                $email->attachFromPath($file, $name . '.' . pathinfo((string) $file, PATHINFO_EXTENSION));
             }
         }
 

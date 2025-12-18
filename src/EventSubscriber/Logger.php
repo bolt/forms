@@ -58,7 +58,7 @@ class Logger implements EventSubscriberInterface
         $this->event->getExtension()->dump('Submitted form data was logged in the System log.');
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'boltforms.post_submit' => ['handleEvent', 10],

@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUploadHandler implements EventSubscriberInterface
 {
     public function __construct(
+        private readonly FormHelper $helper,
         private readonly string $projectDir = '',
-        private readonly FormHelper $helper
     ) {
     }
 
@@ -79,9 +79,7 @@ class FileUploadHandler implements EventSubscriberInterface
 
         $uploadHandler->setPrefix(mb_substr(md5((string) time()), 0, 8) . '_' . $filename);
 
-        $uploadHandler->setSanitizerCallback(function ($name) {
-            return $this->sanitiseFilename($name);
-        });
+        $uploadHandler->setSanitizerCallback($this->sanitiseFilename(...));
 
         /** @var File $processed */
         $processed = $uploadHandler->process($file);
@@ -120,7 +118,7 @@ class FileUploadHandler implements EventSubscriberInterface
         return $filename . '.' . $extension;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'boltforms.post_submit' => ['handleEvent', 40],

@@ -24,7 +24,7 @@ class FormRuntime implements RuntimeExtensionInterface
     ) {
     }
 
-    public function run(string $formName = '', array $data = [], bool $warn = true)
+    public function run(string $formName = '', array $data = [], bool $warn = true): string
     {
         $config = $this->config->getConfig();
         $extension = $this->config->getExtension();
