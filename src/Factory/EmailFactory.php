@@ -8,12 +8,12 @@ use Bolt\Common\Str;
 use Illuminate\Support\Collection;
 use Sirius\Upload\Result\File;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Mime\Address;
 
 class EmailFactory
 {
-    private ?Form $form = null;
+    private ?FormInterface $form = null;
     private ?Collection $config = null;
     private ?Collection $notification = null;
     private ?Collection $formConfig = null;
@@ -21,10 +21,10 @@ class EmailFactory
     /**
      * @param Collection $formConfig The config specific for the current form
      * @param Collection $config The global config defined config/extensions/bolt-boltforms.yaml
-     * @param Form $form The form object
+     * @param FormInterface $form The form object
      * @param array $meta Metadata of the PostSubmitEvent
      */
-    public function create(Collection $formConfig, Collection $config, Form $form, array $meta = []): TemplatedEmail
+    public function create(Collection $formConfig, Collection $config, FormInterface $form, array $meta = []): TemplatedEmail
     {
         $this->config = $config;
         $this->notification = collect($formConfig->get('notification', []));

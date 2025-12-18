@@ -8,7 +8,7 @@ use Bolt\BoltForms\BoltFormsConfig;
 use Bolt\BoltForms\Extension;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -20,7 +20,7 @@ class PostSubmitEvent extends Event
     private Collection $attachments;
 
     public function __construct(
-        private readonly Form $form,
+        private readonly FormInterface $form,
         private readonly BoltFormsConfig $config,
         private readonly string $formName,
         private readonly Request $request
@@ -33,7 +33,7 @@ class PostSubmitEvent extends Event
         return $this->formName;
     }
 
-    public function getForm(): Form
+    public function getForm(): FormInterface
     {
         return $this->form;
     }

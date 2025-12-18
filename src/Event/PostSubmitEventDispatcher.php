@@ -5,21 +5,21 @@ namespace Bolt\BoltForms\Event;
 use Bolt\BoltForms\BoltFormsConfig;
 use Illuminate\Support\Collection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class PostSubmitEventDispatcher
+readonly class PostSubmitEventDispatcher
 {
-    private readonly Collection $dispatchedForms;
+    private Collection $dispatchedForms;
 
     public function __construct(
-        private readonly BoltFormsConfig $config,
-        private readonly EventDispatcherInterface $dispatcher
+        private BoltFormsConfig $config,
+        private EventDispatcherInterface $dispatcher
     ) {
         $this->dispatchedForms = collect();
     }
 
-    public function handle(string $formName, Form $form, Request $request): void
+    public function handle(string $formName, FormInterface $form, Request $request): void
     {
         if (! $this->shouldDispatch($formName)) {
             return;
@@ -33,7 +33,7 @@ class PostSubmitEventDispatcher
         return ! $this->dispatchedForms->contains($formName);
     }
 
-    private function dispatch(string $formName, Form $form, Request $request): void
+    private function dispatch(string $formName, FormInterface $form, Request $request): void
     {
         $event = new PostSubmitEvent($form, $this->config, $formName, $request);
         $this->dispatcher->dispatch($event, PostSubmitEvent::NAME);
