@@ -12,8 +12,8 @@ use Bolt\Repository\UserRepository;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Exception\RuntimeException;
 use Illuminate\Support\Collection;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -77,10 +77,8 @@ class ContentTypePersister extends AbstractPersistSubscriber implements EventSub
             }
 
             if (is_array($value)) {
-                $value = implode(', ', array_map(function ($entry) {
-                    // check if $entry is an array and not empty
-                    return (is_array($entry) && count($entry) > 0) ? $entry[0] : '';
-                }, $value));
+                // check if $entry is an array and not empty
+                $value = implode(', ', array_map(fn ($entry): mixed => (is_array($entry) && count($entry) > 0) ? $entry[0] : '', $value));
             }
 
             if ($value instanceof DateTimeInterface) {

@@ -16,7 +16,7 @@ class FormHelper
 
         return preg_replace_callback(
             '/{([\w]+)}/i',
-            function ($match) use ($form, $values) {
+            function (array $match) use ($form, $values): string {
                 if (\array_key_exists($match[1], $form->all())) {
                     return (string) $form->get($match[1])->getData();
                 }

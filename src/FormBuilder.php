@@ -140,7 +140,7 @@ class FormBuilder
         string $name,
         array $field,
         Collection $config,
-        $formName
+        string $formName
     ): void {
         // If we're using reCaptcha V3 or V2 invisible, we need to add some attributes to the submit button
         // If we're adding a submit button, attach the attributes if we're using reCaptcha v3 or v2 invisible
