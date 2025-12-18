@@ -14,8 +14,8 @@ class PostSubmitEventDispatcher
     private $dispatchedForms;
 
     public function __construct(
-        private BoltFormsConfig $config,
-        private EventDispatcherInterface $dispatcher
+        private readonly BoltFormsConfig $config,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
         $this->dispatchedForms = collect([]);
     }

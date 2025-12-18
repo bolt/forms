@@ -38,7 +38,7 @@ use Symfony\Component\Form\FormEvents;
 class SymfonyFormProxySubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private EventDispatcherInterface $boltFormsDispatcher
+        private readonly EventDispatcherInterface $boltFormsDispatcher
     ) {
     }
 

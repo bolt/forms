@@ -25,7 +25,7 @@ class RecaptchaService
     private $recaptchaVersion;
 
     public function __construct(
-        private ExtensionRegistry $registry
+        private readonly ExtensionRegistry $registry
     ) {
     }
 

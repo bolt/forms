@@ -13,8 +13,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class HcaptchaValidator extends ConstraintValidator
 {
     public function __construct(
-        private HcaptchaService $service,
-        private RequestStack $requestStack
+        private readonly HcaptchaService $service,
+        private readonly RequestStack $requestStack
     ) {
     }
 

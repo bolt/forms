@@ -20,8 +20,8 @@ class BoltFormsConfig
     private $extension = null;
 
     public function __construct(
-        private ExtensionRegistry $registry,
-        private Config $boltConfig
+        private readonly ExtensionRegistry $registry,
+        private readonly Config $boltConfig
     ) {
     }
 

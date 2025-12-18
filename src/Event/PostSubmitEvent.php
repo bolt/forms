@@ -22,10 +22,10 @@ class PostSubmitEvent extends Event
     private $attachments;
 
     public function __construct(
-        private Form $form,
-        private BoltFormsConfig $config,
-        private string $formName,
-        private Request $request
+        private readonly Form $form,
+        private readonly BoltFormsConfig $config,
+        private readonly string $formName,
+        private readonly Request $request
     ) {
         $this->attachments = collect([]);
     }

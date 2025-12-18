@@ -20,7 +20,7 @@ class HcaptchaService
     private $siteKey;
 
     public function __construct(
-        private ExtensionRegistry $registry
+        private readonly ExtensionRegistry $registry
     ) {
     }
 

@@ -10,8 +10,8 @@ use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 class Honeypot
 {
     public function __construct(
-        private string $formName,
-        private ?SymfonyFormBuilder $formBuilder = null
+        private readonly string $formName,
+        private readonly ?SymfonyFormBuilder $formBuilder = null
     ) {
     }
 

@@ -19,10 +19,10 @@ use Symfony\Component\Form\Form;
 class ContentTypePersister extends AbstractPersistSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Config $boltConfig,
-        private UserRepository $userRepository,
-        private EntityManagerInterface $em,
-        private string $projectDir = ''
+        private readonly Config $boltConfig,
+        private readonly UserRepository $userRepository,
+        private readonly EntityManagerInterface $em,
+        private readonly string $projectDir = ''
     ) {
     }
 

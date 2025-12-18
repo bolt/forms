@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ContenttypeType extends AbstractType
 {
     public function __construct(
-        private Query $query
+        private readonly Query $query
     ) {
     }
 
