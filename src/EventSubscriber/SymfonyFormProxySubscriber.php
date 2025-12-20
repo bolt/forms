@@ -35,10 +35,10 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * @license http://opensource.org/licenses/GPL-3.0 GNU Public License 3.0
  * @license http://opensource.org/licenses/LGPL-3.0 GNU Lesser General Public License 3.0
  */
-class SymfonyFormProxySubscriber implements EventSubscriberInterface
+readonly class SymfonyFormProxySubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly EventDispatcherInterface $boltFormsDispatcher
+        private EventDispatcherInterface $boltFormsDispatcher
     ) {
     }
 

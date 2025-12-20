@@ -16,11 +16,11 @@ use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class FileUploadHandler implements EventSubscriberInterface
+readonly class FileUploadHandler implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly FormHelper $helper,
-        private readonly string $projectDir = '',
+        private FormHelper $helper,
+        private string $projectDir = '',
     ) {
     }
 
