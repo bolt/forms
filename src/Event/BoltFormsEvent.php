@@ -34,8 +34,8 @@ use Symfony\Component\Form\FormEvents;
 class BoltFormsEvent extends FormEvent
 {
     public function __construct(
-        protected FormEvent $event,
-        protected string $formsEventName
+        protected readonly FormEvent $event,
+        protected readonly string $formsEventName
     ) {
         parent::__construct($event->getForm(), $event->getData());
     }

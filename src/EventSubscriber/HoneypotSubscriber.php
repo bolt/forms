@@ -9,7 +9,7 @@ use Bolt\BoltForms\Honeypot;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormError;
 
-class HoneypotSubscriber implements EventSubscriberInterface
+readonly class HoneypotSubscriber implements EventSubscriberInterface
 {
     public function handleEvent(PostSubmitEvent $event): PostSubmitEvent
     {
